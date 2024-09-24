@@ -1,0 +1,87 @@
+import 'dart:io';
+import '../model/user_informations_model.dart';
+import '../../../../core/service/data_service.dart';
+import '../../../home/domian/entites/phone_entites.dart';
+import 'package:west_elbalad/core/constants/app_consts.dart';
+import 'package:west_elbalad/core/service/hive_service.dart';
+import 'package:west_elbalad/core/utils/backend_endpoints.dart';
+import 'package:west_elbalad/features/home/data/model/phones_model.dart';
+import 'package:west_elbalad/features/admin/domain/entities/user_informations_entites.dart';
+
+
+abstract class UserInformationsRemoteDataSource {
+  Future<void> deletePhoneData(String id);
+  Future <List<PhoneEntites>> fetchPhonesData();
+  Future<void> editPrice(String phoneId, int newValue);
+  Future<List<UserInformationsEntity>> fetchUsersData();
+  Future<String> uploadImage(File image, String documentId);
+  Future<void> addPhoneData(Map<String, dynamic> data, String documentId);
+}
+
+class UserInformationsRemoteDataSourceImpl
+    extends UserInformationsRemoteDataSource {
+  final DatabaseService databaseService;
+
+  UserInformationsRemoteDataSourceImpl({required this.databaseService});
+
+  @override
+  Future<List<UserInformationsEntity>> fetchUsersData() async {
+    final List<Map<String, dynamic>> usersData =
+        await databaseService.fetchAllDocuments(BackendEndpoint.addUserData);
+    final List<UserInformationsEntity> usersList = usersData.map((data) {
+      return UserInformationsModel.fromMap(data);
+    }).toList();
+    saveData<UserInformationsEntity>(usersList, kUserInformationsHive);
+    return usersList;
+  }
+
+
+
+
+ @override
+  Future<List<PhoneEntites>> fetchPhonesData() async{
+       final List<Map<String, dynamic>> phonesData =
+        await databaseService.fetchAllDocuments(BackendEndpoint.getPhone);
+    final List<PhoneEntites> phonesList = phonesData.map((data) {
+      return PhoneModel.fromMap(data);
+    }).toList();
+    return phonesList;
+  }
+
+
+  @override
+  Future<String> uploadImage(File image, String documentId) async {
+    String imageUrl = await databaseService.uploadImage(
+      image: image,
+      path: "phones/$documentId",
+    );
+    return imageUrl;
+  }
+
+  @override
+  Future<void> addPhoneData(
+      Map<String, dynamic> data, String documentId) async {
+    await databaseService.addData(
+        documentId: documentId, path: BackendEndpoint.addPhone, data: data);
+  }
+
+  @override
+  Future<void> deletePhoneData(String id) async {
+    await databaseService.deleteDocument(
+      documentId: id,
+      collectionName: BackendEndpoint.getPhone,
+    );
+    bool imageExists = await databaseService.checkIfImageExists("phones/$id");
+    if (imageExists) {
+      await databaseService.deleteImageFromStorage("phones/$id");
+    }
+  }
+  
+  @override
+  Future<void> editPrice(String phoneId, int newValue) async {
+await databaseService.updateFieldValue(collectionName: BackendEndpoint.getPhone, docId: phoneId, fieldName: BackendEndpoint.priceOfPhone, newValue: newValue);
+  }
+  
+ 
+}
+
