@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:math' as math;
@@ -8,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class FirebaseAuthService {
   Future deleteUser() async {
@@ -137,41 +135,7 @@ class FirebaseAuthService {
     return (await FirebaseAuth.instance.signInWithCredential(credential)).user!;
   }
 
-  Future<User> signInWithFacebook() async {
-    final rawNonce = generateNonce();
-    final nonce = sha256ofString(rawNonce);
-    final LoginResult loginResult =
-        await FacebookAuth.instance.login(nonce: nonce);
-    OAuthCredential facebookAuthCredential;
 
-    if (Platform.isIOS) {
-      switch (loginResult.accessToken!.type) {
-        case AccessTokenType.classic:
-          final token = loginResult.accessToken as ClassicToken;
-          facebookAuthCredential = FacebookAuthProvider.credential(
-            token.authenticationToken!,
-          );
-          break;
-        case AccessTokenType.limited:
-          final token = loginResult.accessToken as LimitedToken;
-          facebookAuthCredential = OAuthCredential(
-            providerId: 'facebook.com',
-            signInMethod: 'oauth',
-            idToken: token.tokenString,
-            rawNonce: rawNonce,
-          );
-          break;
-      }
-    } else {
-      facebookAuthCredential = FacebookAuthProvider.credential(
-        loginResult.accessToken!.tokenString,
-      );
-    }
-
-    return (await FirebaseAuth.instance
-            .signInWithCredential(facebookAuthCredential))
-        .user!;
-  }
 
   /// Generates a cryptographically secure random nonce, to be included in a
   /// credential request.
