@@ -36,7 +36,7 @@ class AuthRepoImpl extends AuthRepo {
         email: email,
         uId: user.uid,
       );
-      SharedPref.setString('user_name',name);
+      SharedPref.setString('user_name', name);
 
       return right(userEntity);
     } on CustomException catch (e) {
@@ -65,19 +65,17 @@ class AuthRepoImpl extends AuthRepo {
     try {
       var user = await firebaseAuthService.signInWithEmailAndPassword(
           email: email, password: password);
-          bool isUserExist = await doesDocumentExist(user.uid);
-          if (!isUserExist) {
-            await sendEmailVerification(user);
-            return left(ServerFailure('الايميل مسجل من قبل ولاكن لم يتحقق منه'));
-          } else {
-             var userEntity = UserModel.fromFirebaseUser(user);
-                return right(
-        userEntity,
-      );
-          }
-     
-      
-   
+      bool isUserExist = await doesDocumentExist(user.uid);
+      if (!isUserExist) {
+        await sendEmailVerification(user);
+        return left(ServerFailure('الايميل مسجل من قبل ولاكن لم يتحقق منه'));
+      } else {
+        var userEntity = UserModel.fromFirebaseUser(user);
+        await saveUserData(user: userEntity);
+        return right(
+          userEntity,
+        );
+      }
     } on CustomException catch (e) {
       return left(ServerFailure(e.message));
     } catch (e) {
@@ -106,6 +104,7 @@ class AuthRepoImpl extends AuthRepo {
       } else {
         await addUserData(user: userEntity);
       }
+      await saveUserData(user: userEntity);
       return right(userEntity);
     } catch (e) {
       await deleteUser(user);
@@ -120,8 +119,6 @@ class AuthRepoImpl extends AuthRepo {
     }
   }
 
-
-
   @override
   Future<Either<Failure, UserEntity>> signinWithApple() async {
     User? user;
@@ -130,6 +127,7 @@ class AuthRepoImpl extends AuthRepo {
 
       var userEntity = UserModel.fromFirebaseUser(user);
       await addUserData(user: userEntity);
+      await saveUserData(user: userEntity);
       return right(userEntity);
     } catch (e) {
       await deleteUser(user);
@@ -159,7 +157,8 @@ class AuthRepoImpl extends AuthRepo {
         path: BackendEndpoint.getUsersData, docuementId: uid);
     return UserModel.fromJson(userData);
   }
-    @override
+
+  @override
   Future saveUserData({required UserEntity user}) async {
     var jsonData = jsonEncode(UserModel.fromEntity(user).toMap());
     await SharedPref.setString(kUserData, jsonData);
@@ -185,12 +184,12 @@ class Wrapper extends StatelessWidget {
                 return SigninView();
               } else {
                 if (snapshot.data?.emailVerified == true) {
-                String name =  SharedPref.getString('user_name');
-                   var userEntity = UserEntity(
-        name: name,
-        email: UserModel.fromFirebaseUser(snapshot.data!).email,
-        uId:UserModel.fromFirebaseUser(snapshot.data!).uId,
-      );
+                  String name = SharedPref.getString('user_name');
+                  var userEntity = UserEntity(
+                    name: name,
+                    email: UserModel.fromFirebaseUser(snapshot.data!).email,
+                    uId: UserModel.fromFirebaseUser(snapshot.data!).uId,
+                  );
                   addData(
                     path: BackendEndpoint.addUserData,
                     documentId: snapshot.data!.uid,
@@ -218,42 +217,44 @@ Future<void> addData(
   } else {
     await firestore.collection(path).add(data);
   }
-
 }
 
-  Future<bool> doesDocumentExist(String documentName) async {
-    try {
-      // Reference to the Firestore collection
-      CollectionReference usersCollection =
-          FirebaseFirestore.instance.collection('users');
+Future<bool> doesDocumentExist(String documentName) async {
+  try {
+    // Reference to the Firestore collection
+    CollectionReference usersCollection =
+        FirebaseFirestore.instance.collection('users');
 
-      // Get the document reference
-      DocumentReference documentRef = usersCollection.doc(documentName);
+    // Get the document reference
+    DocumentReference documentRef = usersCollection.doc(documentName);
 
-      // Get the document snapshot
-      DocumentSnapshot documentSnapshot = await documentRef.get();
+    // Get the document snapshot
+    DocumentSnapshot documentSnapshot = await documentRef.get();
 
-      // Check if the document exists
-      return documentSnapshot.exists;
-    } catch (e) {
-      // Handle any errors that occur
-      print('Error checking document existence: $e');
-      return false;
-    }
+    // Check if the document exists
+    return documentSnapshot.exists;
+  } catch (e) {
+    // Handle any errors that occur
+    print('Error checking document existence: $e');
+    return false;
   }
+}
 
-  Future<void> sendEmailVerification(User user) async {
-
-    try {
-      await user.sendEmailVerification();
-      log('Verification email sent to ${user.email}');
-    }on FirebaseAuthException catch (e) {
+Future<void> sendEmailVerification(User user) async {
+  try {
+    await user.sendEmailVerification();
+    log('Verification email sent to ${user.email}');
+  } on FirebaseAuthException catch (e) {
     if (e.code == 'too-many-requests') {
       log("Too many requests: ${e.message}");
-      throw CustomException(message: 'تم ارسال بريد التحقق بالفعل من قبل. يرجى المحاولة مرة أخرى في وقت لاحق.');
+      throw CustomException(
+          message:
+              'تم ارسال بريد التحقق بالفعل من قبل. يرجى المحاولة مرة أخرى في وقت لاحق.');
     } else if (e.code == 'network-request-failed') {
       log("Network error: ${e.message}");
-      throw CustomException(message: 'تعذر إرسال البريد بسبب مشكلة في الاتصال بالشبكة. يرجى التحقق من اتصالك وحاول مرة أخرى.');
+      throw CustomException(
+          message:
+              'تعذر إرسال البريد بسبب مشكلة في الاتصال بالشبكة. يرجى التحقق من اتصالك وحاول مرة أخرى.');
     } else {
       log("FirebaseAuthException: ${e.message}");
       throw CustomException(message: 'فشل في إرسال بريد التحقق.');
@@ -262,4 +263,4 @@ Future<void> addData(
     log("Unexpected error: ${e.toString()}");
     throw CustomException(message: 'حدث خطأ غير متوقع. حاول مرة أخرى لاحقًا.');
   }
-  }
+}

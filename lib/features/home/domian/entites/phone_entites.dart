@@ -17,3 +17,5 @@ class PhoneEntites {
     required this.imageUrl,
   });
 }
+
+
