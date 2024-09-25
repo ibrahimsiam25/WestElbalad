@@ -33,38 +33,33 @@ class Filters extends StatelessWidget {
 
             return Row(
               children: [
-                SizedBox(width: 8.0.w),
                 Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(kRadius16),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: orderedPhones.length,
-                      itemBuilder: (context, index) {
-                        final phoneType = orderedPhones[index];
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            left: index == orderedPhones.length - 1
-                                ? 16.0.w
-                                : 4.0.w,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: orderedPhones.length,
+                    itemBuilder: (context, index) {
+                      final phoneType = orderedPhones[index];
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          left: index == orderedPhones.length - 1
+                              ? 16.0.w
+                              : 4.0.w,
+                          right: index == 0 ? 16.0.w : 0.0.w,
+                        ),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(kRadius24),
+                          onTap: () {
+                            context.read<FilterListCubit>().selectIndex(index);
+                          },
+                          child: FilterElement(
+                            text: phoneType,
+                            color: state == index
+                                ? AppColors.lightGreen
+                                : AppColors.white,
                           ),
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(kRadius24),
-                            onTap: () {
-                              context
-                                  .read<FilterListCubit>()
-                                  .selectIndex(index);
-                            },
-                            child: FilterElement(
-                              text: phoneType,
-                              color: state == index
-                                  ? AppColors.lightGreen
-                                  : AppColors.white,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],

@@ -51,20 +51,6 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
                 textInputType: TextInputType.text,
               ),
               SizedBox(height: 16.0),
-              CustomTextFormField(
-                onSaved: (value) {
-                  if (selectedPhoneStatus == 'مستعمل') {
-                    phoneStatus = 'مستعمل';
-                  } else {
-                    phoneStatus = value!;
-                  }
-                },
-                readOnly: selectedPhoneStatus == 'مستعمل' ? true : false,
-                initialValue: selectedPhoneStatus == 'مستعمل' ? 'مستعمل' : '',
-                hintText: "حالة الهاتف",
-                textInputType: TextInputType.text,
-              ),
-              SizedBox(height: 16.0),
               CustomNumberField(
                 onSaved: (value) {
                   phonePrice = value!;
@@ -88,7 +74,8 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
                       context.read<AddInStoreCubit>().uploadPhoneData(
                           context.read<ImagePickerCubit>().image, {
                         "phoneType": phoneType,
-                        "phoneStatus": phoneStatus,
+                        "phoneStatus":
+                            selectedPhoneStatus == 'مستعمل' ? 'مستعمل' : 'جديد',
                         "phoneName": phoneName,
                         "phoneDescription": phoneDescription,
                         "phonePrice": phonePrice
