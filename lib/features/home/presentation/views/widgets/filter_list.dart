@@ -43,7 +43,7 @@ class Filters extends StatelessWidget {
                 SizedBox(width: 8.0.w),
                 Expanded(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(kRadius24),
+                    borderRadius: BorderRadius.circular(kRadius16),
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: orderedPhones.length,
