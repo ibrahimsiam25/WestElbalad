@@ -19,4 +19,5 @@ class AppAssets {
   static const admin = "assets/images/admin.png";
   static const gallery = "assets/images/gallery.png";
   static const filter = "assets/images/filter.png";
+  static const add = "assets/images/plus.png";
 }

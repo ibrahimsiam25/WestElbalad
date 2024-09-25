@@ -24,6 +24,8 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
 
   @override
   Widget build(BuildContext context) {
+    final String selectedPhoneStatus =
+        ModalRoute.of(context)!.settings.arguments as String;
     return SingleChildScrollView(
       child: Form(
         key: formKey,
@@ -51,8 +53,14 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
               SizedBox(height: 16.0),
               CustomTextFormField(
                 onSaved: (value) {
-                  phoneStatus = value!;
+                  if (selectedPhoneStatus == 'مستعمل') {
+                    phoneStatus = 'مستعمل';
+                  } else {
+                    phoneStatus = value!;
+                  }
                 },
+                readOnly: selectedPhoneStatus == 'مستعمل' ? true : false,
+                initialValue: selectedPhoneStatus == 'مستعمل' ? 'مستعمل' : '',
                 hintText: "حالة الهاتف",
                 textInputType: TextInputType.text,
               ),

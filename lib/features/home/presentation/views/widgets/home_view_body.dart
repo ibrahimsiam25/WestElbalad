@@ -63,7 +63,7 @@ class HomeViewBody extends StatelessWidget {
                     Column(
                       children: [
                         CustomTitle(title: 'الأجهزة الجديدة'),
-                        SizedBox(height: 6.0.h),
+                        SizedBox(height: 12.0.h),
                         //Filters
                         Filters(
                           phones: phones,
@@ -126,7 +126,7 @@ class HomeViewBody extends StatelessWidget {
                     ),
                     Divider(
                       color: AppColors.darkGrey,
-                      thickness: 0.75,
+                      thickness: 0.5,
                       indent: 32.0,
                       endIndent: 32.0,
                     ),
