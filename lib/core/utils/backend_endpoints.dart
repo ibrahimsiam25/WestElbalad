@@ -10,7 +10,8 @@ class BackendEndpoint {
   static const descriptionOfPhone = 'description';
   static const typeOfPhone = 'type';
   static const idOfPhone = 'id';
-
+ 
   
   static const isUserExists = 'users';
+  static const offers = 'offers';
 }

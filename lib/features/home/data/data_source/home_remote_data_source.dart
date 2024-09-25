@@ -5,6 +5,7 @@ import '../../../../core/utils/backend_endpoints.dart';
 
 abstract class HomeRemoteDataSource {
   Future<List<PhoneEntites>> fetchPhonesData();
+  Future<List<String>>fetchOffersImagesUrl();
 }
 
 class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
@@ -19,5 +20,12 @@ class HomeRemoteDataSourceImpl extends HomeRemoteDataSource {
     }).toList();
 
     return phoneList;
+  }
+  
+  @override
+  Future<List<String>> fetchOffersImagesUrl()async {
+  var offersData = await databaseService.fetchAllDocuments(BackendEndpoint.offers);
+    List<String> imageUrls = offersData.map((offer) => offer['imageUrl'] as String).toList();
+    return imageUrls;
   }
 }

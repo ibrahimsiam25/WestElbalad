@@ -1,15 +1,18 @@
 import '../../bottom_nav_bar.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/auth/data/repos/auth_repo_impl.dart';
+import '../../features/home/domian/entites/phone_entites.dart';
 import '../../features/admin/presentation/views/admin_view.dart';
 import '../../features/auth/presentation/views/signin_view.dart';
 import '../../features/auth/presentation/views/signup_view.dart';
 import '../../features/auth/presentation/views/verification_view.dart';
 import '../../features/admin/presentation/views/add_in_store_view.dart';
+import '../../features/home/presentation/views/phone_details_view.dart';
 import '../../features/auth/presentation/views/forget_password_view.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
 import '../../features/admin/presentation/views/remove_from_store_view.dart';
 import '../../features/admin/presentation/views/users_informatins_view.dart';
+import '../../features/shopping_cart/presentation/views/shopping_cart_view.dart';
 import 'package:west_elbalad/features/splash/presentation/views/splash_view.dart';
 import 'package:west_elbalad/features/profile/presentation/views/profile_view.dart';
 import 'package:west_elbalad/features/auth/presentation/views/widgets/sign_up_successfully.dart';
@@ -28,11 +31,13 @@ abstract class AppRouter {
   static const kusersInformatinsView = '/usersInformatinsView';
   static const kAddInStoreView = '/AddInStoreView';
   static const kRemoveFromStoreView = '/RemoveFromStoreView';
+  static const kShoppingCartView = '/ShoppingCartView';
+  static const kPhoneDetailsView = '/PhoneDetailsView';
 
   static final router = GoRouter(
     routes: [
       GoRoute(
-        path: "/",
+        path: "/s",
         builder: (context, state) => SplashView(),
       ),
       GoRoute(
@@ -40,7 +45,7 @@ abstract class AppRouter {
         builder: (context, state) => const OnboardingView(),
       ),
       GoRoute(
-        path: kBottomNavBarController,
+        path: "/",
         builder: (context, state) => const BottomNavBarController(),
       ),
       GoRoute(
@@ -85,6 +90,12 @@ abstract class AppRouter {
       GoRoute(
           path: kRemoveFromStoreView,
           builder: (context, state) => const RemoveFromStoreView()),
+      GoRoute(
+          path: kShoppingCartView,
+          builder: (context, state) => const ShoppingCartView()),
+                GoRoute(
+          path: kPhoneDetailsView,
+          builder: (context, state) => PhoneDetailsView(phoneEntites: state.extra as PhoneEntites,)),
     ],
   );
 }

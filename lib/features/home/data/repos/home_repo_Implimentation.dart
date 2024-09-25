@@ -32,4 +32,23 @@ class HomeRepoImplimentation extends HomeRepo {
       );
     }
   }
+  
+  @override
+  Future<Either<Failure, List<String>>> fetchOffersImagesUrl()async{
+    try {
+      List<String> imageUrls = await homeRemoteDataSource.fetchOffersImagesUrl();
+      return right(imageUrls);
+    }on CustomException catch (e) {
+      return left(ServerFailure(e.message));
+    }catch (e) {
+      log(
+        'Exception in AuthRepoImpl.fetchAllOffersImages: ${e.toString()}',
+      );
+      return left(
+        ServerFailure(
+          'حدث خطأ ما. الرجاء المحاولة مرة اخرى.',
+        ),
+      );
+    }
+  }
 }

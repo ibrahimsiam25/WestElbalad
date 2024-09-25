@@ -4,4 +4,5 @@ import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
 
 abstract class HomeRepo {
   Future<Either<Failure, List<PhoneEntites>>> fetchPhonesData();
+  Future<Either<Failure,List<String>>> fetchOffersImagesUrl();
 }
