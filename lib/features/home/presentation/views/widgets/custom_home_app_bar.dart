@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../../../../core/utils/app_styles.dart';
+import '../../../../../core/constants/app_colors.dart';
 import 'package:west_elbalad/core/constants/app_assets.dart';
 
-import '../../../../../core/constants/app_colors.dart';
-import '../../../../../core/utils/app_styles.dart';
 
 class CustomHomeAppBar extends StatelessWidget {
   const CustomHomeAppBar({super.key});
@@ -21,8 +21,10 @@ class CustomHomeAppBar extends StatelessWidget {
           ),
           child: Icon(
             Icons.shopping_cart,
-            color: AppColors.black,
-            size: 20,
+           
+            
+            size: 25,
+             color: AppColors.primary,
           ),
         ),
         leading: Image.asset(AppAssets.profile),
