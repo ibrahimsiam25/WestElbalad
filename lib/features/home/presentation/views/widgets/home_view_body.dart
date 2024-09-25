@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
+import 'package:west_elbalad/core/utils/app_styles.dart';
+import 'package:west_elbalad/core/widgets/custom_title.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
+import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/filter_list.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/home_appbar.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/selected_phones.dart';
-import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
 
 class HomeViewBody extends StatelessWidget {
   final List<PhoneEntites> phones;
@@ -25,8 +28,8 @@ class HomeViewBody extends StatelessWidget {
             //AppBar
             HomeAppbar(), //Banner
             //حط الاعلان هنا يعم ابراهيم
-
             SizedBox(height: 16.0.h),
+            //All phones
             BlocBuilder<FilterListCubit, int>(
               builder: (context, state) {
                 final orderedPhones = [
@@ -40,38 +43,152 @@ class HomeViewBody extends StatelessWidget {
                 ].toSet().toList();
                 final selectedPhones = phones
                     .where(
-                      (phone) => phone.type == orderedPhones[state],
+                      (phone) =>
+                          phone.type == orderedPhones[state] &&
+                          (phone.status == 'new' || phone.status == 'جديد'),
+                    )
+                    .map((phone) => SelectedPhones(phones: phone))
+                    .toList();
+                final usedPhones = phones
+                    .where(
+                      (phone) =>
+                          phone.type == orderedPhones[state] &&
+                          (phone.status == 'used' || phone.status == 'مستعمل'),
                     )
                     .map((phone) => SelectedPhones(phones: phone))
                     .toList();
                 return Column(
                   children: [
-                    //Filters
-                    Filters(
-                      phones: phones,
+                    //New phones
+                    Column(
+                      children: [
+                        CustomTitle(title: 'الأجهزة الجديدة'),
+                        SizedBox(height: 6.0.h),
+                        //Filters
+                        Filters(
+                          phones: phones,
+                        ),
+                        SizedBox(height: 16.0.h),
+                        //Selected phones
+                        Wrap(
+                          spacing: 16.0.w,
+                          children: orderedPhones[state] == 'all'
+                              ? [
+                                  ...phones
+                                      .where(
+                                        (phone) => (phone.status == 'جديد' ||
+                                            phone.status == 'new'),
+                                      )
+                                      .map((phone) =>
+                                          SelectedPhones(phones: phone)),
+                                  //For alighnment and refresh
+                                  if (selectedPhones.length == 1)
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: kHorizontalPadding),
+                                      child: SizedBox(
+                                        width: 128.0.w,
+                                      ),
+                                    ),
+                                ]
+                              : [
+                                  ...selectedPhones,
+                                  //For alighnment and refresh
+                                  if (selectedPhones.length == 1)
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: kHorizontalPadding),
+                                      child: SizedBox(
+                                        width: 128.0.w,
+                                      ),
+                                    ),
+
+                                  //Empty
+                                  if (selectedPhones.isEmpty)
+                                    Container(
+                                      padding: EdgeInsets.only(
+                                          bottom: kHorizontalPadding),
+                                      child: SizedBox(
+                                        width: 200.0.w,
+                                        height: 128.0.h,
+                                        child: Center(
+                                          child: Text(
+                                            'لا توجد اجهزة جديدة\nمن هذا النوع.',
+                                            textAlign: TextAlign.center,
+                                            style: AppStyles.semiBold16,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      color: AppColors.darkGrey,
+                      thickness: 0.75,
+                      indent: 32.0,
+                      endIndent: 32.0,
                     ),
                     SizedBox(height: 16.0.h),
-                    //Selected phones
-                    Wrap(
-                      spacing: 16.0.w,
-                      children: orderedPhones[state] == 'all'
-                          ? [
-                              ...phones.map(
-                                  (phone) => SelectedPhones(phones: phone)),
-                            ]
-                          : [
-                              ...selectedPhones,
-                              //For alighnment and refresh
-                              if (selectedPhones.length == 1)
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: kHorizontalPadding),
-                                  child: SizedBox(
-                                    width: 128.0.w,
-                                    height: 300.0.w,
-                                  ),
-                                ),
-                            ],
+                    //Used phones
+                    Column(
+                      children: [
+                        CustomTitle(title: 'الأجهزة المستعملة'),
+                        SizedBox(height: 12.0.h),
+                        //Selected phones
+                        Wrap(
+                          spacing: 16.0.w,
+                          children: orderedPhones[state] == 'all'
+                              ? [
+                                  ...phones
+                                      .where(
+                                        (phone) => (phone.status == 'مستعمل' ||
+                                            phone.status == 'used'),
+                                      )
+                                      .map((phone) =>
+                                          SelectedPhones(phones: phone)),
+                                  //For alighnment and refresh
+                                  if (usedPhones.length == 1)
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: kHorizontalPadding),
+                                      child: SizedBox(
+                                        width: 128.0.w,
+                                      ),
+                                    ),
+                                ]
+                              : [
+                                  ...usedPhones,
+                                  //For alighnment and refresh
+                                  if (usedPhones.length == 1)
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: kHorizontalPadding),
+                                      child: SizedBox(
+                                        width: 128.0.w,
+                                      ),
+                                    ),
+                                  //Empty
+                                  if (usedPhones.isEmpty)
+                                    Container(
+                                      padding: EdgeInsets.only(
+                                          bottom: kHorizontalPadding),
+                                      child: SizedBox(
+                                        width: 200.0.w,
+                                        height: 128.0.h,
+                                        child: Center(
+                                          child: Text(
+                                            'لا توجد اجهزة مستعملة\nمن هذا النوع.',
+                                            textAlign: TextAlign.center,
+                                            style: AppStyles.semiBold16,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                        ),
+                      ],
                     )
                   ],
                 );
