@@ -161,7 +161,7 @@ class AuthRepoImpl extends AuthRepo {
   @override
   Future saveUserData({required UserEntity user}) async {
     var jsonData = jsonEncode(UserModel.fromEntity(user).toMap());
-    await SharedPref.setString(kUserData, jsonData);
+    await SharedPref.setString(kUserInformationsSharPref, jsonData);
   }
 }
 
