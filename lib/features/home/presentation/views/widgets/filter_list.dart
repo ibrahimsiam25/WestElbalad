@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:west_elbalad/core/constants/app_assets.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
-import 'package:west_elbalad/features/home/presentation/views/widgets/filter_element.dart';
 import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
+import 'package:west_elbalad/features/home/presentation/views/widgets/filter_element.dart';
 
 class Filters extends StatelessWidget {
   final List<PhoneEntites> phones;
@@ -34,7 +33,6 @@ class Filters extends StatelessWidget {
 
             return Row(
               children: [
-
                 SizedBox(width: 8.0.w),
                 Expanded(
                   child: ClipRRect(
