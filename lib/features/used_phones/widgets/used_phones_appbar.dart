@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_assets.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
+import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:west_elbalad/features/admin/presentation/views/add_in_store_view.dart';
 
 class HomeAppbar extends StatelessWidget {
@@ -29,29 +29,33 @@ class HomeAppbar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(width: 24.0.w),
-                // InkWell(
-                //   onTap: () {
-                //     Navigator.of(context).push(
-                //       MaterialPageRoute(
-                //         builder: (context) => const AddInStoreView(),
-                //         settings: RouteSettings(arguments: 'مستعمل'),
-                //       ),
-                //     );
-                //   },
-                //   child: Image.asset(
-                //     width: 28.0.w,
-                //     height: 28.0.w,
-                //     AppAssets.add,
-                //   ),
-                // ),
-                SizedBox(width: 12.0.w),
+                SizedBox(
+                  width: 48.0.w,
+                  child: Center(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const AddInStoreView(),
+                            settings: RouteSettings(arguments: 'مستعمل'),
+                          ),
+                        );
+                      },
+                      child: Image.asset(
+                        width: 28.0.w,
+                        height: 28.0.w,
+                        AppAssets.add,
+                      ),
+                    ),
+                  ),
+                ),
                 Spacer(),
                 Text(
-                  'تصفح الأجهزة المتاحة',
+                  'الأجهزة المستعملة',
                   style: AppStyles.title,
                 ),
                 Spacer(),
-                SizedBox(width: 64.0.w),
+                SizedBox(width: 72.0.w),
               ],
             ),
           ),

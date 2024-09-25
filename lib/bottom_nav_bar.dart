@@ -6,6 +6,7 @@ import 'package:west_elbalad/features/admin/presentation/views/admin_view.dart';
 import 'package:west_elbalad/features/home/presentation/views/home_view.dart';
 import 'package:west_elbalad/features/profile/presentation/views/profile_view.dart';
 import 'package:west_elbalad/features/settings/presentation/views/settings_view.dart';
+import 'package:west_elbalad/features/used_phones/used_phones_view.dart';
 
 class BottomNavBarController extends StatefulWidget {
   const BottomNavBarController({super.key});
@@ -35,6 +36,7 @@ class _BottomNavBarControllerState extends State<BottomNavBarController> {
         items: [
           bottomNavBarItem(AppAssets.home),
           bottomNavBarItem(AppAssets.user),
+          bottomNavBarItem(AppAssets.used),
           bottomNavBarItem(AppAssets.settings),
           bottomNavBarItem(AppAssets.admin),
         ],
@@ -44,6 +46,7 @@ class _BottomNavBarControllerState extends State<BottomNavBarController> {
         children: [
           HomeView(),
           ProfileView(),
+          UsedPhones(),
           SettingsView(),
           AdminView(),
         ],
