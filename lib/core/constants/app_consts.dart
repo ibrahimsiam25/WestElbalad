@@ -11,6 +11,7 @@ String appFontCairo = 'Cairo';
 const String kIsOnBoardingView = 'isOnBoardingView';
 const String kIsSigninView = 'isSigninView';
 const String kUserData = 'isUserData';
+const String kUserInformationsSharPref = 'UserInformationsSharPref';
 const String kUserInformationsHive = 'UserInformationsHive';
 
 

@@ -7,6 +7,7 @@ import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/filter_list.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/home_appbar.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/selected_phones.dart';
+import 'package:west_elbalad/features/home/presentation/views/widgets/custom_home_app_bar.dart';
 import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
 
 class HomeViewBody extends StatelessWidget {
@@ -23,7 +24,7 @@ class HomeViewBody extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: HomeAppbar(),
+            child: CustomHomeAppBar()
           ),
     SliverToBoxAdapter(
       child: SizedBox(

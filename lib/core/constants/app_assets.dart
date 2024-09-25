@@ -1,3 +1,5 @@
+import 'package:west_elbalad/features/profile/presentation/manager/cubit/profile_cubit.dart';
+
 class AppAssets {
   static const spalsh = 'assets/images/splash.gif';
   static const onboarding1 = 'assets/images/onboarding1.json';
@@ -19,6 +21,7 @@ class AppAssets {
   static const admin = "assets/images/admin.png";
   static const gallery = "assets/images/gallery.png";
   static const filter = "assets/images/filter.png";
+  static const profile = "assets/images/profile.png";
   static const offer1 = "assets/images/installment offer.png";
   static const offer2 = "assets/images/sell_used_phone.png";
 }
