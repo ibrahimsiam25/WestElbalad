@@ -19,4 +19,6 @@ class AppAssets {
   static const admin = "assets/images/admin.png";
   static const gallery = "assets/images/gallery.png";
   static const filter = "assets/images/filter.png";
+  static const offer1 = "assets/images/installment offer.png";
+  static const offer2 = "assets/images/sell_used_phone.png";
 }
