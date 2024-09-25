@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:west_elbalad/core/widgets/custom_title.dart';
@@ -62,13 +61,13 @@ class HomeViewBody extends StatelessWidget {
                     //New phones
                     Column(
                       children: [
-                        CustomTitle(title: 'الأجهزة الجديدة'),
-                        SizedBox(height: 12.0.h),
                         //Filters
                         Filters(
                           phones: phones,
                         ),
                         SizedBox(height: 16.0.h),
+                        CustomTitle(title: 'الأجهزة الجديدة'),
+                        SizedBox(height: 12.0.h),
                         //Selected phones
                         Wrap(
                           spacing: 16.0.w,
@@ -123,12 +122,6 @@ class HomeViewBody extends StatelessWidget {
                                 ],
                         ),
                       ],
-                    ),
-                    Divider(
-                      color: AppColors.darkGrey,
-                      thickness: 0.5,
-                      indent: 32.0,
-                      endIndent: 32.0,
                     ),
                     SizedBox(height: 16.0.h),
                     //Used phones
