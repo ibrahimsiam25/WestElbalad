@@ -13,6 +13,8 @@ class ShoppingCartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0.h),
         child: CustomAppBar(

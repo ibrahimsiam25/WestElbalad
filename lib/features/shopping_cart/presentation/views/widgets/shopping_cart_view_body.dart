@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/core/functions/save_and_get_map_to_list_with_shared_pref.dart';
 import 'package:west_elbalad/core/widgets/custom_progress_indicator.dart';
@@ -13,7 +14,11 @@ class ShoppingCartViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+      padding: EdgeInsets.only(
+        right: kHorizontalPadding,
+        left: kHorizontalPadding,
+        top: 64.0.h,
+      ),
       child: BlocProvider(
         create: (context) => ShowOrdersCubit()..fetchOrders(),
         child: BlocBuilder<ShowOrdersCubit, ShowOrdersState>(
@@ -24,16 +29,24 @@ class ShoppingCartViewBody extends StatelessWidget {
                 child: ListView(
                   padding: EdgeInsets.zero,
                   children: List.generate(state.orders.length, (index) {
-                    return ProductDataElement(
-                      onPressed: () {
-                        removeMapFromListInSharedPref(
-                            key: kOrder,
-                            mapToRemove:
-                                PhoneModel.fromEntity(state.orders[index])
-                                    .toMap());
-                        BlocProvider.of<ShowOrdersCubit>(context).fetchOrders();
-                      },
-                      phoneEntites: state.orders[index],
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          bottom: index == state.orders.length - 1
+                              ? 64.0.h
+                              : 16.0.h,
+                          top: index == 0 ? 40.0.h : 0.0.h),
+                      child: ProductDataElement(
+                        onPressed: () {
+                          removeMapFromListInSharedPref(
+                              key: kOrder,
+                              mapToRemove:
+                                  PhoneModel.fromEntity(state.orders[index])
+                                      .toMap());
+                          BlocProvider.of<ShowOrdersCubit>(context)
+                              .fetchOrders();
+                        },
+                        phoneEntites: state.orders[index],
+                      ),
                     );
                   }),
                 ),

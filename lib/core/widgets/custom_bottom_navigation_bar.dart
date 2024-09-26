@@ -22,13 +22,14 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: 4.0.w, left: 8.0.w),
+    return Container(
+      padding: EdgeInsets.all(8.0.w),
+      color: AppColors.white,
       child: Row(
         children: [
-          IconButton(
-            onPressed: onPressedOne,
-            icon: Container(
+          InkWell(
+            onTap: onPressedOne,
+            child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
                   color: AppColors.lightGreen,
@@ -44,6 +45,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(width: 4.0.w),
           Expanded(
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(

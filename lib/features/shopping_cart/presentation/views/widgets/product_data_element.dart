@@ -18,7 +18,6 @@ class ProductDataElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 300.0.h,
-      margin: EdgeInsets.only(bottom: 24.0.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(kRadius24),
         color: AppColors.white,
