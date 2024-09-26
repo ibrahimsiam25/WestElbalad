@@ -20,9 +20,10 @@ class HomeViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => FilterListCubit(),
-      child: SafeArea(
-          child: ListView(
+      child: ListView(
+        padding: EdgeInsets.zero,
         children: [
+          SizedBox(height: 160.0.h),
           OffersList(),
           BlocBuilder<FilterListCubit, int>(
             builder: (context, state) {
@@ -130,7 +131,7 @@ class HomeViewBody extends StatelessWidget {
             },
           ),
         ],
-      )),
+      ),
     );
   }
 }

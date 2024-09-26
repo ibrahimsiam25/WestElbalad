@@ -38,7 +38,7 @@ class OffersList extends StatelessWidget {
                       child: AspectRatio(
                         aspectRatio: 1321 / 736,
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(kRadius24),
                           child: CachedNetworkImage(
                             imageUrl: state.imageUrls[index],
                             placeholder: (context, url) => CustomSkeletonizer(
