@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
-import 'package:west_elbalad/core/constants/app_consts.dart';
+import 'package:west_elbalad/core/utils/app_styles.dart';
+import 'package:west_elbalad/core/widgets/custom_clippath.dart';
 
 class CustomAppBar extends StatelessWidget {
   final String title;
@@ -20,51 +20,56 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(kRadius48),
-          bottomRight: Radius.circular(kRadius48),
+    return ClipPath(
+      clipper: CustomClipperPath(),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.lightGreen,
         ),
-      ),
-      child: Column(
-        children: [
-          SafeArea(child: SizedBox(height: 16.0.h)),
-          Row(
+        child: SafeArea(
+          child: Column(
             children: [
-              SizedBox(width: 24.0.w),
-              backButton
-                  ? InkWell(
-                      onTap: () {
-                        GoRouter.of(context).pop();
-                      },
-                      child: const Icon(
-                        Icons.arrow_back_ios_new,
-                      ),
-                    )
-                  : SizedBox(width: 24.0.w),
-              Spacer(),
-              Text(
-                title,
-                style: AppStyles.title,
+              SizedBox(height: 8.0.h),
+              Row(
+                children: [
+                  SizedBox(width: 24.0.w),
+                  backButton
+                      ? InkWell(
+                          onTap: () {
+                            GoRouter.of(context).pop();
+                          },
+                          child: const Icon(
+                            Icons.arrow_back_ios_new,
+                            color: AppColors.white,
+                          ),
+                        )
+                      : SizedBox(width: 24.0.w),
+                  Spacer(),
+                  Text(
+                    title,
+                    style: AppStyles.header.copyWith(
+                      color: AppColors.white,
+                      fontSize: 24.0.sp,
+                    ),
+                  ),
+                  Spacer(),
+                  icon != null
+                      ? InkWell(
+                          onTap: onTap,
+                          child: Icon(
+                            icon,
+                            color: AppColors.white,
+                          ),
+                        )
+                      : SizedBox(width: 24.0.w),
+                  SizedBox(width: 24.0.w),
+                ],
               ),
-              Spacer(),
-              icon != null
-                  ? InkWell(
-                      onTap: onTap,
-                      child: Icon(
-                        icon,
-                      ),
-                    )
-                  : SizedBox(width: 24.0.w),
-              SizedBox(width: 24.0.w),
+              SizedBox(height: 40.0.h),
             ],
           ),
-          SizedBox(height: 16.0.h),
-        ],
+        ),
       ),
     );
   }
 }
-
