@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:skeletonizer/skeletonizer.dart';
-import '../../../../../core/utils/app_router.dart';
-import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:west_elbalad/core/utils/app_styles.dart';
+import 'package:west_elbalad/core/widgets/custom_cacehd_network_image.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
 
+import '../../../../../core/utils/app_router.dart';
 
 class SelectedPhones extends StatelessWidget {
   final PhoneEntites phones;
@@ -34,21 +33,8 @@ class SelectedPhones extends StatelessWidget {
         ),
         child: Column(
           children: [
-            CachedNetworkImage(
+            CustomCachedImage(
               imageUrl: phones.imageUrl,
-              width: 128.0.w,
-              height: 128.0.h,
-              placeholder: (context, url) => Skeletonizer(
-                containersColor: AppColors.darkGrey,
-                child: Container(
-                  width: 128.0.w,
-                  height: 128.0.h,
-                  color: AppColors.white,
-                ),
-              ),
-              errorWidget: (context, url, error) => Icon(
-                Icons.error,
-              ),
             ),
             SizedBox(height: 8.0.h),
             SizedBox(

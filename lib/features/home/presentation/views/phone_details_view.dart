@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/utils/app_router.dart';
+import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
-import '../../../../core/widgets/custom_bottom_navigation_bar.dart';
 import 'package:west_elbalad/features/home/data/model/phones_model.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
-import '../../../../core/functions/save_and_get_map_to_list_with_shared_pref.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/phone_details_view_body.dart';
+
+import '../../../../core/functions/save_and_get_map_to_list_with_shared_pref.dart';
+import '../../../../core/utils/app_router.dart';
+import '../../../../core/widgets/custom_bottom_navigation_bar.dart';
 
 class PhoneDetailsView extends StatelessWidget {
   const PhoneDetailsView({super.key, required this.phoneEntites});
@@ -16,6 +18,7 @@ class PhoneDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       body: PhoneDetailsViewBody(phone: phoneEntites),
       bottomNavigationBar: CustomBottomNavigationBar(
         onPressedTwo: () {
