@@ -1,13 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import '../../../domian/repos/home_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import '../../manager/offers/offers_cubit.dart';
+
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_consts.dart';
 import '../../../../../core/service/get_it_service.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-
+import '../../../domian/repos/home_repo.dart';
+import '../../manager/offers/offers_cubit.dart';
 
 class OffersList extends StatelessWidget {
   const OffersList({super.key});
@@ -18,71 +18,65 @@ class OffersList extends StatelessWidget {
       create: (context) => OffersCubit(
         getIt<HomeRepo>(),
       )..loadImagesFromFirebase(),
-      child: SliverToBoxAdapter(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.27,
-          child: BlocBuilder<OffersCubit, OffersState>(
-            builder: (context, state) {
-              if (state is OffersSuccess) {
-
-                return ListView.builder(
-                  padding:  EdgeInsets.symmetric(
-                    horizontal: kHorizontalPadding,
-                    vertical: 16.0,
-                  ),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: state.imageUrls.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.3,
-                        child: AspectRatio(
-                          aspectRatio: 1321 / 736,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child:      CachedNetworkImage(
-              imageUrl:   state.imageUrls[index],
-
-              placeholder: (context, url) =>CustomSkeletonizer(
-                height: MediaQuery.of(context).size.height * 0.3,
-                aspectRatio: 1321 / 736,
-              ) ,
-              errorWidget: (context, url, error) => Icon(
-                Icons.error,
-              ),
-            ),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.27,
+        child: BlocBuilder<OffersCubit, OffersState>(
+          builder: (context, state) {
+            if (state is OffersSuccess) {
+              return ListView.builder(
+                padding: EdgeInsets.symmetric(
+                  horizontal: kHorizontalPadding,
+                  vertical: 16.0,
+                ),
+                scrollDirection: Axis.horizontal,
+                itemCount: state.imageUrls.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      child: AspectRatio(
+                        aspectRatio: 1321 / 736,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: CachedNetworkImage(
+                            imageUrl: state.imageUrls[index],
+                            placeholder: (context, url) => CustomSkeletonizer(
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              aspectRatio: 1321 / 736,
+                            ),
+                            errorWidget: (context, url, error) => Icon(
+                              Icons.error,
+                            ),
                           ),
                         ),
                       ),
-                    );
-                  },
-                );
-              } else if (state is OffersFailure) {
-
-                return Center(child: Text(state.message));
-              } else {
-
-                return ListView.builder(
-                  padding:  EdgeInsets.symmetric(
-                    horizontal: kHorizontalPadding,
-                    vertical: 16.0,
-                  ),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: CustomSkeletonizer(
-                        height: MediaQuery.of(context).size.height * 0.3,
-                        aspectRatio: 1321 / 736,
-                      ),
-                    );
-                  },
-                );
-              }
-            },
-          ),
+                    ),
+                  );
+                },
+              );
+            } else if (state is OffersFailure) {
+              return Center(child: Text(state.message));
+            } else {
+              return ListView.builder(
+                padding: EdgeInsets.symmetric(
+                  horizontal: kHorizontalPadding,
+                  vertical: 16.0,
+                ),
+                scrollDirection: Axis.horizontal,
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: CustomSkeletonizer(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      aspectRatio: 1321 / 736,
+                    ),
+                  );
+                },
+              );
+            }
+          },
         ),
       ),
     );
@@ -91,24 +85,25 @@ class OffersList extends StatelessWidget {
 
 class CustomSkeletonizer extends StatelessWidget {
   const CustomSkeletonizer({
-    super.key, required this.height, required this.aspectRatio,
+    super.key,
+    required this.height,
+    required this.aspectRatio,
   });
-final double height ;
-final double aspectRatio ;
+  final double height;
+  final double aspectRatio;
   @override
   Widget build(BuildContext context) {
     return Skeletonizer(
       containersColor: AppColors.lightGrey,
       child: SizedBox(
-      height: height,
-      child: AspectRatio(
-        aspectRatio: aspectRatio,
-       
-          child: Container(
-            decoration: BoxDecoration(
-                 color: AppColors.white,
-              borderRadius: BorderRadius.circular(16), // الزوايا المنحنية
-            )))),
+          height: height,
+          child: AspectRatio(
+              aspectRatio: aspectRatio,
+              child: Container(
+                  decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(16), // الزوايا المنحنية
+              )))),
     );
   }
 }
