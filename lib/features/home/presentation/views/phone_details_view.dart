@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
+import 'package:west_elbalad/core/widgets/custom_app_bar.dart';
 import 'package:west_elbalad/features/home/data/model/phones_model.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/phone_details_view_body.dart';
@@ -19,6 +21,14 @@ class PhoneDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.h),
+        child: CustomAppBar(
+          title: "تفاصيل المنتج",
+        ),
+      ),
       body: PhoneDetailsViewBody(phone: phoneEntites),
       bottomNavigationBar: CustomBottomNavigationBar(
         onPressedTwo: () {
