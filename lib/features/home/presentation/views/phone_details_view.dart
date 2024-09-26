@@ -23,7 +23,9 @@ class PhoneDetailsView extends StatelessWidget {
       bottomNavigationBar: CustomBottomNavigationBar(
         onPressedTwo: () {
           saveMapToListInSharedPref(
-              key: kOrder, newMap: PhoneModel.fromEntity(phoneEntites).toMap());
+            key: kOrder,
+            newMap: PhoneModel.fromEntity(phoneEntites).toMap(),
+          );
           GoRouter.of(context).push(AppRouter.kShoppingCartView);
         },
         onPressedOne: () {

@@ -38,8 +38,9 @@ class CustomAppBar extends StatelessWidget {
                           onTap: () {
                             GoRouter.of(context).pop();
                           },
-                          child: const Icon(
+                          child: Icon(
                             Icons.arrow_back_ios_new,
+                            size: 24.0.r,
                             color: AppColors.white,
                           ),
                         )

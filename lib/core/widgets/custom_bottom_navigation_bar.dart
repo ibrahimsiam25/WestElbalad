@@ -1,56 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
-
+import 'package:west_elbalad/core/utils/app_styles.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({
-    super.key, required this.onPressedOne, required this.onPressedTwo, required this.iconOne, required this.iconTwo, required this.textTwo,
-  
+    super.key,
+    required this.onPressedOne,
+    required this.onPressedTwo,
+    required this.iconOne,
+    required this.iconTwo,
+    required this.textTwo,
   });
 
-final void Function() onPressedOne;
-final void Function() onPressedTwo;
-final IconData iconOne;
-final IconData iconTwo;
-final String textTwo;
+  final void Function() onPressedOne;
+  final void Function() onPressedTwo;
+  final IconData iconOne;
+  final IconData iconTwo;
+  final String textTwo;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),  // Adds some padding around the bottom bar
+      padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
-    IconButton(
-      onPressed: onPressedOne,
-      icon: Container(
-        decoration: BoxDecoration(
-    border: Border.all(color: AppColors.primary, width: 2),  // Border color and thickness
-    borderRadius: BorderRadius.circular(10),  // Rounded corners
-        ),
-        padding: const EdgeInsets.all(8),  // Adds padding inside the border
-        child:  Icon(
-  iconOne,
-    color: AppColors.primary,
-    size: 30,  // Icon size
-        ),
-      ),
-    ),  const SizedBox(width: 10), 
-                  Expanded(
+          IconButton(
+            onPressed: onPressedOne,
+            icon: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: AppColors.lightGreen,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: const EdgeInsets.all(8),
+              child: Icon(
+                iconOne,
+                color: AppColors.lightGreen,
+                size: 30,
+              ),
+            ),
+          ),
+          Expanded(
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                backgroundColor:AppColors.primary ,  // Set your desired button color
-                padding: const EdgeInsets.symmetric(vertical: 15), // Adjusts button height
+                backgroundColor: AppColors.lightGreen,
+                padding: EdgeInsets.symmetric(vertical: 10.0.h),
               ),
               onPressed: onPressedTwo,
-              icon:  Icon(iconTwo, color: AppColors.white),
-              label:  Text(
+              icon: Icon(iconTwo, color: AppColors.white),
+              label: Text(
                 textTwo,
-                style: AppStyles.title.copyWith(color: AppColors.white, fontSize: 15.sp),  // Set text size
+                style: AppStyles.title.copyWith(
+                  color: AppColors.white,
+                  fontSize: 15.0.sp,
+                ),
               ),
             ),
           )

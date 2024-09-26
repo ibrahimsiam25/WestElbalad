@@ -28,7 +28,7 @@ class CustomHomeAppBar extends StatelessWidget {
           child: Icon(
             Icons.shopping_cart,
             size: 25,
-            color: AppColors.primary,
+            color: AppColors.lightGreen,
           ),
         ),
       ),

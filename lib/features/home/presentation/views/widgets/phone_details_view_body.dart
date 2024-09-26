@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
+import 'package:west_elbalad/core/widgets/custom_app_bar.dart';
 import 'package:west_elbalad/core/widgets/custom_cacehd_network_image.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
 
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/utils/app_styles.dart';
-import '../../../../../core/widgets/custom_back_app_bar.dart';
 
 class PhoneDetailsViewBody extends StatelessWidget {
   const PhoneDetailsViewBody({
@@ -19,9 +19,7 @@ class PhoneDetailsViewBody extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          CustomBackAppBar(
-            title: "التفاصيل",
-          ),
+          CustomAppBar(title: 'تفاصيل المنتج'),
           Padding(
             padding: EdgeInsets.all(40.0.w),
             child: Center(
