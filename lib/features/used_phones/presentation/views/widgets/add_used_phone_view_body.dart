@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/core/widgets/custom_button.dart';
-import '../../../manager/image_picker/image_picker_cubit.dart';
-import '../../../manager/add_in_store/edit_in_store_cubit.dart';
+import '../../manager/add_used_phone/add_used_phone_cubit.dart';
 import '../../../../../../core/widgets/custom_number_field.dart';
 import 'package:west_elbalad/core/widgets/custom_text_field.dart';
 import 'package:west_elbalad/core/functions/build_message_bar.dart';
+import '../../../../admin/presentation/manager/image_picker/image_picker_cubit.dart';
+
 
 class AddInStoreViewBody extends StatefulWidget {
   const AddInStoreViewBody({super.key});
@@ -17,7 +18,14 @@ class AddInStoreViewBody extends StatefulWidget {
 
 class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-  late String phoneType, phoneName, phoneDescription, phonePrice;
+   late String phoneType,
+      phoneName,
+      phoneDescription,
+      phonePrice,
+      userName,
+      userPhone,
+      userGovernorate,
+      userLocation;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -62,18 +70,54 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
                 hintText: "موصفات الهاتف",
                 textInputType: TextInputType.text,
               ),
+                      CustomTextFormField(
+                onSaved: (value) {
+                  userName = value!;
+                },
+                hintText: "اسم المستخدم",
+                textInputType: TextInputType.text,
+              ),
+              SizedBox(height: 16.0),
+              CustomTextFormField(
+                onSaved: (value) {
+                  userPhone = value!;
+                },
+                hintText: "رقم الهاتف",
+                textInputType: TextInputType.phone,
+              ),
+              SizedBox(height: 16.0),
+              CustomTextFormField(
+                onSaved: (value) {
+                  userGovernorate = value!;
+                },
+                hintText: "المحافظة",
+                textInputType: TextInputType.text,
+              ),
+             SizedBox(height: 16.0),
+              CustomTextFormField(
+                onSaved: (value) {
+                  userLocation = value!;
+                },
+                hintText: "العنوان",
+                textInputType: TextInputType.text,
+              ),
+         
               SizedBox(height: 24.0),
               CustomButton(
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
                     if (context.read<ImagePickerCubit>().image != null) {
-                      context.read<AddInStoreCubit>().uploadPhoneData(
+                      context.read<AddUsedPhoneCubit>().uploadPhoneData(
                           context.read<ImagePickerCubit>().image, {
                         "phoneType": phoneType,
                         "phoneName": phoneName,
                         "phoneDescription": phoneDescription,
-                        "phonePrice": phonePrice
+                        "phonePrice": phonePrice,
+                        "userName": userName,
+                        "userPhone": userPhone,
+                        "userGovernorate": userGovernorate,
+                        "userLocation": userLocation
                       });
                     } else {
                       buildMessageBar(context, "يجب تحديد صورة للهاتف");

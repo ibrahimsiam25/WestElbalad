@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
-import 'package:west_elbalad/core/utils/app_styles.dart';
-import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
-import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/filter_list.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/selected_phones.dart';
+import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
+import 'package:west_elbalad/features/used_phones/presentation/views/widgets/filter_list.dart';
+import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
+import 'package:west_elbalad/features/used_phones/presentation/views/widgets/selected_phones.dart';
 
 class UsedPhonesViewBody extends StatelessWidget {
-  final List<PhoneEntites> phones;
+  final List<UsedPhonesEntities> phones;
   const UsedPhonesViewBody({
     super.key,
     required this.phones,
@@ -34,28 +36,23 @@ class UsedPhonesViewBody extends StatelessWidget {
                   'nokia',
                   ...phones.map((phone) => phone.type).toList()
                 ].toSet().toList();
-
-                final usedPhones = phones
+   final usedPhones = phones
                     .where(
-                      (phone) =>
-                          phone.type == orderedPhones[state] &&
-                          phone.status == 'مستعمل',
+                      (phone) => phone.type == orderedPhones[state],
                     )
-                    .map((phone) => SelectedPhones(phones: phone))
+                    .map((phone) => SelectedUsedPhones(phones: phone))
                     .toList();
-                final allUsedPhones = phones
-                    .where(
-                      (phone) => (phone.status == 'مستعمل'),
-                    )
-                    .map((phone) => SelectedPhones(phones: phone))
-                    .toList();
+              final allUsedPhones = phones
+              
+                  .map((phone) => SelectedUsedPhones(phones: phone))
+                  .toList();
                 return Column(
                   children: [
-                    //Used phones
+                 
                     Column(
                       children: [
                         //Filters
-                        Filters(
+                        UsedPhonesFilters(
                           phones: phones,
                         ),
                         SizedBox(height: 8.0.h),

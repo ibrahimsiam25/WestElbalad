@@ -12,10 +12,12 @@ import '../../features/auth/presentation/views/forget_password_view.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
 import '../../features/admin/presentation/views/remove_from_store_view.dart';
 import '../../features/admin/presentation/views/users_informatins_view.dart';
+import '../../features/used_phones/presentation/views/add_used_phone_view.dart';
 import '../../features/shopping_cart/presentation/views/shopping_cart_view.dart';
 import 'package:west_elbalad/features/splash/presentation/views/splash_view.dart';
 import 'package:west_elbalad/features/profile/presentation/views/profile_view.dart';
 import 'package:west_elbalad/features/auth/presentation/views/widgets/sign_up_successfully.dart';
+
 
 abstract class AppRouter {
   static const kOnBoardingView = '/onBoardingView';
@@ -33,7 +35,7 @@ abstract class AppRouter {
   static const kRemoveFromStoreView = '/RemoveFromStoreView';
   static const kShoppingCartView = '/ShoppingCartView';
   static const kPhoneDetailsView = '/PhoneDetailsView';
-
+ static const kAddUsedPhoneView = '/AddUsedPhoneView';
   static final router = GoRouter(
     routes: [
       GoRoute(
@@ -93,6 +95,9 @@ abstract class AppRouter {
       GoRoute(
           path: kShoppingCartView,
           builder: (context, state) => const ShoppingCartView()),
+             GoRoute(
+          path: kAddUsedPhoneView,
+          builder: (context, state) => const AddUsedPhoneView()),
                 GoRoute(
           path: kPhoneDetailsView,
           builder: (context, state) => PhoneDetailsView(phoneEntites: state.extra as PhoneEntites,)),

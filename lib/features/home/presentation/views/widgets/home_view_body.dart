@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
-import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
-import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
-import 'package:west_elbalad/features/home/presentation/views/widgets/custom_home_app_bar.dart';
-import 'package:west_elbalad/features/home/presentation/views/widgets/filter_list.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/offer_list.dart';
+import 'package:west_elbalad/features/home/presentation/views/widgets/filter_list.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/selected_phones.dart';
+import 'package:west_elbalad/features/home/presentation/views/widgets/custom_home_app_bar.dart';
+import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
 
 class HomeViewBody extends StatelessWidget {
   final List<PhoneEntites> phones;
@@ -38,18 +38,14 @@ class HomeViewBody extends StatelessWidget {
                 'nokia',
                 ...phones.map((phone) => phone.type).toList()
               ].toSet().toList();
-              final selectedPhones = phones
-                  .where(
-                    (phone) =>
-                        phone.type == orderedPhones[state] &&
-                        phone.status == 'جديد',
-                  )
-                  .map((phone) => SelectedPhones(phones: phone))
-                  .toList();
+       final selectedPhones = phones
+                    .where(
+                      (phone) => phone.type == orderedPhones[state],
+                    )
+                    .map((phone) => SelectedPhones(phones: phone))
+                    .toList();
               final allNewPhones = phones
-                  .where(
-                    (phone) => phone.status == 'جديد',
-                  )
+              
                   .map((phone) => SelectedPhones(phones: phone))
                   .toList();
               return Column(

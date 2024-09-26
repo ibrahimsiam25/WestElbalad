@@ -22,6 +22,7 @@ class SettingsViewBody extends StatelessWidget {
                 backgroundColor: AppColors.green,
                 onPressed: () async {
                   await SharedPref.setBool(kIsSigninView, false);
+                    SharedPref.setInt("isFirstTimeForUsedPhone", -1);
                   SharedPref.setInt("isFirstTime", -1);
                   GoRouter.of(context).go(AppRouter.kSigninView);
                 },

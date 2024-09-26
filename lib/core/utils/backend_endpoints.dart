@@ -4,6 +4,7 @@ class BackendEndpoint {
 
   static const addPhone = 'phones';
   static const getPhone = 'phones';
+  static const usedPhones = 'usedPhones';
   static const  priceOfPhone = 'price';
   static const imageOfPhone = 'imageUrl';
   static const nameOfPhone = 'name';

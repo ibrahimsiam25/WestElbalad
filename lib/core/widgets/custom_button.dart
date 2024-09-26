@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
-import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
@@ -12,7 +12,7 @@ class CustomButton extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.text,
-    this.backgroundColor = AppColors.red,
+    this.backgroundColor = AppColors.lightGreen,
   });
 
   @override
