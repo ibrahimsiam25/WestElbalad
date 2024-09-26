@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:skeletonizer/skeletonizer.dart';
-import '../../../../../../core/utils/app_styles.dart';
-import '../../../../../../core/constants/app_consts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:west_elbalad/core/widgets/custom_cacehd_network_image.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
 
-
-
+import '../../../../../../core/constants/app_consts.dart';
+import '../../../../../../core/utils/app_styles.dart';
 
 class ProductDataElement extends StatelessWidget {
-  const ProductDataElement({super.key, required this.phoneEntites, required this. onPressed});
+  const ProductDataElement(
+      {super.key, required this.phoneEntites, required this.onPressed});
   final PhoneEntites phoneEntites;
-  final void Function()  onPressed;
+  final void Function() onPressed;
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20.0.h),
-      margin: EdgeInsets.symmetric(vertical: 8.0.h),
+      height: 300.0.h,
+      margin: EdgeInsets.only(bottom: 24.0.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(kRadius24),
         color: AppColors.white,
@@ -26,58 +26,83 @@ class ProductDataElement extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          CachedNetworkImage(
-            imageUrl: phoneEntites.imageUrl,
-            height: 128.0.h,
-            placeholder: (context, url) => Skeletonizer(
-              containersColor: AppColors.darkGrey,
-              child: Container(
-                width: 128.0.w,
-                height: 128.0.h,
-                color: AppColors.white,
+          SizedBox(
+            height: 160.0.h,
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.all(16.0.h),
+                child: CustomCachedImage(
+                  imageUrl: phoneEntites.imageUrl,
+                  width: 140.0.w,
+                ),
               ),
             ),
-            errorWidget: (context, url, error) => Icon(
-              Icons.error,
+          ),
+          SizedBox(
+            height: 76.0.h,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 24.0.h,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Iconsax.verify5,
+                            color: AppColors.blueAccent,
+                            size: 12.0.r,
+                          ),
+                          SizedBox(width: 2.0.w),
+                          Text(
+                            "${phoneEntites.type}".toUpperCase(),
+                            style: AppStyles.semiBold16.copyWith(
+                              fontSize: 12.0.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 24.0.h,
+                    child: Center(
+                      child: Text(
+                        "${phoneEntites.name}".capitalize!,
+                        style: AppStyles.title,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 4.0.h),
+                  SizedBox(
+                    height: 24.0.h,
+                    child: Text(
+                      "${phoneEntites.price} جنية",
+                      style: AppStyles.title.copyWith(
+                        color: AppColors.red,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          SizedBox(height: 16.0.h),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              "النوع:    ${phoneEntites.type}".toUpperCase(),
-              style: AppStyles.semiBold16,
-            ),
-          ),
-          SizedBox(height: 8.0.h),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              "الاسم:   ${phoneEntites.name}",
-              style: AppStyles.semiBold16,
-            ),
-          ),
-          SizedBox(height: 8.0.h),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              "السعر:   ${phoneEntites.price}",
-              style: AppStyles.semiBold16,
-            ),
-          ),
-          SizedBox(height: 8.0.h),
-
-          SizedBox(height: 20.0.h),
-          Align(
-            alignment: Alignment.centerLeft,
+          Spacer(),
+          SizedBox(
+            height: 40.0.h,
+            width: double.infinity,
             child: TextButton(
               style: TextButton.styleFrom(
-                minimumSize:
-                    Size(MediaQuery.of(context).size.width * 0.3, 40.h),
-                backgroundColor: AppColors.primary,
-                padding: EdgeInsets.symmetric(horizontal: 24.0.w),
-              ),
-              onPressed: onPressed ,
+                  backgroundColor: AppColors.lightGreen,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(kRadius24),
+                      bottomRight: Radius.circular(kRadius24),
+                    ),
+                  )),
+              onPressed: onPressed,
               child: Text(
                 "حذف المنتج",
                 style: AppStyles.semiBold16.copyWith(color: AppColors.white),
