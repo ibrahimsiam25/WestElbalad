@@ -7,7 +7,6 @@ import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/core/functions/build_message_bar.dart';
 import 'package:west_elbalad/features/admin/presentation/views/widgets/add_in_store/image_picker_bloc_builder.dart';
 
-import '../../../../../../core/widgets/custom_app_bar.dart';
 import '../../../manager/add_in_store/edit_in_store_cubit.dart';
 import 'add_in_store_view_body.dart';
 
@@ -31,14 +30,11 @@ class AddInStoreViewBodyBlocConsumer extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  CustomAppBar(
-                    title: "اضافة هاتف",
-                  ),
-                  SizedBox(height: 40.0.h),
+                  SizedBox(height: 100.0.h),
                   imagePickerBlocBuilder(
                       radius: kRadius48,
-                      width: 150.w,
-                      height: 150.h,
+                      width: 128.w,
+                      height: 128.h,
                       defaultImage: AppAssets.gallery),
                   AddInStoreViewBody(),
                   SizedBox(height: 16.0.h),

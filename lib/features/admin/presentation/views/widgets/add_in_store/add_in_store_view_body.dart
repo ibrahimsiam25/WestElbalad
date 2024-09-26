@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/core/functions/build_message_bar.dart';
 import 'package:west_elbalad/core/widgets/custom_button.dart';
@@ -43,7 +45,7 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
           padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
           child: Column(
             children: [
-              SizedBox(height: 32.0),
+              SizedBox(height: 16.0.h),
               CustomTextFormField(
                 onSaved: (value) {
                   phoneType = value!;
@@ -51,7 +53,7 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
                 hintText: "اسم الشركة",
                 textInputType: TextInputType.text,
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 4.0.h),
               CustomTextFormField(
                 onSaved: (value) {
                   phoneName = value!;
@@ -59,14 +61,14 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
                 hintText: "نوع الهاتف",
                 textInputType: TextInputType.text,
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 4.0.h),
               CustomNumberField(
                 onSaved: (value) {
                   phonePrice = value!;
                 },
                 hintText: "سعر الهاتف",
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 4.0.h),
               CustomTextFormField(
                 onSaved: (value) {
                   phoneDescription = value!;
@@ -74,7 +76,7 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
                 hintText: "موصفات الهاتف",
                 textInputType: TextInputType.text,
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 4.0.h),
               if (selectedPhoneStatus == 'مستعمل')
                 Column(
                   children: [
@@ -85,7 +87,7 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
                       hintText: "اسم المستخدم",
                       textInputType: TextInputType.text,
                     ),
-                    SizedBox(height: 16.0),
+                    SizedBox(height: 4.0.h),
                     CustomTextFormField(
                       onSaved: (value) {
                         userPhone = value!;
@@ -93,7 +95,7 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
                       hintText: "رقم الهاتف",
                       textInputType: TextInputType.text,
                     ),
-                    SizedBox(height: 16.0),
+                    SizedBox(height: 4.0.h),
                     CustomTextFormField(
                       onSaved: (value) {
                         userLocation = value!;
@@ -103,8 +105,9 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
                     ),
                   ],
                 ),
-              SizedBox(height: 24.0),
+              SizedBox(height: 12.0.h),
               CustomButton(
+                backgroundColor: AppColors.lightGreen,
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
