@@ -12,6 +12,7 @@ class CustomClipperPath extends CustomClipper<Path> {
     path.quadraticBezierTo(w, h - 32, w, h);
     path.lineTo(w, 0);
     path.close();
+
     return path;
   }
 

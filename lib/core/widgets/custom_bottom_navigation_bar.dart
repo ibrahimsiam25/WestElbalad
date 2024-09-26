@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
+import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/core/utils/app_styles.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -22,7 +23,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.only(right: 4.0.w, left: 8.0.w),
       child: Row(
         children: [
           IconButton(
@@ -33,7 +34,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                   color: AppColors.lightGreen,
                   width: 2,
                 ),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(kRadius24),
               ),
               padding: const EdgeInsets.all(8),
               child: Icon(
@@ -47,7 +48,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(kRadius24),
                 ),
                 backgroundColor: AppColors.lightGreen,
                 padding: EdgeInsets.symmetric(vertical: 10.0.h),
