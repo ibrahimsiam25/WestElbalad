@@ -10,7 +10,7 @@ import 'package:west_elbalad/features/home/presentation/manager/phones_data/phon
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
-//
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +24,7 @@ class HomeView extends StatelessWidget {
         create: (context) => PhonesDataCubit(
           getIt<HomeRepo>(),
           getIt<Stream<QuerySnapshot>>(),
-        )..fetchPhonesData(),
+        ),
         child: const PhonesBlocConsumer(),
       ),
     );
