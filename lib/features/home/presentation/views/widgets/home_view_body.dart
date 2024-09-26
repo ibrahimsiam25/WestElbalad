@@ -5,6 +5,7 @@ import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
 import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
+import 'package:west_elbalad/features/home/presentation/views/widgets/custom_home_app_bar.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/filter_list.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/offer_list.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/selected_phones.dart';
@@ -23,7 +24,7 @@ class HomeViewBody extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          SizedBox(height: 176.0.h),
+          CustomHomeAppBar(),
           OffersList(),
           SizedBox(height: 16.0.h),
           BlocBuilder<FilterListCubit, int>(

@@ -21,14 +21,14 @@ class OffersList extends StatelessWidget {
         getIt<HomeRepo>(),
       )..loadImagesFromFirebase(),
       child: SizedBox(
-        height: 140.0.h,
+        height: 148.0.h,
         child: BlocBuilder<OffersCubit, OffersState>(
           builder: (context, state) {
             if (state is OffersSuccess) {
               return CarouselSlider(
                   options: CarouselOptions(
-                    height: 160.0.h,
-                    viewportFraction: 0.7,
+                    height: 148.0.h,
+                    viewportFraction: 0.75,
                     enableInfiniteScroll: true,
                     autoPlay: true,
                     autoPlayInterval: const Duration(seconds: 5),
@@ -43,10 +43,10 @@ class OffersList extends StatelessWidget {
                       borderRadius: BorderRadius.circular(kRadius24),
                       child: CachedNetworkImage(
                         fit: BoxFit.fill,
-                        height: 140.0.h,
+                        height: 148.0.h,
                         imageUrl: state.imageUrls[index],
                         placeholder: (context, url) => CustomSkeletonizer(
-                          height: 140.0.h,
+                          height: 148.0.h,
                           aspectRatio: 16 / 9,
                         ),
                         errorWidget: (context, url, error) => Icon(

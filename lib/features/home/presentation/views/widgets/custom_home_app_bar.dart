@@ -16,6 +16,7 @@ class CustomHomeAppBar extends StatelessWidget {
     return ClipPath(
       clipper: CustomClipperPath(),
       child: Container(
+        height: 180.0.h,
         color: AppColors.lightGreen,
         child: Center(
           child: ListTile(
