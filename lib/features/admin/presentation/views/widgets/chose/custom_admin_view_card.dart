@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
-import '../../../../../../core/utils/app_styles.dart';
+
 import '../../../../../../core/constants/app_colors.dart';
+import '../../../../../../core/utils/app_styles.dart';
 
 class CustomAdminViewCard extends StatelessWidget {
   const CustomAdminViewCard({
@@ -17,8 +19,8 @@ class CustomAdminViewCard extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8.0),
-        padding: const EdgeInsets.all(20),
+        margin: EdgeInsets.only(bottom: 12.0.h),
+        padding: EdgeInsets.all(16.0.r),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(kRadius24),
           color: Colors.white,

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
-import 'package:west_elbalad/core/widgets/custom_app_bar.dart';
 import 'package:west_elbalad/features/admin/presentation/views/add_in_store_view.dart';
 import 'package:west_elbalad/features/admin/presentation/views/widgets/chose/custom_admin_view_card.dart';
 
@@ -16,11 +14,6 @@ class AdminViewBody extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          CustomAppBar(
-            title: 'المشرف',
-            backButton: false,
-          ),
-          SizedBox(height: 8.0.h),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: kHorizontalPadding,
@@ -31,11 +24,11 @@ class AdminViewBody extends StatelessWidget {
                   onPressed: () {
                     GoRouter.of(context).push(AppRouter.kusersInformatinsView);
                   },
-                  title: "عرض المستخدمين",
+                  title: "المستخدمين",
                 ),
                 CustomAdminViewCard(
                   onPressed: () {},
-                  title: " عرض الطلبات ",
+                  title: "الطلبات",
                 ),
                 CustomAdminViewCard(
                   onPressed: () {
@@ -52,7 +45,13 @@ class AdminViewBody extends StatelessWidget {
                   onPressed: () {
                     GoRouter.of(context).push(AppRouter.kRemoveFromStoreView);
                   },
-                  title: "حذف منتج و تعديل في سعر",
+                  title: "المنتجات",
+                ),
+                CustomAdminViewCard(
+                  onPressed: () {
+                    GoRouter.of(context).push(AppRouter.kRemoveFromStoreView);
+                  },
+                  title: "المنتجات المستعملة",
                 ),
               ],
             ),
