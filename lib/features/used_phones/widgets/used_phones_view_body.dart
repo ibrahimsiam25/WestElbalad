@@ -7,7 +7,6 @@ import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
 import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/filter_list.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/selected_phones.dart';
-import 'package:west_elbalad/features/used_phones/widgets/used_phones_appbar.dart';
 
 class UsedPhonesViewBody extends StatelessWidget {
   final List<PhoneEntites> phones;
@@ -23,9 +22,7 @@ class UsedPhonesViewBody extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            //App bar
-            HomeAppbar(),
-            SizedBox(height: 16.0.h),
+            SizedBox(height: 100.0.h),
             BlocBuilder<FilterListCubit, int>(
               builder: (context, state) {
                 final orderedPhones = [

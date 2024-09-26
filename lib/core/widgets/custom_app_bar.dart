@@ -50,7 +50,7 @@ class CustomAppBar extends StatelessWidget {
                     title,
                     style: AppStyles.header.copyWith(
                       color: AppColors.white,
-                      fontSize: 24.0.sp,
+                      fontSize: 22.0.sp,
                     ),
                   ),
                   Spacer(),
@@ -60,6 +60,7 @@ class CustomAppBar extends StatelessWidget {
                           child: Icon(
                             icon,
                             color: AppColors.white,
+                            size: 24.0.h,
                           ),
                         )
                       : SizedBox(width: 24.0.w),
