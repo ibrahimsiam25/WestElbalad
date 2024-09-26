@@ -23,8 +23,9 @@ class HomeViewBody extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          SizedBox(height: 160.0.h),
+          SizedBox(height: 176.0.h),
           OffersList(),
+          SizedBox(height: 16.0.h),
           BlocBuilder<FilterListCubit, int>(
             builder: (context, state) {
               final orderedPhones = [

@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../../core/constants/app_colors.dart';
@@ -19,42 +21,40 @@ class OffersList extends StatelessWidget {
         getIt<HomeRepo>(),
       )..loadImagesFromFirebase(),
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.27,
+        height: 140.0.h,
         child: BlocBuilder<OffersCubit, OffersState>(
           builder: (context, state) {
             if (state is OffersSuccess) {
-              return ListView.builder(
-                padding: EdgeInsets.symmetric(
-                  horizontal: kHorizontalPadding,
-                  vertical: 16.0,
-                ),
-                scrollDirection: Axis.horizontal,
-                itemCount: state.imageUrls.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      child: AspectRatio(
-                        aspectRatio: 1321 / 736,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(kRadius24),
-                          child: CachedNetworkImage(
-                            imageUrl: state.imageUrls[index],
-                            placeholder: (context, url) => CustomSkeletonizer(
-                              height: MediaQuery.of(context).size.height * 0.3,
-                              aspectRatio: 1321 / 736,
-                            ),
-                            errorWidget: (context, url, error) => Icon(
-                              Icons.error,
-                            ),
-                          ),
+              return CarouselSlider(
+                  options: CarouselOptions(
+                    height: 160.0.h,
+                    viewportFraction: 0.7,
+                    enableInfiniteScroll: true,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 5),
+                    autoPlayAnimationDuration:
+                        const Duration(milliseconds: 800),
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    enlargeCenterPage: true,
+                    scrollDirection: Axis.horizontal,
+                  ),
+                  items: List.generate(state.imageUrls.length, (index) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(kRadius24),
+                      child: CachedNetworkImage(
+                        fit: BoxFit.fill,
+                        height: 140.0.h,
+                        imageUrl: state.imageUrls[index],
+                        placeholder: (context, url) => CustomSkeletonizer(
+                          height: 140.0.h,
+                          aspectRatio: 16 / 9,
+                        ),
+                        errorWidget: (context, url, error) => Icon(
+                          Icons.error,
                         ),
                       ),
-                    ),
-                  );
-                },
-              );
+                    );
+                  }));
             } else if (state is OffersFailure) {
               return Center(child: Text(state.message));
             } else {
