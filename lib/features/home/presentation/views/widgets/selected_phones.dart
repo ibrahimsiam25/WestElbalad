@@ -33,8 +33,11 @@ class SelectedPhones extends StatelessWidget {
         ),
         child: Column(
           children: [
-            CustomCachedImage(
-              imageUrl: phones.imageUrl,
+            SizedBox(
+              height: 128.0.h,
+              child: CustomCachedImage(
+                imageUrl: phones.imageUrl,
+              ),
             ),
             SizedBox(height: 8.0.h),
             SizedBox(
