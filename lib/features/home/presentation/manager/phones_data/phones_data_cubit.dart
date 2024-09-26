@@ -26,4 +26,15 @@ class PhonesDataCubit extends Cubit<PhonesDataState> {
       (phones) => emit(PhonesDataSuccess(phonesList: phones)),
     );
   }
+
+      Future<void> fetchPhonesData() async {
+    emit(PhonesDataLoading());
+     print("*****************************fetchPhonesData**********************");
+    final result = await homeRepo.fetchPhonesData();
+
+    result.fold(
+      (failure) => emit(PhonesDataFailure(message: failure.message)),
+      (phones) => emit(PhonesDataSuccess(phonesList: phones)),
+    );
+  }
 }
