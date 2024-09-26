@@ -35,6 +35,7 @@ class Filters extends StatelessWidget {
               children: [
                 Expanded(
                   child: ListView.builder(
+                    padding: EdgeInsets.zero,
                     scrollDirection: Axis.horizontal,
                     itemCount: orderedPhones.length,
                     itemBuilder: (context, index) {
@@ -44,7 +45,7 @@ class Filters extends StatelessWidget {
                           left: index == orderedPhones.length - 1
                               ? 16.0.w
                               : 4.0.w,
-                          right: index == 0 ? 16.0.w : 0.0.w,
+                          right: index == 0 ? 12.0.w : 0.0.w,
                         ),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(kRadius24),

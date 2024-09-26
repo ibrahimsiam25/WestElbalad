@@ -73,6 +73,9 @@ class AdminRepoImpl extends AdminRepo {
       description: data["phoneDescription"].toLowerCase(),
       imageUrl: imageUrl,
       price: int.parse(data["phonePrice"]),
+      userName: data["userName"].toLowerCase(),
+      userPhone: data["userPhone"].toLowerCase(),
+      userLocation: data["userLocation"].toLowerCase(),
     );
 
     await userInformationsRemoteDataSource.addPhoneData(

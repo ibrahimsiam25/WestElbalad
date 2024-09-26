@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
+import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
-import 'package:west_elbalad/features/home/presentation/views/widgets/offer_list.dart';
-import 'package:west_elbalad/features/home/presentation/views/widgets/filter_list.dart';
-import 'package:west_elbalad/features/home/presentation/views/widgets/selected_phones.dart';
-import 'package:west_elbalad/features/home/presentation/views/widgets/custom_home_app_bar.dart';
 import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
-
+import 'package:west_elbalad/features/home/presentation/views/widgets/custom_home_app_bar.dart';
+import 'package:west_elbalad/features/home/presentation/views/widgets/filter_list.dart';
+import 'package:west_elbalad/features/home/presentation/views/widgets/offer_list.dart';
+import 'package:west_elbalad/features/home/presentation/views/widgets/selected_phones.dart';
 
 class HomeViewBody extends StatelessWidget {
   final List<PhoneEntites> phones;
@@ -26,7 +25,7 @@ class HomeViewBody extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(child: CustomHomeAppBar()),
-             OffersList(),
+            OffersList(),
             SliverToBoxAdapter(
               child: BlocBuilder<FilterListCubit, int>(
                 builder: (context, state) {
@@ -43,7 +42,13 @@ class HomeViewBody extends StatelessWidget {
                       .where(
                         (phone) =>
                             phone.type == orderedPhones[state] &&
-                            (phone.status == 'new' || phone.status == 'جديد'),
+                            phone.status == 'جديد',
+                      )
+                      .map((phone) => SelectedPhones(phones: phone))
+                      .toList();
+                  final allNewPhones = phones
+                      .where(
+                        (phone) => phone.status == 'جديد',
                       )
                       .map((phone) => SelectedPhones(phones: phone))
                       .toList();
@@ -62,20 +67,31 @@ class HomeViewBody extends StatelessWidget {
                             spacing: 16.0.w,
                             children: orderedPhones[state] == 'all'
                                 ? [
-                                    ...phones
-                                        .where(
-                                          (phone) => (phone.status == 'جديد' ||
-                                              phone.status == 'new'),
-                                        )
-                                        .map((phone) =>
-                                            SelectedPhones(phones: phone)),
+                                    ...allNewPhones,
                                     //For alighnment and refresh
-                                    if (selectedPhones.length == 1)
+                                    if (allNewPhones.length == 1)
                                       Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: kHorizontalPadding),
                                         child: SizedBox(
                                           width: 128.0.w,
+                                        ),
+                                      ),
+                                    //Empty
+                                    if (allNewPhones.isEmpty)
+                                      Container(
+                                        padding: EdgeInsets.only(
+                                            bottom: kHorizontalPadding),
+                                        child: SizedBox(
+                                          width: 200.0.w,
+                                          height: 128.0.h,
+                                          child: Center(
+                                            child: Text(
+                                              'لا توجد اجهزة جديدة.',
+                                              textAlign: TextAlign.center,
+                                              style: AppStyles.semiBold16,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                   ]
@@ -90,7 +106,7 @@ class HomeViewBody extends StatelessWidget {
                                           width: 128.0.w,
                                         ),
                                       ),
-        
+
                                     //Empty
                                     if (selectedPhones.isEmpty)
                                       Container(

@@ -8,6 +8,9 @@ class PhoneModel extends PhoneEntites {
       required super.name,
       required super.description,
       required super.price,
+      required super.userName,
+      required super.userPhone,
+      required super.userLocation,
       required super.imageUrl});
   factory PhoneModel.fromEntity(PhoneEntites user) {
     return PhoneModel(
@@ -17,6 +20,9 @@ class PhoneModel extends PhoneEntites {
       name: user.name,
       description: user.description,
       price: user.price,
+      userName: user.userName,
+      userPhone: user.userPhone,
+      userLocation: user.userLocation,
       imageUrl: user.imageUrl,
     );
   }
@@ -28,6 +34,9 @@ class PhoneModel extends PhoneEntites {
       name: map['name'],
       description: map['description'],
       price: map['price'],
+      userName: map['userName'],
+      userPhone: map['userPhone'],
+      userLocation: map['userLocation'],
       imageUrl: map['imageUrl'],
     );
   }
@@ -39,6 +48,9 @@ class PhoneModel extends PhoneEntites {
       'name': name,
       'description': description,
       'price': price,
+      'userName': userName,
+      'userPhone': userPhone,
+      'userLocation': userLocation,
       'imageUrl': imageUrl
     };
   }

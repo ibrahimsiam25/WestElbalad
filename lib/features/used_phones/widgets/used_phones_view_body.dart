@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
+import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
-import 'package:west_elbalad/features/used_phones/widgets/used_phones_appbar.dart';
+import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/filter_list.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/selected_phones.dart';
-import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
+import 'package:west_elbalad/features/used_phones/widgets/used_phones_appbar.dart';
 
 class UsedPhonesViewBody extends StatelessWidget {
   final List<PhoneEntites> phones;
@@ -42,7 +42,13 @@ class UsedPhonesViewBody extends StatelessWidget {
                     .where(
                       (phone) =>
                           phone.type == orderedPhones[state] &&
-                          (phone.status == 'used' || phone.status == 'مستعمل'),
+                          phone.status == 'مستعمل',
+                    )
+                    .map((phone) => SelectedPhones(phones: phone))
+                    .toList();
+                final allUsedPhones = phones
+                    .where(
+                      (phone) => (phone.status == 'مستعمل'),
                     )
                     .map((phone) => SelectedPhones(phones: phone))
                     .toList();
@@ -61,20 +67,31 @@ class UsedPhonesViewBody extends StatelessWidget {
                           spacing: 16.0.w,
                           children: orderedPhones[state] == 'all'
                               ? [
-                                  ...phones
-                                      .where(
-                                        (phone) => (phone.status == 'مستعمل' ||
-                                            phone.status == 'used'),
-                                      )
-                                      .map((phone) =>
-                                          SelectedPhones(phones: phone)),
-                                  //For alighnment and refresh
-                                  if (usedPhones.length == 1)
+                                  ...allUsedPhones,
+                                  // For alighnment and refresh
+                                  if (allUsedPhones.length == 1)
                                     Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: kHorizontalPadding),
                                       child: SizedBox(
                                         width: 128.0.w,
+                                      ),
+                                    ),
+                                  //Empty
+                                  if (allUsedPhones.isEmpty)
+                                    Container(
+                                      padding: EdgeInsets.only(
+                                          bottom: kHorizontalPadding),
+                                      child: SizedBox(
+                                        width: 128.0.w,
+                                        height: 128.0.h,
+                                        child: Center(
+                                          child: Text(
+                                            'لا توجد اجهزة مستعملة.',
+                                            textAlign: TextAlign.center,
+                                            style: AppStyles.semiBold16,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                 ]
