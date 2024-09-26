@@ -18,7 +18,7 @@ class PhoneDetailsViewBody extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          CustomBackAppBar(),
+          CustomBackAppBar(title: "التفاصيل",),
           SizedBox(height: 24.0.h),
           CachedNetworkImage(
             imageUrl: phone.imageUrl,

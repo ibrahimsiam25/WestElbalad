@@ -5,9 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomBackAppBar extends StatelessWidget {
   const CustomBackAppBar({
-    super.key,
+    super.key, required this.title,
   });
-
+final String title;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,7 +29,7 @@ class CustomBackAppBar extends StatelessWidget {
                 flex: 5,
               ),
               Text(
-                "التفاصيل",
+               title ,
                 style: AppStyles.title.copyWith(color: AppColors.primary),
               ),
               Spacer(

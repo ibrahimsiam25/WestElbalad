@@ -37,7 +37,7 @@ abstract class AppRouter {
   static final router = GoRouter(
     routes: [
       GoRoute(
-        path: "/s",
+        path: "/",
         builder: (context, state) => SplashView(),
       ),
       GoRoute(
@@ -45,7 +45,7 @@ abstract class AppRouter {
         builder: (context, state) => const OnboardingView(),
       ),
       GoRoute(
-        path: "/",
+        path: kBottomNavBarController,
         builder: (context, state) => const BottomNavBarController(),
       ),
       GoRoute(
