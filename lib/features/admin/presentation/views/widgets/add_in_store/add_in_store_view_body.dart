@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
-import 'package:west_elbalad/core/widgets/custom_button.dart';
-import '../../../manager/image_picker/image_picker_cubit.dart';
-import '../../../manager/add_in_store/edit_in_store_cubit.dart';
-import '../../../../../../core/widgets/custom_number_field.dart';
-import 'package:west_elbalad/core/widgets/custom_text_field.dart';
 import 'package:west_elbalad/core/functions/build_message_bar.dart';
+import 'package:west_elbalad/core/widgets/custom_button.dart';
+import 'package:west_elbalad/core/widgets/custom_text_field.dart';
+
+import '../../../../../../core/widgets/custom_number_field.dart';
+import '../../../manager/add_in_store/edit_in_store_cubit.dart';
+import '../../../manager/image_picker/image_picker_cubit.dart';
 
 class AddInStoreViewBody extends StatefulWidget {
   const AddInStoreViewBody({super.key});
@@ -31,30 +33,30 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
           padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
           child: Column(
             children: [
-              SizedBox(height: 32.0),
+              SizedBox(height: 12.0.h),
               CustomTextFormField(
                 onSaved: (value) {
-                    phoneType = value!;
+                  phoneType = value!;
                 },
                 hintText: "اسم الشركة",
                 textInputType: TextInputType.text,
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 6.0.h),
               CustomTextFormField(
                 onSaved: (value) {
-              phoneName = value!;
+                  phoneName = value!;
                 },
                 hintText: "نوع الهاتف",
                 textInputType: TextInputType.text,
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 6.0.h),
               CustomNumberField(
                 onSaved: (value) {
                   phonePrice = value!;
                 },
                 hintText: "سعر الهاتف",
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 6.0.h),
               CustomTextFormField(
                 onSaved: (value) {
                   phoneDescription = value!;
@@ -62,7 +64,7 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
                 hintText: "موصفات الهاتف",
                 textInputType: TextInputType.text,
               ),
-              SizedBox(height: 24.0),
+              SizedBox(height: 12.0.h),
               CustomButton(
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
