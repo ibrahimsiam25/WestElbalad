@@ -69,7 +69,7 @@ class ProductDataElement extends StatelessWidget {
             width: double.infinity,
             child: TextButton(
               style: TextButton.styleFrom(
-                  backgroundColor: AppColors.lightGreen,
+                  backgroundColor: AppColors.red,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(kRadius24),

@@ -75,7 +75,7 @@ class EditNewPhoneDataElement extends StatelessWidget {
                         bottomRight: Radius.circular(kRadius24),
                       ),
                     ),
-                    backgroundColor: AppColors.lightGreen,
+                    backgroundColor: AppColors.primary,
                     padding: EdgeInsets.symmetric(vertical: 8.0.h),
                   ),
                   onPressed: () {

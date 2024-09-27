@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import '../../../../../core/utils/app_router.dart';
-import '../../../../../core/utils/app_styles.dart';
-import '../../../../../core/constants/app_colors.dart';
-import 'package:west_elbalad/core/functions/get_user.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:west_elbalad/core/constants/app_assets.dart';
+import 'package:west_elbalad/core/functions/get_user.dart';
 import 'package:west_elbalad/core/widgets/custom_clippath.dart';
 
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/utils/app_router.dart';
+import '../../../../../core/utils/app_styles.dart';
 
 class CustomHomeAppBar extends StatelessWidget {
   const CustomHomeAppBar({super.key});
@@ -18,7 +18,7 @@ class CustomHomeAppBar extends StatelessWidget {
       clipper: CustomClipperPath(),
       child: Container(
         height: 180.0.h,
-        color: AppColors.lightGreen,
+        color: AppColors.primary,
         child: Center(
           child: ListTile(
             trailing: Container(
@@ -37,7 +37,7 @@ class CustomHomeAppBar extends StatelessWidget {
                   child: Icon(
                     Icons.shopping_cart,
                     size: 25,
-                    color: AppColors.lightGreen,
+                    color: AppColors.primary,
                   ),
                 ),
               ),

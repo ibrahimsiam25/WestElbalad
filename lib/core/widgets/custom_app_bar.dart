@@ -24,7 +24,7 @@ class CustomAppBar extends StatelessWidget {
       clipper: CustomClipperPath(),
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.lightGreen,
+          color: AppColors.primary,
         ),
         child: SafeArea(
           child: Column(

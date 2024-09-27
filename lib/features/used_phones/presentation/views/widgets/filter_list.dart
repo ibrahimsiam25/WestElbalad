@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
+import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/filter_element.dart';
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
-import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
 
 class UsedPhonesFilters extends StatelessWidget {
   final List<UsedPhonesEntities> phones;
@@ -55,7 +55,7 @@ class UsedPhonesFilters extends StatelessWidget {
                           child: FilterElement(
                             text: phoneType,
                             color: state == index
-                                ? AppColors.lightGreen
+                                ? AppColors.primary
                                 : AppColors.white,
                           ),
                         ),

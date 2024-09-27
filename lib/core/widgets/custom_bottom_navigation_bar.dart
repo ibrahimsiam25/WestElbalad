@@ -32,7 +32,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: AppColors.lightGreen,
+                  color: AppColors.primary,
                   width: 2,
                 ),
                 borderRadius: BorderRadius.circular(kRadius24),
@@ -40,7 +40,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               child: Icon(
                 iconOne,
-                color: AppColors.lightGreen,
+                color: AppColors.primary,
                 size: 30,
               ),
             ),
@@ -52,7 +52,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(kRadius24),
                 ),
-                backgroundColor: AppColors.lightGreen,
+                backgroundColor: AppColors.primary,
                 padding: EdgeInsets.symmetric(vertical: 10.0.h),
               ),
               onPressed: onPressedTwo,

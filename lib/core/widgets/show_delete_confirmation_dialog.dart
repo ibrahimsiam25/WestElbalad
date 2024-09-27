@@ -35,7 +35,7 @@ void showDeleteConfirmationDialog(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(kRadius24),
               ),
-              backgroundColor: AppColors.lightGreen,
+              backgroundColor: AppColors.primary,
               padding: EdgeInsets.only(bottom: 4.0.h),
             ),
             onPressed: () {

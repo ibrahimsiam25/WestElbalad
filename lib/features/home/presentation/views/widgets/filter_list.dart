@@ -55,7 +55,7 @@ class Filters extends StatelessWidget {
                           child: FilterElement(
                             text: phoneType,
                             color: state == index
-                                ? AppColors.lightGreen
+                                ? AppColors.primary
                                 : AppColors.white,
                           ),
                         ),

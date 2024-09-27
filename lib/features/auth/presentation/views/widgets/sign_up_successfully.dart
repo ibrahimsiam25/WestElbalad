@@ -35,7 +35,7 @@ class SignUpSuccessfully extends StatelessWidget {
                   ),
                   Spacer(),
                   CustomButton(
-                    backgroundColor: AppColors.lightGreen,
+                    backgroundColor: AppColors.primary,
                     onPressed: () {
                       GoRouter.of(context).go(AppRouter.kSigninView);
                     },
