@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:west_elbalad/core/functions/build_message_bar.dart';
-import 'package:west_elbalad/features/admin/presentation/views/widgets/admin_new_phones/new_phones_view_body.dart';
+import 'package:west_elbalad/features/admin/presentation/views/widgets/new_phones/edit_new_phones_view_body.dart';
 
 import '../../../manager/new_phones/new_phones_cubit.dart';
 
-class NewPhonesViewBodyBlocConsumer extends StatelessWidget {
-  const NewPhonesViewBodyBlocConsumer({super.key});
+class EditNewPhonesViewBodyBlocConsumer extends StatelessWidget {
+  const EditNewPhonesViewBodyBlocConsumer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class NewPhonesViewBodyBlocConsumer extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is NewPhonesSuccess) {
-          return NewPhonesViewBody(phonesList: state.phonesList);
+          return EditNewPhonesViewBody(phonesList: state.phonesList);
         } else if (state is NewPhonesFailure) {
           return Center(child: Text(state.message));
         } else {

@@ -5,15 +5,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/features/admin/presentation/manager/new_phones/new_phones_cubit.dart';
-import 'package:west_elbalad/features/admin/presentation/views/widgets/admin_new_phones/show_edit_price_dialog.dart';
+import 'package:west_elbalad/features/admin/presentation/views/widgets/new_phones/show_edit_price_dialog.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
 
 import '../../../../../../core/constants/app_consts.dart';
 import '../../../../../../core/utils/app_styles.dart';
 import '../../../../../../core/widgets/show_delete_confirmation_dialog.dart';
 
-class PhoneDataElement extends StatelessWidget {
-  const PhoneDataElement({super.key, required this.phoneEntites});
+class EditNewPhoneDataElement extends StatelessWidget {
+  const EditNewPhoneDataElement({super.key, required this.phoneEntites});
   final PhoneEntites phoneEntites;
 
   @override

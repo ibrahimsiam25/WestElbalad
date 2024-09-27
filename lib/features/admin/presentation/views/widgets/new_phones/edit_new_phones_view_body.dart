@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/widgets/custom_app_bar.dart';
-import 'package:west_elbalad/features/admin/presentation/views/widgets/admin_new_phones/new_phone_data_element.dart';
+import 'package:west_elbalad/features/admin/presentation/views/widgets/new_phones/edit_new_phone_data_element.dart';
 
 import '../../../../../../core/constants/app_consts.dart';
 
-class NewPhonesViewBody extends StatelessWidget {
-  const NewPhonesViewBody({super.key, required this.phonesList});
+class EditNewPhonesViewBody extends StatelessWidget {
+  const EditNewPhonesViewBody({super.key, required this.phonesList});
   final List phonesList;
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class NewPhonesViewBody extends StatelessWidget {
                 itemCount: phonesList.length,
                 itemBuilder: (context, index) {
                   final phone = phonesList[index];
-                  return PhoneDataElement(phoneEntites: phone);
+                  return EditNewPhoneDataElement(phoneEntites: phone);
                 },
               ),
             ),

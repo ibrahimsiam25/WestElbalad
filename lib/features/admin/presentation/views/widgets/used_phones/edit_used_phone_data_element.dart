@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/features/admin/presentation/manager/edit_used_phones/used_phones_cubit.dart';
-import 'package:west_elbalad/features/admin/presentation/views/widgets/admin_new_phones/show_edit_price_dialog.dart';
+import 'package:west_elbalad/features/admin/presentation/views/widgets/new_phones/show_edit_price_dialog.dart';
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 
 import '../../../../../../core/constants/app_consts.dart';
