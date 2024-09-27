@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/core/service/shared_preferences_singleton.dart';
 import 'package:west_elbalad/core/widgets/custom_button.dart';
@@ -39,7 +40,7 @@ class _FinishOrderViewBodyState extends State<FinishOrderViewBody> {
                 "اجمالي سعر الطالبية $totalPrice",
                 style: AppStyles.title,
               ),
-              SizedBox(height: 32.0),
+              SizedBox(height: 16.0.h),
               CustomTextFormField(
                 onSaved: (value) {
                   userName = value!;
@@ -47,14 +48,14 @@ class _FinishOrderViewBodyState extends State<FinishOrderViewBody> {
                 hintText: "اسم العميل",
                 textInputType: TextInputType.text,
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 8.0.h),
               CustomNumberField(
                 onSaved: (value) {
                   userPhone = value!;
                 },
                 hintText: "رقم الهاتف",
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 8.0.h),
               CustomTextFormField(
                 onSaved: (value) {
                   userGovernorate = value!;
@@ -62,7 +63,7 @@ class _FinishOrderViewBodyState extends State<FinishOrderViewBody> {
                 hintText: "المحافظة",
                 textInputType: TextInputType.text,
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 8.0.h),
               CustomTextFormField(
                 onSaved: (value) {
                   userLocation = value!;
