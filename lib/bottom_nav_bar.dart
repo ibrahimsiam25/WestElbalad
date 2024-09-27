@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:west_elbalad/core/constants/app_assets.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
-import 'package:west_elbalad/features/home/presentation/views/home_view.dart';
 import 'package:west_elbalad/features/admin/presentation/views/admin_view.dart';
+import 'package:west_elbalad/features/home/presentation/views/home_view.dart';
 import 'package:west_elbalad/features/settings/presentation/views/settings_view.dart';
 import 'package:west_elbalad/features/used_phones/presentation/views/used_phones_view.dart';
-import 'package:west_elbalad/features/shopping_cart/presentation/views/shopping_cart_view.dart';
 
 class BottomNavBarController extends StatefulWidget {
   const BottomNavBarController({super.key});
@@ -35,9 +34,7 @@ class _BottomNavBarControllerState extends State<BottomNavBarController> {
         },
         items: [
           bottomNavBarItem(AppAssets.home),
-           bottomNavBarItem(AppAssets.used),
-          bottomNavBarItem(AppAssets.shoppingCart),
-         
+          bottomNavBarItem(AppAssets.used),
           bottomNavBarItem(AppAssets.settings),
           bottomNavBarItem(AppAssets.admin),
         ],
@@ -47,8 +44,6 @@ class _BottomNavBarControllerState extends State<BottomNavBarController> {
         children: [
           HomeView(),
           UsedPhones(),
-         ShoppingCartView(),
-          
           SettingsView(),
           AdminView(),
         ],

@@ -32,10 +32,11 @@ class ShoppingCartViewBody extends StatelessWidget {
                   CustomAppBar(
                     title: "عربة التسوق",
                   ),
-                  Text(
-                    "اجمالي سعر الطلب: $totalPriceText",
-                    style: AppStyles.title,
-                  ),
+                  if (totalPriceText != "صفر")
+                    Text(
+                      "اجمالي سعر الطلب: $totalPriceText",
+                      style: AppStyles.title,
+                    ),
                   ...List.generate(state.orders.length, (index) {
                     return Padding(
                       padding: EdgeInsets.only(
