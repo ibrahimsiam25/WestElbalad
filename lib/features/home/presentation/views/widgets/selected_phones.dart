@@ -20,7 +20,8 @@ class SelectedPhones extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).push(AppRouter.kPhoneDetailsView, extra: phones);
+        GoRouter.of(context)
+            .push(AppRouter.kNewPhoneDetailsView, extra: phones);
       },
       child: Container(
         padding: EdgeInsets.all(16.0),

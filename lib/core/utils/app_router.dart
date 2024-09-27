@@ -4,6 +4,8 @@ import 'package:west_elbalad/features/auth/presentation/views/widgets/sign_up_su
 import 'package:west_elbalad/features/profile/presentation/views/profile_view.dart';
 import 'package:west_elbalad/features/shopping_cart/presentation/views/finish_order_view.dart';
 import 'package:west_elbalad/features/splash/presentation/views/splash_view.dart';
+import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
+import 'package:west_elbalad/features/used_phones/presentation/views/used_phones_details_view.dart';
 
 import '../../bottom_nav_bar.dart';
 import '../../features/admin/presentation/views/add_in_store_view.dart';
@@ -16,7 +18,7 @@ import '../../features/auth/presentation/views/signin_view.dart';
 import '../../features/auth/presentation/views/signup_view.dart';
 import '../../features/auth/presentation/views/verification_view.dart';
 import '../../features/home/domian/entites/phone_entites.dart';
-import '../../features/home/presentation/views/phone_details_view.dart';
+import '../../features/home/presentation/views/new_phone_details_view.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
 import '../../features/shopping_cart/presentation/views/shopping_cart_view.dart';
 import '../../features/used_phones/presentation/views/add_used_phone_view.dart';
@@ -37,7 +39,8 @@ abstract class AppRouter {
   static const kNewPhonesView = '/NewPhonesView';
   static const kUsedPhonesView = '/UsedPhonesView';
   static const kShoppingCartView = '/ShoppingCartView';
-  static const kPhoneDetailsView = '/PhoneDetailsView';
+  static const kNewPhoneDetailsView = '/NewPhoneDetailsView';
+  static const kUsedPhoneDetailsView = '/UsedPhoneDetailsView';
   static const kAddUsedPhoneView = '/AddUsedPhoneView';
   static const kFinishOrderView = '/FinishOrderView';
   static final router = GoRouter(
@@ -109,10 +112,17 @@ abstract class AppRouter {
           path: kAddUsedPhoneView,
           builder: (context, state) => const AddUsedPhoneView()),
       GoRoute(
-          path: kPhoneDetailsView,
-          builder: (context, state) => PhoneDetailsView(
-                phoneEntites: state.extra as PhoneEntites,
-              )),
+        path: kNewPhoneDetailsView,
+        builder: (context, state) => NewPhoneDetailsView(
+          phoneEntites: state.extra as PhoneEntites,
+        ),
+      ),
+      GoRoute(
+        path: kUsedPhoneDetailsView,
+        builder: (context, state) => UsedPhonesDetailsView(
+          usedPhonesEntities: state.extra as UsedPhonesEntities,
+        ),
+      ),
       GoRoute(
           path: kFinishOrderView,
           builder: (context, state) => FinishOrderView()),

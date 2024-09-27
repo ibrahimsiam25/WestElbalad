@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import '../../../../../core/utils/app_router.dart';
-import 'package:west_elbalad/core/utils/app_styles.dart';
-import '../../../domian/entities/used_phone_entities.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
+import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:west_elbalad/core/widgets/custom_cacehd_network_image.dart';
 
-
+import '../../../../../core/utils/app_router.dart';
+import '../../../domian/entities/used_phone_entities.dart';
 
 class SelectedUsedPhones extends StatelessWidget {
   final UsedPhonesEntities phones;
@@ -21,7 +20,8 @@ class SelectedUsedPhones extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).push(AppRouter.kPhoneDetailsView, extra: phones);
+        GoRouter.of(context)
+            .push(AppRouter.kUsedPhoneDetailsView, extra: phones);
       },
       child: Container(
         padding: EdgeInsets.all(16.0),
