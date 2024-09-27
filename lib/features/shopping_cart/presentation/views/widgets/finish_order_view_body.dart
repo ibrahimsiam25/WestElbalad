@@ -37,8 +37,8 @@ class _FinishOrderViewBodyState extends State<FinishOrderViewBody> {
           child: Column(
             children: [
               Text(
-                "اجمالي سعر الطالبية $totalPrice",
-                style: AppStyles.title,
+                "اجمالي سعر الطلب:  $totalPrice جنية",
+                style: AppStyles.semiBold16,
               ),
               SizedBox(height: 16.0.h),
               CustomTextFormField(

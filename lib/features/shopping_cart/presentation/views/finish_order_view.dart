@@ -20,7 +20,6 @@ class FinishOrderView extends StatelessWidget {
         getIt<ShoppingCartRepo>(),
       ),
       child: Scaffold(
-        body: FinishOrderViewBodyBlocConsumer(),
         extendBodyBehindAppBar: true,
         extendBody: true,
         appBar: PreferredSize(
@@ -29,6 +28,7 @@ class FinishOrderView extends StatelessWidget {
             title: "اتمام الطلب",
           ),
         ),
+        body: FinishOrderViewBodyBlocConsumer(),
       ),
     );
   }
