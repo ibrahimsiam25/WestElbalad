@@ -16,11 +16,12 @@ class UsedPhones extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
+      body: BlocProvider<FetchUsedPhoneCubit>(
         create: (context) => FetchUsedPhoneCubit(
           getIt<UsedPhonesRepo>(),
           getIt<Stream<QuerySnapshot>>(
-              instanceName: BackendEndpoint.usedPhones),
+            instanceName: BackendEndpoint.usedPhones,
+          ),
         ),
         child: const UsedPhonesBlocConsumer(),
       ),

@@ -1,23 +1,25 @@
-import '../../bottom_nav_bar.dart';
 import 'package:go_router/go_router.dart';
-import '../../features/auth/data/repos/auth_repo_impl.dart';
-import '../../features/home/domian/entites/phone_entites.dart';
+import 'package:west_elbalad/features/admin/presentation/views/edit_used_phones_view.dart';
+import 'package:west_elbalad/features/auth/presentation/views/widgets/sign_up_successfully.dart';
+import 'package:west_elbalad/features/profile/presentation/views/profile_view.dart';
+import 'package:west_elbalad/features/shopping_cart/presentation/views/finish_order_view.dart';
+import 'package:west_elbalad/features/splash/presentation/views/splash_view.dart';
+
+import '../../bottom_nav_bar.dart';
+import '../../features/admin/presentation/views/add_in_store_view.dart';
 import '../../features/admin/presentation/views/admin_view.dart';
+import '../../features/admin/presentation/views/edit_new_phones_view.dart';
+import '../../features/admin/presentation/views/users_informatins_view.dart';
+import '../../features/auth/data/repos/auth_repo_impl.dart';
+import '../../features/auth/presentation/views/forget_password_view.dart';
 import '../../features/auth/presentation/views/signin_view.dart';
 import '../../features/auth/presentation/views/signup_view.dart';
 import '../../features/auth/presentation/views/verification_view.dart';
-import '../../features/admin/presentation/views/add_in_store_view.dart';
+import '../../features/home/domian/entites/phone_entites.dart';
 import '../../features/home/presentation/views/phone_details_view.dart';
-import '../../features/auth/presentation/views/forget_password_view.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
-import '../../features/admin/presentation/views/remove_from_store_view.dart';
-import '../../features/admin/presentation/views/users_informatins_view.dart';
-import '../../features/used_phones/presentation/views/add_used_phone_view.dart';
 import '../../features/shopping_cart/presentation/views/shopping_cart_view.dart';
-import 'package:west_elbalad/features/splash/presentation/views/splash_view.dart';
-import 'package:west_elbalad/features/profile/presentation/views/profile_view.dart';
-import 'package:west_elbalad/features/shopping_cart/presentation/views/finish_order_view.dart';
-import 'package:west_elbalad/features/auth/presentation/views/widgets/sign_up_successfully.dart';
+import '../../features/used_phones/presentation/views/add_used_phone_view.dart';
 
 abstract class AppRouter {
   static const kOnBoardingView = '/onBoardingView';
@@ -32,7 +34,8 @@ abstract class AppRouter {
   static const kAdminView = '/adminView';
   static const kusersInformatinsView = '/usersInformatinsView';
   static const kAddInStoreView = '/AddInStoreView';
-  static const kRemoveFromStoreView = '/RemoveFromStoreView';
+  static const kNewPhonesView = '/NewPhonesView';
+  static const kUsedPhonesView = '/UsedPhonesView';
   static const kShoppingCartView = '/ShoppingCartView';
   static const kPhoneDetailsView = '/PhoneDetailsView';
   static const kAddUsedPhoneView = '/AddUsedPhoneView';
@@ -88,11 +91,17 @@ abstract class AppRouter {
         builder: (context, state) => const UsersInformatinsView(),
       ),
       GoRoute(
-          path: kAddInStoreView,
-          builder: (context, state) => const AddInStoreView()),
+        path: kAddInStoreView,
+        builder: (context, state) => const AddInStoreView(),
+      ),
       GoRoute(
-          path: kRemoveFromStoreView,
-          builder: (context, state) => const RemoveFromStoreView()),
+        path: kNewPhonesView,
+        builder: (context, state) => const EditNewPhonesView(),
+      ),
+      GoRoute(
+        path: kUsedPhonesView,
+        builder: (context, state) => const EditUsedPhonesView(),
+      ),
       GoRoute(
           path: kShoppingCartView,
           builder: (context, state) => const ShoppingCartView()),
@@ -106,9 +115,7 @@ abstract class AppRouter {
               )),
       GoRoute(
           path: kFinishOrderView,
-          builder: (context, state) =>  FinishOrderView(
-
-          )),
+          builder: (context, state) => FinishOrderView()),
     ],
   );
 }

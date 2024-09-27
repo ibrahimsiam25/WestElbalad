@@ -1,18 +1,24 @@
 import 'dart:io';
-import '../model/user_informations_model.dart';
-import '../../../../core/service/data_service.dart';
-import '../../../home/domian/entites/phone_entites.dart';
+
 import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/core/service/hive_service.dart';
 import 'package:west_elbalad/core/utils/backend_endpoints.dart';
-import 'package:west_elbalad/features/home/data/model/phones_model.dart';
 import 'package:west_elbalad/features/admin/domain/entities/user_informations_entites.dart';
+import 'package:west_elbalad/features/home/data/model/phones_model.dart';
+import 'package:west_elbalad/features/used_phones/data/model/used_phone_model.dart';
+import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 
+import '../../../../core/service/data_service.dart';
+import '../../../home/domian/entites/phone_entites.dart';
+import '../model/user_informations_model.dart';
 
 abstract class UserInformationsRemoteDataSource {
-  Future<void> deletePhoneData(String id);
-  Future <List<PhoneEntites>> fetchPhonesData();
-  Future<void> editPrice(String phoneId, int newValue);
+  Future<void> deleteNewPhoneData(String id);
+  Future<void> deleteUsedPhoneData(String id);
+  Future<List<PhoneEntites>> fetchNewPhonesData();
+  Future<List<UsedPhonesEntities>> fetchUsedPhonesData();
+  Future<void> editNewPhonePrice(String phoneId, int newValue);
+  Future<void> editUsedPhonePrice(String phoneId, int newValue);
   Future<List<UserInformationsEntity>> fetchUsersData();
   Future<String> uploadImage(File image, String documentId);
   Future<void> addPhoneData(Map<String, dynamic> data, String documentId);
@@ -35,19 +41,25 @@ class UserInformationsRemoteDataSourceImpl
     return usersList;
   }
 
-
-
-
- @override
-  Future<List<PhoneEntites>> fetchPhonesData() async{
-       final List<Map<String, dynamic>> phonesData =
-        await databaseService.fetchAllDocuments(BackendEndpoint.getPhone);
+  @override
+  Future<List<PhoneEntites>> fetchNewPhonesData() async {
+    final List<Map<String, dynamic>> phonesData =
+        await databaseService.fetchAllDocuments(BackendEndpoint.newPhone);
     final List<PhoneEntites> phonesList = phonesData.map((data) {
       return PhoneModel.fromMap(data);
     }).toList();
     return phonesList;
   }
 
+  @override
+  Future<List<UsedPhonesEntities>> fetchUsedPhonesData() async {
+    final List<Map<String, dynamic>> phonesData =
+        await databaseService.fetchAllDocuments(BackendEndpoint.usedPhones);
+    final List<UsedPhonesEntities> phonesList = phonesData.map((data) {
+      return UsedPhoneModel.fromMap(data);
+    }).toList();
+    return phonesList;
+  }
 
   @override
   Future<String> uploadImage(File image, String documentId) async {
@@ -66,22 +78,43 @@ class UserInformationsRemoteDataSourceImpl
   }
 
   @override
-  Future<void> deletePhoneData(String id) async {
+  Future<void> deleteNewPhoneData(String id) async {
     await databaseService.deleteDocument(
       documentId: id,
-      collectionName: BackendEndpoint.getPhone,
+      collectionName: BackendEndpoint.newPhone,
     );
     bool imageExists = await databaseService.checkIfImageExists("phones/$id");
     if (imageExists) {
       await databaseService.deleteImageFromStorage("phones/$id");
     }
   }
-  
-  @override
-  Future<void> editPrice(String phoneId, int newValue) async {
-await databaseService.updateFieldValue(collectionName: BackendEndpoint.getPhone, docId: phoneId, fieldName: BackendEndpoint.priceOfPhone, newValue: newValue);
-  }
-  
- 
-}
 
+  Future<void> deleteUsedPhoneData(String id) async {
+    await databaseService.deleteDocument(
+      documentId: id,
+      collectionName: BackendEndpoint.usedPhones,
+    );
+    bool imageExists = await databaseService.checkIfImageExists("phones/$id");
+    if (imageExists) {
+      await databaseService.deleteImageFromStorage("phones/$id");
+    }
+  }
+
+  @override
+  Future<void> editNewPhonePrice(String phoneId, int newValue) async {
+    await databaseService.updateFieldValue(
+        collectionName: BackendEndpoint.newPhone,
+        docId: phoneId,
+        fieldName: BackendEndpoint.priceOfNewPhone,
+        newValue: newValue);
+  }
+
+  @override
+  Future<void> editUsedPhonePrice(String phoneId, int newValue) async {
+    await databaseService.updateFieldValue(
+        collectionName: BackendEndpoint.usedPhones,
+        docId: phoneId,
+        fieldName: BackendEndpoint.priceOfUsedPhone,
+        newValue: newValue);
+  }
+}

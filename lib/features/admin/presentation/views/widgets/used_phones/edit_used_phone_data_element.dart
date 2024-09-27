@@ -4,17 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
-import 'package:west_elbalad/features/admin/presentation/views/widgets/phone_data/show_edit_price_dialog.dart';
-import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
+import 'package:west_elbalad/features/admin/presentation/manager/edit_used_phones/used_phones_cubit.dart';
+import 'package:west_elbalad/features/admin/presentation/views/widgets/admin_new_phones/show_edit_price_dialog.dart';
+import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 
 import '../../../../../../core/constants/app_consts.dart';
 import '../../../../../../core/utils/app_styles.dart';
 import '../../../../../../core/widgets/show_delete_confirmation_dialog.dart';
-import '../../../manager/remove_from_store/remove_from_store_cubit.dart';
 
-class PhoneDataElement extends StatelessWidget {
-  const PhoneDataElement({super.key, required this.phoneEntites});
-  final PhoneEntites phoneEntites;
+class EditUsedPhoneDataElement extends StatelessWidget {
+  const EditUsedPhoneDataElement({super.key, required this.phoneEntites});
+  final UsedPhonesEntities phoneEntites;
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +89,8 @@ class PhoneDataElement extends StatelessWidget {
                   showEditPriceDialog(
                       context: context,
                       onPriceSaved: (price) {
-                        BlocProvider.of<RemoveFromStoreCubit>(context)
-                            .editPrice(phoneEntites.id, price);
+                        BlocProvider.of<EditUsedPhonesCubit>(context)
+                            .editUsedPhonesPrice(phoneEntites.id, price);
                       });
                 },
                 child: Text(
@@ -111,8 +111,8 @@ class PhoneDataElement extends StatelessWidget {
                     context,
                     'هل أنت متأكد من حذف ${phoneEntites.name}  ${phoneEntites.type} ؟',
                     () {
-                      BlocProvider.of<RemoveFromStoreCubit>(context)
-                          .deletePhoneData(phoneEntites.id);
+                      BlocProvider.of<EditUsedPhonesCubit>(context)
+                          .deleteUsedPhoneData(phoneEntites.id);
                     },
                   );
                 },

@@ -1,18 +1,19 @@
-import 'dart:io';
 import 'dart:developer';
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
-import '../../../../core/errors/excptions.dart';
-import '../../../home/data/model/phones_model.dart';
 import 'package:west_elbalad/core/errors/failure.dart';
-import '../../../home/domian/entites/phone_entites.dart';
-import '../../../../core/functions/generate_unique_id.dart';
-import '../../../../core/service/image_picker_serivce.dart';
-import 'package:west_elbalad/features/admin/domain/repos/admin_repo.dart';
-import 'package:west_elbalad/features/admin/domain/entities/user_informations_entites.dart';
 import 'package:west_elbalad/features/admin/data/data_sources/user_informations_local_data_source.dart';
 import 'package:west_elbalad/features/admin/data/data_sources/user_informations_remote_data_source.dart';
+import 'package:west_elbalad/features/admin/domain/entities/user_informations_entites.dart';
+import 'package:west_elbalad/features/admin/domain/repos/admin_repo.dart';
+import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 
-
+import '../../../../core/errors/excptions.dart';
+import '../../../../core/functions/generate_unique_id.dart';
+import '../../../../core/service/image_picker_serivce.dart';
+import '../../../home/data/model/phones_model.dart';
+import '../../../home/domian/entites/phone_entites.dart';
 
 class AdminRepoImpl extends AdminRepo {
   final ImagePickerService imagePickerService;
@@ -72,7 +73,6 @@ class AdminRepoImpl extends AdminRepo {
       description: data["phoneDescription"].toLowerCase(),
       imageUrl: imageUrl,
       price: int.parse(data["phonePrice"]),
-
     );
 
     await userInformationsRemoteDataSource.addPhoneData(
@@ -90,10 +90,10 @@ class AdminRepoImpl extends AdminRepo {
   }
 
   @override
-  Future<Either<Failure, List<PhoneEntites>>> fetchPhonesData() async {
+  Future<Either<Failure, List<PhoneEntites>>> fetchNewPhonesData() async {
     try {
       List<PhoneEntites> phoneList =
-          await userInformationsRemoteDataSource.fetchPhonesData();
+          await userInformationsRemoteDataSource.fetchNewPhonesData();
       print(
           "******************fetchPhonesData AdminRepoImpl**********************");
       return right(phoneList);
@@ -112,9 +112,32 @@ class AdminRepoImpl extends AdminRepo {
   }
 
   @override
-  Future<Either<Failure, void>> deletePhoneData(String id) async {
+  Future<Either<Failure, List<UsedPhonesEntities>>>
+      fetchUsedPhonesData() async {
     try {
-      await userInformationsRemoteDataSource.deletePhoneData(id);
+      List<UsedPhonesEntities> phoneList =
+          await userInformationsRemoteDataSource.fetchUsedPhonesData();
+      print(
+          "******************fetchPhonesData AdminRepoImpl**********************");
+      return right(phoneList);
+    } on CustomException catch (e) {
+      return left(ServerFailure(e.message));
+    } catch (e) {
+      log(
+        'Exception in AuthRepoImpl.fetchAllPhones: ${e.toString()}',
+      );
+      return left(
+        ServerFailure(
+          'حدث خطأ ما. الرجاء المحاولة مرة اخرى.',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteNewPhoneData(String id) async {
+    try {
+      await userInformationsRemoteDataSource.deleteNewPhoneData(id);
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(e.message));
@@ -128,9 +151,45 @@ class AdminRepoImpl extends AdminRepo {
   }
 
   @override
-  Future<Either<Failure, void>> editPrice(String phoneId, int newValue) async {
+  Future<Either<Failure, void>> deleteUsedPhoneData(String id) async {
     try {
-      await userInformationsRemoteDataSource.editPrice(phoneId, newValue);
+      await userInformationsRemoteDataSource.deleteUsedPhoneData(id);
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(e.message));
+    } catch (e) {
+      return left(
+        ServerFailure(
+          'حدث خطأ ما. الرجاء المحاولة مرة اخرى.',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> editNewPhonePrice(
+      String phoneId, int newValue) async {
+    try {
+      await userInformationsRemoteDataSource.editNewPhonePrice(
+          phoneId, newValue);
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(e.message));
+    } catch (e) {
+      return left(
+        ServerFailure(
+          'حدث خطأ ما. الرجاء المحاولة مرة اخرى.',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> editUsedPhonePrice(
+      String phoneId, int newValue) async {
+    try {
+      await userInformationsRemoteDataSource.editUsedPhonePrice(
+          phoneId, newValue);
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(e.message));
