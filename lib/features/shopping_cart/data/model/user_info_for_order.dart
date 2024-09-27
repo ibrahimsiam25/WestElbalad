@@ -1,7 +1,5 @@
 import '../../../home/data/model/phones_model.dart';
 import '../../domian/entites/user_info_for_order_entities.dart';
-import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
-
 
 class UserInfoForOrderModel extends UserInfoForOrderEntities {
   UserInfoForOrderModel({
@@ -55,8 +53,8 @@ class UserInfoForOrderModel extends UserInfoForOrderEntities {
       'userPhone': userPhone,
       'userLocation': userLocation,
       'userGovernorate': userGovernorate,
-      'lsitOfOrder': lsitOfOrder.map((phone) => (phone as PhoneModel).toMap()).toList(),
+      'lsitOfOrder':
+          lsitOfOrder.map((phone) => (phone as PhoneModel).toMap()).toList(),
     };
   }
 }
-

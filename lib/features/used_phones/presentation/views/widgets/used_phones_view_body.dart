@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
+import 'package:west_elbalad/core/utils/app_router.dart';
+import 'package:west_elbalad/core/utils/app_styles.dart';
+import 'package:west_elbalad/core/widgets/custom_app_bar.dart';
+import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 import 'package:west_elbalad/features/used_phones/presentation/views/widgets/filter_list.dart';
-import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
 import 'package:west_elbalad/features/used_phones/presentation/views/widgets/selected_phones.dart';
 
 class UsedPhonesViewBody extends StatelessWidget {
@@ -22,7 +26,14 @@ class UsedPhonesViewBody extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 100.0.h),
+            CustomAppBar(
+              title: "الهواتف المستعملة",
+              backButton: false,
+              icon: Iconsax.add5,
+              onTap: () {
+                GoRouter.of(context).push(AppRouter.kAddUsedPhoneView);
+              },
+            ),
             BlocBuilder<FilterListCubit, int>(
               builder: (context, state) {
                 final orderedPhones = [
@@ -34,19 +45,17 @@ class UsedPhonesViewBody extends StatelessWidget {
                   'nokia',
                   ...phones.map((phone) => phone.type).toList()
                 ].toSet().toList();
-   final usedPhones = phones
+                final usedPhones = phones
                     .where(
                       (phone) => phone.type == orderedPhones[state],
                     )
                     .map((phone) => SelectedUsedPhones(phones: phone))
                     .toList();
-              final allUsedPhones = phones
-              
-                  .map((phone) => SelectedUsedPhones(phones: phone))
-                  .toList();
+                final allUsedPhones = phones
+                    .map((phone) => SelectedUsedPhones(phones: phone))
+                    .toList();
                 return Column(
                   children: [
-                 
                     Column(
                       children: [
                         //Filters
