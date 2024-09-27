@@ -1,19 +1,20 @@
-import 'dart:developer';
 import 'dart:io';
-
+import 'dart:developer';
 import 'package:dartz/dartz.dart';
-import 'package:west_elbalad/core/errors/failure.dart';
-import 'package:west_elbalad/features/admin/data/data_sources/user_informations_local_data_source.dart';
-import 'package:west_elbalad/features/admin/data/data_sources/user_informations_remote_data_source.dart';
-import 'package:west_elbalad/features/admin/domain/entities/user_informations_entites.dart';
-import 'package:west_elbalad/features/admin/domain/repos/admin_repo.dart';
-import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
-
 import '../../../../core/errors/excptions.dart';
+import '../../../home/data/model/phones_model.dart';
+import 'package:west_elbalad/core/errors/failure.dart';
+import '../../../home/domian/entites/phone_entites.dart';
 import '../../../../core/functions/generate_unique_id.dart';
 import '../../../../core/service/image_picker_serivce.dart';
-import '../../../home/data/model/phones_model.dart';
-import '../../../home/domian/entites/phone_entites.dart';
+import 'package:west_elbalad/features/admin/domain/repos/admin_repo.dart';
+import 'package:west_elbalad/features/admin/domain/entities/user_informations_entites.dart';
+import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
+import 'package:west_elbalad/features/shopping_cart/domian/entites/user_info_for_order_entities.dart';
+import 'package:west_elbalad/features/admin/data/data_sources/user_informations_local_data_source.dart';
+import 'package:west_elbalad/features/admin/data/data_sources/user_informations_remote_data_source.dart';
+
+
 
 class AdminRepoImpl extends AdminRepo {
   final ImagePickerService imagePickerService;
@@ -201,4 +202,43 @@ class AdminRepoImpl extends AdminRepo {
       );
     }
   }
-}
+
+  @override
+  Future<Either<Failure, void>> deleteOrderData(String id) async{
+    try {
+    await  userInformationsRemoteDataSource.deleteOrderData(id);
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(e.message));
+    } catch (e) {
+      return left(
+        ServerFailure(
+          'حدث خطأ ما. الرجاء المحاولة مرة اخرى.',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<UserInfoForOrderEntities>>> fetchOrdersData()async {
+    try {
+      List<UserInfoForOrderEntities> ordersList =
+        await  userInformationsRemoteDataSource.fetchOrdersData();
+      print(
+          "******************fetch ordersData AdminRepoImpl**********************");
+      return right(ordersList);
+    } on CustomException catch (e) {
+      return left(ServerFailure(e.message));
+    } catch (e) {
+      log(
+        'Exception in AuthRepoImpl.fetchAllPhones: ${e.toString()}',
+      );
+      return left(
+        ServerFailure(
+          'حدث خطأ ما. الرجاء المحاولة مرة اخرى.',
+        ),
+      );
+    }
+    }
+  }
+

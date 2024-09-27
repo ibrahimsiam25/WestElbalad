@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
-import 'package:west_elbalad/core/functions/build_message_bar.dart';
 import 'package:west_elbalad/core/widgets/custom_button.dart';
-import 'package:west_elbalad/core/widgets/custom_text_field.dart';
-
-import '../../../../../../core/widgets/custom_number_field.dart';
-import '../../../../admin/presentation/manager/image_picker/image_picker_cubit.dart';
 import '../../manager/add_used_phone/add_used_phone_cubit.dart';
+import '../../../../../../core/widgets/custom_number_field.dart';
+import 'package:west_elbalad/core/widgets/custom_text_field.dart';
+import 'package:west_elbalad/core/functions/build_message_bar.dart';
+import '../../../../admin/presentation/manager/image_picker/image_picker_cubit.dart';
+
 
 class AddUsedPhoneViewBody extends StatefulWidget {
   const AddUsedPhoneViewBody({super.key});
@@ -80,12 +80,11 @@ class _AddUsedPhoneViewBodyState extends State<AddUsedPhoneViewBody> {
                 textInputType: TextInputType.text,
               ),
               SizedBox(height: 4.0.h),
-              CustomTextFormField(
+              CustomNumberField(
                 onSaved: (value) {
                   userPhone = value!;
                 },
                 hintText: "رقم الهاتف",
-                textInputType: TextInputType.phone,
               ),
               SizedBox(height: 4.0.h),
               CustomTextFormField(

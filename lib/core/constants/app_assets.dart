@@ -8,7 +8,6 @@ class AppAssets {
   static const googleIcon = "assets/images/google_icon.svg";
   static const checkIcon = "assets/images/Check.svg";
   static const applIcon = "assets/images/appl_icon.svg";
-  static const user = "assets/images/user.png";
   static const home = "assets/images/home.png";
   static const settings = "assets/images/setting.png";
   static const address = "assets/images/address.png";
@@ -24,4 +23,5 @@ class AppAssets {
   static const offer2 = "assets/images/sell_used_phone.png";
   static const add = "assets/images/plus.png";
   static const used = "assets/images/recycle-sign.png";
+  static const shoppingCart = "assets/images/shopping-cart.png";
 }

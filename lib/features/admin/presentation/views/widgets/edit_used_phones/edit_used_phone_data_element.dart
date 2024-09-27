@@ -1,17 +1,17 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../../core/utils/app_styles.dart';
+import '../../../../../../core/constants/app_consts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
-import 'package:west_elbalad/core/widgets/custom_cacehd_network_image.dart';
 import 'package:west_elbalad/core/widgets/verified_type_row.dart';
+import 'package:west_elbalad/core/widgets/custom_cacehd_network_image.dart';
+import '../../../../../../core/widgets/show_delete_confirmation_dialog.dart';
+import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 import 'package:west_elbalad/features/admin/presentation/manager/used_phones/used_phones_cubit.dart';
 import 'package:west_elbalad/features/admin/presentation/views/widgets/edit_new_phones/show_edit_price_dialog.dart';
-import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 
-import '../../../../../../core/constants/app_consts.dart';
-import '../../../../../../core/utils/app_styles.dart';
-import '../../../../../../core/widgets/show_delete_confirmation_dialog.dart';
 
 class EditUsedPhoneDataElement extends StatelessWidget {
   final UsedPhonesEntities phoneEntites;

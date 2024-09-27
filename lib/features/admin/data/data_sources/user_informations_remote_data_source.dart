@@ -1,22 +1,26 @@
 import 'dart:io';
-
+import '../model/user_informations_model.dart';
+import '../../../../core/service/data_service.dart';
+import '../../../home/domian/entites/phone_entites.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/core/service/hive_service.dart';
 import 'package:west_elbalad/core/utils/backend_endpoints.dart';
-import 'package:west_elbalad/features/admin/domain/entities/user_informations_entites.dart';
 import 'package:west_elbalad/features/home/data/model/phones_model.dart';
+import '../../../shopping_cart/data/model/user_info_for_order_model.dart';
+import '../../../shopping_cart/domian/entites/user_info_for_order_entities.dart';
 import 'package:west_elbalad/features/used_phones/data/model/used_phone_model.dart';
+import 'package:west_elbalad/features/admin/domain/entities/user_informations_entites.dart';
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 
-import '../../../../core/service/data_service.dart';
-import '../../../home/domian/entites/phone_entites.dart';
-import '../model/user_informations_model.dart';
+
 
 abstract class UserInformationsRemoteDataSource {
   Future<void> deleteNewPhoneData(String id);
   Future<void> deleteUsedPhoneData(String id);
+  Future<void> deleteOrderData(String id);
   Future<List<PhoneEntites>> fetchNewPhonesData();
   Future<List<UsedPhonesEntities>> fetchUsedPhonesData();
+  Future<List<UserInfoForOrderEntities>> fetchOrdersData();
   Future<void> editNewPhonePrice(String phoneId, int newValue);
   Future<void> editUsedPhonePrice(String phoneId, int newValue);
   Future<List<UserInformationsEntity>> fetchUsersData();
@@ -60,7 +64,17 @@ class UserInformationsRemoteDataSourceImpl
     }).toList();
     return phonesList;
   }
-
+  @override
+  Future<List<UserInfoForOrderEntities>> fetchOrdersData()async {
+   final List<Map<String, dynamic>> ordersData =
+        await databaseService.fetchAllDocuments(BackendEndpoint.orders);
+    final List<UserInfoForOrderEntities> ordersList = ordersData.map((data) {
+      return UserInfoForOrderModel.fromMap(data);
+    }).toList();
+     
+    return ordersList;
+   
+  }
   @override
   Future<String> uploadImage(File image, String documentId) async {
     String imageUrl = await databaseService.uploadImage(
@@ -99,7 +113,13 @@ class UserInformationsRemoteDataSourceImpl
       await databaseService.deleteImageFromStorage("phones/$id");
     }
   }
-
+@override
+  Future<void> deleteOrderData(String id) async{
+    await databaseService.deleteDocument(
+      documentId: id,
+      collectionName: BackendEndpoint.orders,
+    );
+  }
   @override
   Future<void> editNewPhonePrice(String phoneId, int newValue) async {
     await databaseService.updateFieldValue(
@@ -117,4 +137,8 @@ class UserInformationsRemoteDataSourceImpl
         fieldName: BackendEndpoint.priceOfUsedPhone,
         newValue: newValue);
   }
+  
+  
+  
+
 }

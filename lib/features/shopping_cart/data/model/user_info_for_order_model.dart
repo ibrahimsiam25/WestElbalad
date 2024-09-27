@@ -39,7 +39,9 @@ class UserInfoForOrderModel extends UserInfoForOrderEntities {
       userPhone: map['userPhone'],
       userGovernorate: map['userGovernorate'],
       userLocation: map['userLocation'],
-      lsitOfOrder: map['lsitOfOrder'],
+      lsitOfOrder: (map['lsitOfOrder'] as List)
+        .map((phone) => PhoneModel.fromMap(phone)) // Mapping phone data
+        .toList(),
     );
   }
   toMap() {
