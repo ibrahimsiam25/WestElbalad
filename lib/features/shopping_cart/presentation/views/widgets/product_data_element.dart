@@ -17,48 +17,53 @@ class ProductDataElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300.0.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(kRadius24),
         color: AppColors.white,
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 160.0.h,
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.all(16.0.h),
-                child: CustomCachedImage(
-                  imageUrl: phoneEntites.imageUrl,
-                  width: 140.0.w,
-                ),
-              ),
-            ),
-          ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
-            child: Column(
+            padding: EdgeInsets.all(12.0.h),
+            child: Row(
               children: [
-                VerifiedTypeRow(type: phoneEntites.type),
-                Center(
-                  child: Text(
-                    "${phoneEntites.name}".capitalize!,
-                    style: AppStyles.title,
+                SizedBox(
+                  height: 140.0.h,
+                  width: 140.0.w,
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0.h),
+                      child: CustomCachedImage(
+                        imageUrl: phoneEntites.imageUrl,
+                        width: 140.0.w,
+                      ),
+                    ),
                   ),
                 ),
-                SizedBox(height: 4.0.h),
-                Text(
-                  "${phoneEntites.price} جنية",
-                  style: AppStyles.title.copyWith(
-                    color: AppColors.red,
+                Expanded(
+                  child: Column(
+                    children: [
+                      VerifiedTypeRow(type: phoneEntites.type),
+                      Center(
+                        child: Text(
+                          "${phoneEntites.name}".capitalize!,
+                          textAlign: TextAlign.center,
+                          style: AppStyles.title,
+                        ),
+                      ),
+                      SizedBox(height: 4.0.h),
+                      Text(
+                        "${phoneEntites.price} جنية",
+                        style: AppStyles.title.copyWith(
+                          color: AppColors.red,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
-          Spacer(),
           SizedBox(
             height: 40.0.h,
             width: double.infinity,
@@ -83,8 +88,9 @@ class ProductDataElement extends StatelessWidget {
                   SizedBox(width: 10.w),
                   Text(
                     "حذف المنتج",
-                    style:
-                        AppStyles.semiBold16.copyWith(color: AppColors.white),
+                    style: AppStyles.semiBold16.copyWith(
+                      color: AppColors.white,
+                    ),
                   ),
                 ],
               ),
