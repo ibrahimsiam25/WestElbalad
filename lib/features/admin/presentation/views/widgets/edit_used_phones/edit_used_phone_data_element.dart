@@ -5,17 +5,20 @@ import 'package:get/get.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/widgets/custom_cacehd_network_image.dart';
 import 'package:west_elbalad/core/widgets/verified_type_row.dart';
-import 'package:west_elbalad/features/admin/presentation/manager/new_phones/new_phones_cubit.dart';
-import 'package:west_elbalad/features/admin/presentation/views/widgets/new_phones/show_edit_price_dialog.dart';
-import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
+import 'package:west_elbalad/features/admin/presentation/manager/used_phones/used_phones_cubit.dart';
+import 'package:west_elbalad/features/admin/presentation/views/widgets/edit_new_phones/show_edit_price_dialog.dart';
+import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 
 import '../../../../../../core/constants/app_consts.dart';
 import '../../../../../../core/utils/app_styles.dart';
 import '../../../../../../core/widgets/show_delete_confirmation_dialog.dart';
 
-class EditNewPhoneDataElement extends StatelessWidget {
-  const EditNewPhoneDataElement({super.key, required this.phoneEntites});
-  final PhoneEntites phoneEntites;
+class EditUsedPhoneDataElement extends StatelessWidget {
+  final UsedPhonesEntities phoneEntites;
+  const EditUsedPhoneDataElement({
+    super.key,
+    required this.phoneEntites,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +31,12 @@ class EditNewPhoneDataElement extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.all(16.0.w),
+            padding: EdgeInsets.only(right: 12.0.w, left: 12.0.w, top: 12.0.h),
             child: Row(
               children: [
                 SizedBox(
-                  width: 100.0.w,
-                  height: 100.0.h,
+                  width: 116.0.w,
+                  height: 116.0.h,
                   child: CustomCachedImage(
                     imageUrl: phoneEntites.imageUrl,
                   ),
@@ -64,6 +67,50 @@ class EditNewPhoneDataElement extends StatelessWidget {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Divider(),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(right: 8.0, left: 8.0, bottom: 4.0),
+                  child: Text('بيانات البائع', style: AppStyles.subtitle),
+                ),
+                Expanded(
+                  child: Divider(),
+                ),
+              ],
+            ),
+          ),
+          Text(
+            phoneEntites.userName,
+            style: AppStyles.semiBold16,
+          ),
+          Text(
+            phoneEntites.userPhone,
+            style: AppStyles.semiBold16,
+          ),
+          Text(
+            phoneEntites.authUserEmail,
+            style: AppStyles.semiBold16,
+          ),
+          Text(
+            phoneEntites.authUserName,
+            style: AppStyles.semiBold16,
+          ),
+          Text(
+            phoneEntites.userLocation,
+            style: AppStyles.semiBold16,
+          ),
+          Text(
+            phoneEntites.userGovernorate,
+            style: AppStyles.semiBold16,
+          ),
+          SizedBox(height: 12.0.h),
           Row(
             children: [
               Expanded(
@@ -82,8 +129,8 @@ class EditNewPhoneDataElement extends StatelessWidget {
                     showEditPriceDialog(
                         context: context,
                         onPriceSaved: (price) {
-                          BlocProvider.of<NewPhonesCubit>(context)
-                              .editPrice(phoneEntites.id, price);
+                          BlocProvider.of<EditUsedPhonesCubit>(context)
+                              .editUsedPhonesPrice(phoneEntites.id, price);
                         });
                   },
                   child: Text(
@@ -112,8 +159,8 @@ class EditNewPhoneDataElement extends StatelessWidget {
                       'هل أنت متأكد من حذف جهاز:\n ${phoneEntites.name} ؟'
                           .capitalize!,
                       () {
-                        BlocProvider.of<NewPhonesCubit>(context)
-                            .deleteNewPhoneData(phoneEntites.id);
+                        BlocProvider.of<EditUsedPhonesCubit>(context)
+                            .deleteUsedPhoneData(phoneEntites.id);
                       },
                     );
                   },

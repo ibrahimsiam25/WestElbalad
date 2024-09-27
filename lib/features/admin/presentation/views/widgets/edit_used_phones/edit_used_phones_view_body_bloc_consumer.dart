@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:west_elbalad/core/functions/build_message_bar.dart';
-import 'package:west_elbalad/features/admin/presentation/manager/edit_used_phones/used_phones_cubit.dart';
-import 'package:west_elbalad/features/admin/presentation/views/widgets/used_phones/edit_used_phones_view_body.dart';
+import 'package:west_elbalad/features/admin/presentation/manager/used_phones/used_phones_cubit.dart';
+import 'package:west_elbalad/features/admin/presentation/views/widgets/edit_used_phones/edit_used_phones_view_body.dart';
 
 class EditUsedPhonesViewBodyBlocConsumer extends StatelessWidget {
   const EditUsedPhonesViewBodyBlocConsumer({super.key});
