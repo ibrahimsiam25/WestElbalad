@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/widgets/custom_button.dart';
 import 'package:west_elbalad/core/widgets/custom_text_field.dart';
+import 'package:west_elbalad/core/functions/build_message_bar.dart';
 import 'package:west_elbalad/features/auth/presentation/cubits/signup_cubits/signup_cubit.dart';
 import 'package:west_elbalad/features/auth/presentation/views/widgets/terms_and_conditions.dart';
 import 'package:west_elbalad/features/auth/presentation/views/widgets/have_an_account_widget.dart';
@@ -92,11 +93,14 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                               userName,
                             );
                       } else {
+                      buildMessageBar(
+                          context, 'يجب عليك الموافقة على الشروط والإحكام');
+                    }
+                    }else {
                         setState(() {
                           autovalidateMode = AutovalidateMode.always;
                         });
                       }
-                    }
                   },
                   text: 'إنشاء حساب جديد',
                 ),
