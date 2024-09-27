@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:flutter/material.dart';
+import '../../../../../core/utils/app_styles.dart';
+import '../../../../../core/constants/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/core/widgets/custom_cacehd_network_image.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
 
-import '../../../../../core/constants/app_colors.dart';
-import '../../../../../core/utils/app_styles.dart';
 
 class PhoneDetailsViewBody extends StatelessWidget {
   const PhoneDetailsViewBody({

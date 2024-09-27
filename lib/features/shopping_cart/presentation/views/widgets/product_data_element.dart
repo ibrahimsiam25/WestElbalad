@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:flutter/material.dart';
+import '../../../../../../core/utils/app_styles.dart';
+import '../../../../../../core/constants/app_consts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/widgets/custom_cacehd_network_image.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
 
-import '../../../../../../core/constants/app_consts.dart';
-import '../../../../../../core/utils/app_styles.dart';
 
 class ProductDataElement extends StatelessWidget {
   const ProductDataElement(
@@ -37,55 +37,43 @@ class ProductDataElement extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            height: 76.0.h,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 24.0.h,
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Iconsax.verify5,
-                            color: AppColors.blueAccent,
-                            size: 12.0.r,
-                          ),
-                          SizedBox(width: 2.0.w),
-                          Text(
-                            "${phoneEntites.type}".toUpperCase(),
-                            style: AppStyles.semiBold16.copyWith(
-                              fontSize: 12.0.sp,
-                            ),
-                          ),
-                        ],
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+            child: Column(
+              children: [
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Iconsax.verify5,
+                        color: AppColors.blueAccent,
+                        size: 12.0.r,
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 24.0.h,
-                    child: Center(
-                      child: Text(
-                        "${phoneEntites.name}".capitalize!,
-                        style: AppStyles.title,
+                      SizedBox(width: 2.0.w),
+                      Text(
+                        "${phoneEntites.type}".toUpperCase(),
+                        style: AppStyles.semiBold16.copyWith(
+                          fontSize: 12.0.sp,
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                  SizedBox(height: 4.0.h),
-                  SizedBox(
-                    height: 24.0.h,
-                    child: Text(
-                      "${phoneEntites.price} جنية",
-                      style: AppStyles.title.copyWith(
-                        color: AppColors.red,
-                      ),
-                    ),
+                ),
+                Center(
+                  child: Text(
+                    "${phoneEntites.name}".capitalize!,
+                    style: AppStyles.title,
                   ),
-                ],
-              ),
+                ),
+                SizedBox(height: 4.0.h),
+                Text(
+                  "${phoneEntites.price} جنية",
+                  style: AppStyles.title.copyWith(
+                    color: AppColors.red,
+                  ),
+                ),
+              ],
             ),
           ),
           Spacer(),
@@ -102,9 +90,21 @@ class ProductDataElement extends StatelessWidget {
                     ),
                   )),
               onPressed: onPressed,
-              child: Text(
-                "حذف المنتج",
-                style: AppStyles.semiBold16.copyWith(color: AppColors.white),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+
+                  Icon(
+                 Icons.delete,
+                    color: AppColors.white,
+                    size: 25.0.r,
+                  ),
+                  SizedBox(width: 10.w),
+                  Text(
+                    "حذف المنتج",
+                    style: AppStyles.semiBold16.copyWith(color: AppColors.white),
+                  ),
+                ],
               ),
             ),
           ),

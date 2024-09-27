@@ -36,7 +36,7 @@ class AddUsedPhoneViewBodyBlocConsumer extends StatelessWidget {
                       width: 150.w,
                       height: 150.h,
                       defaultImage: AppAssets.gallery),
-                  AddInStoreViewBody(),
+                  AddUsedPhoneViewBody(),
                   SizedBox(height: 16.0.h),
                 ],
               ),

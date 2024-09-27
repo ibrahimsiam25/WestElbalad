@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:west_elbalad/core/widgets/custom_app_bar.dart';
-
-import '../../../../core/utils/app_router.dart';
-import '../../../../core/widgets/custom_bottom_navigation_bar.dart';
 import 'widgets/shopping_cart_view_body.dart';
+import '../../../../core/utils/app_router.dart';
+import '../../../../core/constants/app_consts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:west_elbalad/core/widgets/custom_app_bar.dart';
+import '../../../../core/widgets/custom_bottom_navigation_bar.dart';
+import 'package:west_elbalad/core/service/shared_preferences_singleton.dart';
+
 
 class ShoppingCartView extends StatelessWidget {
   const ShoppingCartView({super.key});
@@ -24,9 +26,15 @@ class ShoppingCartView extends StatelessWidget {
       body: ShoppingCartViewBody(),
       bottomNavigationBar: CustomBottomNavigationBar(
         onPressedTwo: () {
-          //   GoRouter.of(context).push(AppRouter.kShoppingCartView);
+          String orders=SharedPref.getString(kOrder);
+          if(orders!=""){
+                     GoRouter.of(context).push(AppRouter.kFinishOrderView
+         );
+          }
+
         },
         onPressedOne: () {
+
           GoRouter.of(context).go(AppRouter.kBottomNavBarController);
         },
         textTwo: "اتمام الطلب",

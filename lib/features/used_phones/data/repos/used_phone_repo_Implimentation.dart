@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import '../../domian/repos/used_phone_repo.dart';
 import 'package:west_elbalad/core/errors/failure.dart';
 import 'package:west_elbalad/core/errors/excptions.dart';
+import 'package:west_elbalad/core/functions/get_user.dart';
 import '../../../../core/service/image_picker_serivce.dart';
 import '../../../../core/functions/generate_unique_id.dart';
 import 'package:west_elbalad/features/used_phones/data/model/used_phone_model.dart';
@@ -46,10 +47,13 @@ final ImagePickerService imagePickerService;
 
     UsedPhonesEntities usedPhonesEntities= UsedPhonesEntities(
       id: documentId,
- userName: data["userName"],
-      userPhone: data["userPhone"],
-      userGovernorate: data["userGovernorate"],
-      userLocation: data["userLocation"],
+      authUserId:getUser().uId ,
+      authUserName: getUser().name,
+      authUserEmail: getUser().email,
+      userName: data["userName"].toLowerCase(),
+      userPhone: data["userPhone"].toLowerCase(),
+      userGovernorate: data["userGovernorate"].toLowerCase(),
+      userLocation: data["userLocation"].toLowerCase(),
       type: data["phoneType"].toLowerCase(),
       name: data["phoneName"].toLowerCase(),
       description: data["phoneDescription"].toLowerCase(),

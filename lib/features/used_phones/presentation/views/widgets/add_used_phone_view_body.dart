@@ -9,14 +9,14 @@ import 'package:west_elbalad/core/functions/build_message_bar.dart';
 import '../../../../admin/presentation/manager/image_picker/image_picker_cubit.dart';
 
 
-class AddInStoreViewBody extends StatefulWidget {
-  const AddInStoreViewBody({super.key});
+class AddUsedPhoneViewBody extends StatefulWidget {
+  const AddUsedPhoneViewBody({super.key});
 
   @override
-  State<AddInStoreViewBody> createState() => _AddInStoreViewBodyState();
+  State<AddUsedPhoneViewBody> createState() => _AddUsedPhoneViewBodyState();
 }
 
-class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
+class _AddUsedPhoneViewBodyState extends State<AddUsedPhoneViewBody> {
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
    late String phoneType,
       phoneName,
@@ -69,7 +69,7 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
                 },
                 hintText: "موصفات الهاتف",
                 textInputType: TextInputType.text,
-              ),
+              ), SizedBox(height: 16.0),
                       CustomTextFormField(
                 onSaved: (value) {
                   userName = value!;

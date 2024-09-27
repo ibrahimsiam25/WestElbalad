@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
-import 'package:west_elbalad/features/home/presentation/views/widgets/filter_list.dart';
-import 'package:west_elbalad/features/home/presentation/views/widgets/selected_phones.dart';
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 import 'package:west_elbalad/features/used_phones/presentation/views/widgets/filter_list.dart';
 import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';

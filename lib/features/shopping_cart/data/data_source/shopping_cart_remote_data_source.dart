@@ -4,7 +4,8 @@ import '../../../../core/utils/backend_endpoints.dart';
 
 abstract class ShoppingCartRemoteDataSource {
 
-  Future<void> addOrder({required String docId,required Map<String, dynamic> data,});
+  Future<void>addOrder(
+      Map<String, dynamic> data, String documentId);
 }
 
 class ShoppingCartRemoteDataSourceImpl  extends ShoppingCartRemoteDataSource  {
@@ -12,7 +13,9 @@ class ShoppingCartRemoteDataSourceImpl  extends ShoppingCartRemoteDataSource  {
   ShoppingCartRemoteDataSourceImpl({required this.databaseService});
  
   @override
-  Future<void> addOrder({required String docId,required Map<String, dynamic> data,}) async {
-    await databaseService.addDataInSubCollection(collection: BackendEndpoint.getUsersData, docId: docId, subCollection: BackendEndpoint.orders, data: data);
+  Future<void>  addOrder(
+      Map<String, dynamic> data, String documentId) async {
+    await databaseService.addData(
+        documentId: documentId, path: BackendEndpoint.orders, data: data);
   }
 }

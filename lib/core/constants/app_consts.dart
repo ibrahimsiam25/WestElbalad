@@ -14,6 +14,7 @@ const String kUserData = 'isUserData';
 const String kUserInformationsSharPref = 'UserInformationsSharPref';
 const String kUserInformationsHive = 'UserInformationsHive';
 const String kOrder ="order";
+const String kTotalPrice ="totalPrice";
 
 List<String> governorates = [
   'القاهرة',

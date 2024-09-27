@@ -10,7 +10,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/service/get_it_service.dart';
 import 'package:west_elbalad/core/widgets/custom_app_bar.dart';
 import '../manager/fetch_used_phone/fetch_used_phone_cubit.dart';
-import 'package:west_elbalad/features/admin/presentation/views/add_in_store_view.dart';
 import 'package:west_elbalad/features/used_phones/presentation/views/widgets/used_phones_bloc_consumer.dart';
 
 
