@@ -23,23 +23,23 @@ class AdminViewBody extends StatelessWidget {
                   onPressed: () {
                     GoRouter.of(context).push(AppRouter.kusersInformatinsView);
                   },
-                  title: "المستخدمين",
+                  title: "بيانات المستخدمين",
                 ),
                 CustomAdminViewCard(
                   onPressed: () {},
-                  title: "الطلبات",
+                  title: "عرض الطلبات",
                 ),
                 CustomAdminViewCard(
                   onPressed: () {
                     GoRouter.of(context).push(AppRouter.kAddInStoreView);
                   },
-                  title: "اضافة منتج ",
+                  title: "اضافة منتج",
                 ),
                 CustomAdminViewCard(
                   onPressed: () {
                     GoRouter.of(context).push(AppRouter.kNewPhonesView);
                   },
-                  title: "المنتجات",
+                  title: "المنتجات الجديدة",
                 ),
                 CustomAdminViewCard(
                   onPressed: () {

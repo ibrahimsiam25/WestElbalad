@@ -109,7 +109,8 @@ class EditNewPhoneDataElement extends StatelessWidget {
                   onPressed: () {
                     showDeleteConfirmationDialog(
                       context,
-                      'هل أنت متأكد من حذف ${phoneEntites.name}  ${phoneEntites.type} ؟',
+                      'هل أنت متأكد من حذف جهاز:\n ${phoneEntites.name} ؟'
+                          .capitalize!,
                       () {
                         BlocProvider.of<NewPhonesCubit>(context)
                             .deleteNewPhoneData(phoneEntites.id);
