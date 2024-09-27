@@ -1,17 +1,17 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../../core/utils/app_styles.dart';
-import '../../../../../../core/constants/app_consts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
-import 'package:west_elbalad/core/widgets/verified_type_row.dart';
 import 'package:west_elbalad/core/widgets/custom_cacehd_network_image.dart';
-import '../../../../../../core/widgets/show_delete_confirmation_dialog.dart';
-import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
+import 'package:west_elbalad/core/widgets/verified_type_row.dart';
 import 'package:west_elbalad/features/admin/presentation/manager/used_phones/used_phones_cubit.dart';
 import 'package:west_elbalad/features/admin/presentation/views/widgets/edit_new_phones/show_edit_price_dialog.dart';
+import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 
+import '../../../../../../core/constants/app_consts.dart';
+import '../../../../../../core/utils/app_styles.dart';
+import '../../../../../../core/widgets/show_delete_confirmation_dialog.dart';
 
 class EditUsedPhoneDataElement extends StatelessWidget {
   final UsedPhonesEntities phoneEntites;
@@ -67,47 +67,64 @@ class EditUsedPhoneDataElement extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Divider(),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(right: 8.0, left: 8.0, bottom: 4.0),
-                  child: Text('بيانات البائع', style: AppStyles.subtitle),
-                ),
-                Expanded(
-                  child: Divider(),
-                ),
-              ],
-            ),
+          SizedBox(height: 8.0.h),
+          //User order date
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Divider(),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.only(right: 8.0.w, left: 8.0.w, bottom: 4.0.h),
+                child: Text('بيانات البائع', style: AppStyles.subtitle),
+              ),
+              Expanded(
+                child: Divider(),
+              ),
+            ],
           ),
           Text(
-            phoneEntites.userName,
+            "اسم البائع : ${phoneEntites.userName}",
             style: AppStyles.semiBold16,
           ),
           Text(
-            phoneEntites.userPhone,
+            "رقم الهاتف : ${phoneEntites.userPhone}",
             style: AppStyles.semiBold16,
           ),
           Text(
-            phoneEntites.authUserEmail,
+            "المحافظة : ${phoneEntites.userGovernorate}",
             style: AppStyles.semiBold16,
+          ),
+          Text(
+            "المنطقة : ${phoneEntites.userLocation}",
+            style: AppStyles.semiBold16,
+          ),
+          SizedBox(height: 8.0.h),
+          //User auth date
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Divider(),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.only(right: 8.0.w, left: 8.0.w, bottom: 4.0.h),
+                child: Text('معلومات تسجيل الدخول', style: AppStyles.subtitle),
+              ),
+              Expanded(
+                child: Divider(),
+              ),
+            ],
           ),
           Text(
             phoneEntites.authUserName,
             style: AppStyles.semiBold16,
           ),
           Text(
-            phoneEntites.userLocation,
-            style: AppStyles.semiBold16,
-          ),
-          Text(
-            phoneEntites.userGovernorate,
+            phoneEntites.authUserEmail,
             style: AppStyles.semiBold16,
           ),
           SizedBox(height: 12.0.h),

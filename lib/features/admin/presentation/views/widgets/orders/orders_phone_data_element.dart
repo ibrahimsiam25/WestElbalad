@@ -58,32 +58,7 @@ class OrderDataElement extends StatelessWidget {
             },
           ),
           SizedBox(height: 16.0.h),
-          //User auth date
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Divider(),
-              ),
-              Padding(
-                padding:
-                    EdgeInsets.only(right: 8.0.w, left: 8.0.w, bottom: 4.0.h),
-                child: Text('ملومات تسجيل الدخول', style: AppStyles.subtitle),
-              ),
-              Expanded(
-                child: Divider(),
-              ),
-            ],
-          ),
-          Text(
-            orderEntities.authUserName,
-            style: AppStyles.semiBold16,
-          ),
-          Text(
-            orderEntities.authUserEmail,
-            style: AppStyles.semiBold16,
-          ),
-          SizedBox(height: 8.0.h),
+
           //User order date
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -115,6 +90,32 @@ class OrderDataElement extends StatelessWidget {
           ),
           Text(
             "المنطقة : ${orderEntities.userLocation}",
+            style: AppStyles.semiBold16,
+          ),
+          SizedBox(height: 8.0.h),
+          //User auth date
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Divider(),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.only(right: 8.0.w, left: 8.0.w, bottom: 4.0.h),
+                child: Text('ملومات تسجيل الدخول', style: AppStyles.subtitle),
+              ),
+              Expanded(
+                child: Divider(),
+              ),
+            ],
+          ),
+          Text(
+            orderEntities.authUserName,
+            style: AppStyles.semiBold16,
+          ),
+          Text(
+            orderEntities.authUserEmail,
             style: AppStyles.semiBold16,
           ),
           SizedBox(height: 12.0.h),
