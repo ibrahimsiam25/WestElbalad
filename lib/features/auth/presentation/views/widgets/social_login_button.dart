@@ -1,8 +1,8 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:svg_flutter/svg.dart';
 import 'package:flutter/material.dart';
-import 'package:west_elbalad/core/constants/app_consts.dart';
 import '../../../../../core/utils/app_styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:west_elbalad/core/constants/app_consts.dart';
 
 class SocialLoginButton extends StatelessWidget {
   final String image;
@@ -37,6 +37,7 @@ class SocialLoginButton extends StatelessWidget {
             SvgPicture.asset(
               height: 24.0.h,
               image,
+              fit: BoxFit.fill,
             ),
             SizedBox(width: 16.0.w),
             Text(

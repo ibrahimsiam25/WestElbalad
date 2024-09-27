@@ -24,4 +24,8 @@ class AppAssets {
   static const add = "assets/images/plus.png";
   static const used = "assets/images/recycle-sign.png";
   static const shoppingCart = "assets/images/shopping-cart.png";
+  static const faceBockIcon = "assets/images/facebook_icon.svg";
+  static const whatsappIcon = "assets/images/whatsapp.svg";
+  static const callIcon = "assets/images/phone-call.svg";
+  static const googleMapsIcon = "assets/images/google_maps.svg";
 }
