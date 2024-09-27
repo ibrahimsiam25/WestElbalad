@@ -8,10 +8,10 @@ part 'user_informations_state.dart';
 class UserInformationsCubit extends Cubit<UserInformationsState> {
   UserInformationsCubit(this.adminRepo) : super(UserInformationsInitial());
   final AdminRepo adminRepo;
-  Future<void> fetchUserInformations({bool isRefreshed = false}) async {
+  Future<void> fetchUserInformations() async {
     emit(UserInformationsLoading());
 
-    final result = await adminRepo.fetchAllUsers(isRefreshed: isRefreshed);
+    final result = await adminRepo.fetchAllUsers();
     result.fold(
       (failure) => emit(UserInformationsFailure(message: failure.message)),
       (userInformations) =>

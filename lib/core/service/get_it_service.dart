@@ -16,7 +16,6 @@ import '../../features/used_phones/data/data_source/used_phone_data_source.dart'
 import '../../features/used_phones/data/repos/used_phone_repo_Implimentation.dart';
 import 'package:west_elbalad/features/home/data/repos/home_repo_Implimentation.dart';
 import 'package:west_elbalad/features/used_phones/domian/repos/used_phone_repo.dart';
-import '../../features/admin/data/data_sources/user_informations_local_data_source.dart';
 import '../../features/admin/presentation/manager/add_in_store/edit_in_store_cubit.dart';
 import 'package:west_elbalad/features/home/data/data_source/home_remote_data_source.dart';
 import 'package:west_elbalad/features/admin/presentation/manager/image_picker/image_picker_cubit.dart';
@@ -49,7 +48,7 @@ void setupGetIt() {
       )));
   getIt.registerSingleton<AdminRepo>(
     AdminRepoImpl(
-      userInformationsLocalDataSource: UserInformationsLocalDataSourceImpl(),
+      
       userInformationsRemoteDataSource: UserInformationsRemoteDataSourceImpl(
           databaseService: getIt.get<DatabaseService>()),
       imagePickerService: getIt.get<ImagePickerService>(),

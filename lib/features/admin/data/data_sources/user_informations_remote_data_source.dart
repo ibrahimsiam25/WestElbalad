@@ -3,7 +3,6 @@ import '../model/user_informations_model.dart';
 import '../../../../core/service/data_service.dart';
 import '../../../home/domian/entites/phone_entites.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
-import 'package:west_elbalad/core/service/hive_service.dart';
 import 'package:west_elbalad/core/utils/backend_endpoints.dart';
 import 'package:west_elbalad/features/home/data/model/phones_model.dart';
 import '../../../shopping_cart/data/model/user_info_for_order_model.dart';
@@ -41,7 +40,7 @@ class UserInformationsRemoteDataSourceImpl
     final List<UserInformationsEntity> usersList = usersData.map((data) {
       return UserInformationsModel.fromMap(data);
     }).toList();
-    saveData<UserInformationsEntity>(usersList, kUserInformationsHive);
+
     return usersList;
   }
 

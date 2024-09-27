@@ -9,7 +9,7 @@ import 'package:west_elbalad/features/shopping_cart/domian/entites/user_info_for
 
 
 abstract class AdminRepo {
-  Future<Either<Failure, List<UserInformationsEntity>>> fetchAllUsers({bool isRefreshed = false});
+  Future<Either<Failure, List<UserInformationsEntity>>> fetchAllUsers();
   Future<Either<Failure, List<PhoneEntites>>> fetchNewPhonesData();
   Future<Either<Failure, List<UsedPhonesEntities>>> fetchUsedPhonesData();
   Future<Either<Failure, List<UserInfoForOrderEntities>>> fetchOrdersData();

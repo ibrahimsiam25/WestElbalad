@@ -11,7 +11,6 @@ import 'package:west_elbalad/features/admin/domain/repos/admin_repo.dart';
 import 'package:west_elbalad/features/admin/domain/entities/user_informations_entites.dart';
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 import 'package:west_elbalad/features/shopping_cart/domian/entites/user_info_for_order_entities.dart';
-import 'package:west_elbalad/features/admin/data/data_sources/user_informations_local_data_source.dart';
 import 'package:west_elbalad/features/admin/data/data_sources/user_informations_remote_data_source.dart';
 
 
@@ -19,37 +18,20 @@ import 'package:west_elbalad/features/admin/data/data_sources/user_informations_
 class AdminRepoImpl extends AdminRepo {
   final ImagePickerService imagePickerService;
   final UserInformationsRemoteDataSource userInformationsRemoteDataSource;
-  final UserInformationsLocalDataSource userInformationsLocalDataSource;
+
   AdminRepoImpl({
     required this.userInformationsRemoteDataSource,
-    required this.userInformationsLocalDataSource,
+ 
     required this.imagePickerService,
   });
 
   @override
   Future<Either<Failure, List<UserInformationsEntity>>> fetchAllUsers(
-      {bool isRefreshed = false}) async {
+     ) async {
     try {
-      List<UserInformationsEntity> usersList;
-
-      if (isRefreshed) {
-        print(
-            "*****************User ***********Fetching data from user remote data source due to refresh");
-        usersList = await userInformationsRemoteDataSource.fetchUsersData();
-        return right(usersList);
-      }
-
-      usersList = await userInformationsLocalDataSource.fetchUsersData();
-
-      if (usersList.isNotEmpty) {
-        print(
-            "*******************User********** information exists in local data source");
-        return right(usersList);
-      }
-
-      print(
-          "*********************User********** information does not exist in local data source, fetching from remote");
-      usersList = await userInformationsRemoteDataSource.fetchUsersData();
+     
+      List<UserInformationsEntity> usersList =
+       await userInformationsRemoteDataSource.fetchUsersData();
       return right(usersList);
     } on CustomException catch (e) {
       return left(ServerFailure(e.message));
