@@ -1,13 +1,13 @@
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:flutter/material.dart';
-import '../../../../../../core/utils/app_styles.dart';
-import '../../../../../../core/constants/app_consts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/widgets/custom_cacehd_network_image.dart';
+import 'package:west_elbalad/core/widgets/verified_type_row.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
 
+import '../../../../../../core/constants/app_consts.dart';
+import '../../../../../../core/utils/app_styles.dart';
 
 class ProductDataElement extends StatelessWidget {
   const ProductDataElement(
@@ -41,25 +41,7 @@ class ProductDataElement extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
             child: Column(
               children: [
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Iconsax.verify5,
-                        color: AppColors.blueAccent,
-                        size: 12.0.r,
-                      ),
-                      SizedBox(width: 2.0.w),
-                      Text(
-                        "${phoneEntites.type}".toUpperCase(),
-                        style: AppStyles.semiBold16.copyWith(
-                          fontSize: 12.0.sp,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                VerifiedTypeRow(type: phoneEntites.type),
                 Center(
                   child: Text(
                     "${phoneEntites.name}".capitalize!,
@@ -93,16 +75,16 @@ class ProductDataElement extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
                   Icon(
-                 Icons.delete,
+                    Icons.delete,
                     color: AppColors.white,
                     size: 25.0.r,
                   ),
                   SizedBox(width: 10.w),
                   Text(
                     "حذف المنتج",
-                    style: AppStyles.semiBold16.copyWith(color: AppColors.white),
+                    style:
+                        AppStyles.semiBold16.copyWith(color: AppColors.white),
                   ),
                 ],
               ),

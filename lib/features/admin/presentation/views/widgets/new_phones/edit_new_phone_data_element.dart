@@ -1,9 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:get/get.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
+import 'package:west_elbalad/core/widgets/custom_cacehd_network_image.dart';
+import 'package:west_elbalad/core/widgets/verified_type_row.dart';
 import 'package:west_elbalad/features/admin/presentation/manager/new_phones/new_phones_cubit.dart';
 import 'package:west_elbalad/features/admin/presentation/views/widgets/new_phones/show_edit_price_dialog.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
@@ -19,8 +20,6 @@ class EditNewPhoneDataElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20.0.h),
-      margin: EdgeInsets.symmetric(vertical: 8.0.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(kRadius24),
         color: AppColors.white,
@@ -28,97 +27,101 @@ class EditNewPhoneDataElement extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          CachedNetworkImage(
-            imageUrl: phoneEntites.imageUrl,
-            height: 128.0.h,
-            placeholder: (context, url) => Skeletonizer(
-              containersColor: AppColors.darkGrey,
-              child: Container(
-                width: 128.0.w,
-                height: 128.0.h,
-                color: AppColors.white,
-              ),
-            ),
-            errorWidget: (context, url, error) => Icon(
-              Icons.error,
-            ),
-          ),
-          SizedBox(height: 16.0.h),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              "اسم الشركة:    ${phoneEntites.type}".toUpperCase(),
-              style: AppStyles.semiBold16,
-            ),
-          ),
-          SizedBox(height: 8.0.h),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              "نوع الهاتف:   ${phoneEntites.name}",
-              style: AppStyles.semiBold16,
-            ),
-          ),
-          SizedBox(height: 8.0.h),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              "السعر:   ${phoneEntites.price}",
-              style: AppStyles.semiBold16,
+          Padding(
+            padding: EdgeInsets.all(16.0.w),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 100.0.w,
+                  height: 100.0.h,
+                  child: CustomCachedImage(
+                    imageUrl: phoneEntites.imageUrl,
+                  ),
+                ),
+                SizedBox(width: 4.0.w),
+                Expanded(
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        VerifiedTypeRow(type: phoneEntites.type),
+                        Text(
+                          " ${phoneEntites.name}".capitalize!,
+                          textAlign: TextAlign.center,
+                          style: AppStyles.title,
+                        ),
+                        SizedBox(height: 8.0.h),
+                        Text(
+                          "${phoneEntites.price} جنية",
+                          style: AppStyles.semiBold16.apply(
+                            color: AppColors.red,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
-          SizedBox(height: 8.0.h),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              "الوصف:   ${phoneEntites.description}",
-              style: AppStyles.semiBold16,
-            ),
-          ),
-          SizedBox(height: 20.0.h),
           Row(
             children: [
-              TextButton(
-                style: TextButton.styleFrom(
-                  minimumSize:
-                      Size(MediaQuery.of(context).size.width * 0.3, 40.h),
-                  backgroundColor: AppColors.red,
-                  padding: EdgeInsets.symmetric(horizontal: 24.0.w),
-                ),
-                onPressed: () {
-                  showEditPriceDialog(
-                      context: context,
-                      onPriceSaved: (price) {
-                        BlocProvider.of<NewPhonesCubit>(context)
-                            .editPrice(phoneEntites.id, price);
-                      });
-                },
-                child: Text(
-                  "تعديل السعر",
-                  style: AppStyles.semiBold16.copyWith(color: AppColors.white),
+              Expanded(
+                flex: 1,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(kRadius24),
+                      ),
+                    ),
+                    backgroundColor: AppColors.lightGreen,
+                    padding: EdgeInsets.symmetric(vertical: 8.0.h),
+                  ),
+                  onPressed: () {
+                    showEditPriceDialog(
+                        context: context,
+                        onPriceSaved: (price) {
+                          BlocProvider.of<NewPhonesCubit>(context)
+                              .editPrice(phoneEntites.id, price);
+                        });
+                  },
+                  child: Text(
+                    "تعديل السعر",
+                    style: AppStyles.semiBold16.copyWith(
+                      color: AppColors.white,
+                    ),
+                  ),
                 ),
               ),
-              Spacer(),
-              TextButton(
-                style: TextButton.styleFrom(
-                  minimumSize:
-                      Size(MediaQuery.of(context).size.width * 0.3, 40.h),
-                  backgroundColor: AppColors.red,
-                  padding: EdgeInsets.symmetric(horizontal: 24.0.w),
-                ),
-                onPressed: () {
-                  showDeleteConfirmationDialog(
-                    context,
-                    'هل أنت متأكد من حذف ${phoneEntites.name}  ${phoneEntites.type} ؟',
-                    () {
-                      BlocProvider.of<NewPhonesCubit>(context)
-                          .deleteNewPhoneData(phoneEntites.id);
-                    },
-                  );
-                },
-                child: Text(
-                  "حذف المنتج",
-                  style: AppStyles.semiBold16.copyWith(color: AppColors.white),
+              Expanded(
+                flex: 1,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(kRadius24),
+                      ),
+                    ),
+                    backgroundColor: AppColors.red,
+                    padding: EdgeInsets.symmetric(vertical: 8.0.h),
+                  ),
+                  onPressed: () {
+                    showDeleteConfirmationDialog(
+                      context,
+                      'هل أنت متأكد من حذف ${phoneEntites.name}  ${phoneEntites.type} ؟',
+                      () {
+                        BlocProvider.of<NewPhonesCubit>(context)
+                            .deleteNewPhoneData(phoneEntites.id);
+                      },
+                    );
+                  },
+                  child: Text(
+                    "حذف المنتج",
+                    style: AppStyles.semiBold16.copyWith(
+                      color: AppColors.white,
+                    ),
+                  ),
                 ),
               ),
             ],
