@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:west_elbalad/core/constants/app_consts.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:west_elbalad/core/utils/app_router.dart';
 import 'package:west_elbalad/core/utils/app_styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/core/widgets/custom_app_bar.dart';
-import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 import 'package:west_elbalad/features/used_phones/presentation/views/widgets/filter_list.dart';
+import 'package:west_elbalad/features/home/presentation/manager/phones_filter/filter_cubit.dart';
 import 'package:west_elbalad/features/used_phones/presentation/views/widgets/selected_phones.dart';
 
 class UsedPhonesViewBody extends StatelessWidget {
@@ -37,12 +37,13 @@ class UsedPhonesViewBody extends StatelessWidget {
             BlocBuilder<FilterListCubit, int>(
               builder: (context, state) {
                 final orderedPhones = [
-                  'all',
-                  'samsung',
-                  'oppo',
-                  'realme',
-                  'mi',
-                  'nokia',
+                   'all',
+                'oppo',
+                'samsung',
+                'realme',
+                'mi',
+                'vivo',
+                'nokia',
                   ...phones.map((phone) => phone.type).toList()
                 ].toSet().toList();
                 final usedPhones = phones

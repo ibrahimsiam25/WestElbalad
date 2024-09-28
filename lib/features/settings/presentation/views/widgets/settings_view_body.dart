@@ -31,7 +31,7 @@ class SettingsViewBody extends StatelessWidget {
               image: AppAssets.whatsappIcon,
               title: "تواصل معنا علي الواتساب",
               onPressed: () {
-                launchCustomUr(context, 'https://wa.me/01011621272');
+             launchCustomUr(context, 'https://wa.me/20${'1011621272'}');
               }),
                  SizedBox(height: 24.0),
           SocialLoginButton(

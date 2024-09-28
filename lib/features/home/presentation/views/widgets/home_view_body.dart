@@ -31,10 +31,11 @@ class HomeViewBody extends StatelessWidget {
             builder: (context, state) {
               final orderedPhones = [
                 'all',
-                'samsung',
                 'oppo',
+                'samsung',
                 'realme',
                 'mi',
+                'vivo',
                 'nokia',
                 ...phones.map((phone) => phone.type).toList()
               ].toSet().toList();
