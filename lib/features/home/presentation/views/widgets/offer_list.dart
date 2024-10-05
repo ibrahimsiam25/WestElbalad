@@ -1,15 +1,15 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import '../../../domian/repos/home_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-
+import '../../manager/offers/offers_cubit.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_consts.dart';
 import '../../../../../core/service/get_it_service.dart';
-import '../../../domian/repos/home_repo.dart';
-import '../../manager/offers/offers_cubit.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 
 class OffersList extends StatelessWidget {
   const OffersList({super.key});
@@ -31,7 +31,7 @@ class OffersList extends StatelessWidget {
                     viewportFraction: 0.75,
                     enableInfiniteScroll: true,
                     autoPlay: true,
-                    autoPlayInterval: const Duration(seconds: 5),
+                    autoPlayInterval: const Duration(seconds: 2),
                     autoPlayAnimationDuration:
                         const Duration(milliseconds: 800),
                     autoPlayCurve: Curves.fastOutSlowIn,

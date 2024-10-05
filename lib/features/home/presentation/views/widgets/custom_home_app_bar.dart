@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../../core/utils/app_router.dart';
+import '../../../../../core/utils/app_styles.dart';
+import '../../../../../core/functions/get_user.dart';
+import '../../../../../core/constants/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_assets.dart';
 import 'package:west_elbalad/core/widgets/custom_clippath.dart';
 
-import '../../../../../core/constants/app_colors.dart';
-import '../../../../../core/utils/app_router.dart';
-import '../../../../../core/utils/app_styles.dart';
 
 class CustomHomeAppBar extends StatelessWidget {
   const CustomHomeAppBar({super.key});
@@ -46,7 +47,7 @@ class CustomHomeAppBar extends StatelessWidget {
               "صباح الخير !..",
               style: AppStyles.semiBold16.copyWith(color: AppColors.white),
             ),
-            subtitle: Text("ابراهيم ثروت",
+            subtitle: Text(getUser().name,
                 style: AppStyles.title.copyWith(color: AppColors.white)),
           ),
         ),
