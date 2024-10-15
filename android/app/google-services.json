@@ -1,45 +1,45 @@
 {
   "project_info": {
-    "project_number": "43663545764",
-    "project_id": "westelbalad-569ba",
-    "storage_bucket": "westelbalad-569ba.appspot.com"
+    "project_number": "659791045666",
+    "project_id": "west-elbald",
+    "storage_bucket": "west-elbald.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:43663545764:android:4d83e3f30e5505c14bdd31",
+        "mobilesdk_app_id": "1:659791045666:android:655de55376d039cb2c167b",
         "android_client_info": {
           "package_name": "com.example.west_elbalad"
         }
       },
       "oauth_client": [
         {
-          "client_id": "43663545764-j7ulavcadn3qa7b301bh2k71t6u3uhp2.apps.googleusercontent.com",
+          "client_id": "659791045666-hqjhc6961p8poj76cku13hbuqrjk2bc2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.west_elbalad",
-            "certificate_hash": "ed9a567b2d2d663f8219effc392f7c51f8bd146d"
+            "certificate_hash": "336b3731e801b64b7ec9b37b4ec305c7cafb14ee"
           }
         },
         {
-          "client_id": "43663545764-4uir21deriskl46svr2d1b18l2su8n6g.apps.googleusercontent.com",
+          "client_id": "659791045666-f3crjd270mr11j1um5r268let3eql6f5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCNpE4VZ2P5u8VP0UAQ6tXLYISNeTWa7u4"
+          "current_key": "AIzaSyDlmeXciytHnKllZlsurQT2ZR2_Qyqv3tk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "43663545764-4uir21deriskl46svr2d1b18l2su8n6g.apps.googleusercontent.com",
+              "client_id": "659791045666-f3crjd270mr11j1um5r268let3eql6f5.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "43663545764-n6s1l73vi35dl8pud1ppg5ihus9bbn3d.apps.googleusercontent.com",
+              "client_id": "659791045666-2qsvulih08qcuksrp43nbnbuu4bb1pqe.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.example.westElbalad"

@@ -10,11 +10,13 @@ import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:west_elbalad/core/service/shared_preferences_singleton.dart';
-
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   setupGetIt();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

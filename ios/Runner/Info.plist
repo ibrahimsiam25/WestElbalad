@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleURLTypes</key>
+  <key>CFBundleURLTypes</key>
     <array>
 	    <dict>
 		    <key>CFBundleTypeRole</key>
@@ -11,7 +11,7 @@
 		    <array>
 			    <!-- TODO Replace this value: -->
 			    <!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
-			    <string>com.googleusercontent.apps.43663545764-n6s1l73vi35dl8pud1ppg5ihus9bbn3d</string>
+			    <string>com.googleusercontent.apps.659791045666-2qsvulih08qcuksrp43nbnbuu4bb1pqe</string>
 		    </array>
 	    </dict>
     </array>
@@ -58,15 +58,10 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-    <dict>
-    <key>NSAllowsLocalNetworking</key>
-    <true/>
 	<key>LSApplicationQueriesSchemes</key>
 <array>
   <string>https</string>
   <string>tel</string>
 </array>
-</dict>
 </dict>
 </plist>

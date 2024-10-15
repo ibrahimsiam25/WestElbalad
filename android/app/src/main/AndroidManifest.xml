@@ -18,10 +18,9 @@
   </intent>
 </queries>
     <application
-        android:label="West Elbalad"
+        android:label="west_elbalad"
         android:name="${applicationName}"
-        android:usesCleartextTraffic="true"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:exported="true"
