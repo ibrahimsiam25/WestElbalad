@@ -33,6 +33,7 @@ class FireStoreService implements DatabaseService {
     required String collection,
     required String docId,
     required String subCollection,
+    required String subDocId,
     required Map<String, dynamic> data,
   }) async {
     try {
@@ -40,7 +41,8 @@ class FireStoreService implements DatabaseService {
           .collection(collection)
           .doc(docId)
           .collection(subCollection)
-          .add(data);
+          .doc(subDocId)
+          .set(data);
     } on FirebaseException catch (e) {
       // Handle Firestore-specific errors
       switch (e.code) {

@@ -40,7 +40,7 @@ class CustomHomeAppBar extends StatelessWidget {
             ),
             leading: GestureDetector(
               onTap: () {
-                
+                GoRouter.of(context).push(AppRouter.kUserProfileView);
               },
               child: Image.asset(AppAssets.profile)),
             title: Text(

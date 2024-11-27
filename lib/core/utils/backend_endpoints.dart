@@ -16,4 +16,6 @@ class BackendEndpoint {
   static const isUserExists = 'users';
   static const offers = 'offers';
   static const orders = 'orders';
+
+  static const profileImage = 'profileImage';
 }

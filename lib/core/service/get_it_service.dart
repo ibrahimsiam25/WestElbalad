@@ -1,4 +1,7 @@
 import 'package:get_it/get_it.dart';
+import 'package:west_elbalad/features/user_profile/domian/repos/user_profile_repo.dart';
+import '../../features/user_profile/data/data_sources/user_profile_remote_data_source.dart';
+import '../../features/user_profile/data/repos/user_profile_repo_impl.dart';
 import '../utils/backend_endpoints.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../features/auth/domain/repos/auth_repo.dart';
@@ -22,7 +25,6 @@ import 'package:west_elbalad/features/admin/presentation/manager/image_picker/im
 import 'package:west_elbalad/features/admin/data/data_sources/user_informations_remote_data_source.dart';
 import 'package:west_elbalad/features/shopping_cart/data/data_source/shopping_cart_remote_data_source.dart';
 
-
 final getIt = GetIt.instance;
 void setupGetIt() {
   getIt.registerSingleton<FirebaseAuthService>(FirebaseAuthService());
@@ -34,6 +36,11 @@ void setupGetIt() {
       databaseService: getIt.get<DatabaseService>(),
     ),
   );
+
+  getIt.registerSingleton<UserProfileRepo>(UserProfileRepoImpl(
+      userProfileRemoteDataSource: UserProfileRemoteDataSourceImpl(
+    databaseService: getIt.get<DatabaseService>(),
+  )));
 
   getIt.registerSingleton<ShoppingCartRepo>(
     ShoppingCardRepoImpl(
@@ -48,7 +55,6 @@ void setupGetIt() {
       )));
   getIt.registerSingleton<AdminRepo>(
     AdminRepoImpl(
-      
       userInformationsRemoteDataSource: UserInformationsRemoteDataSourceImpl(
           databaseService: getIt.get<DatabaseService>()),
       imagePickerService: getIt.get<ImagePickerService>(),
@@ -59,7 +65,6 @@ void setupGetIt() {
   getIt.registerFactory<AddInStoreCubit>(() => AddInStoreCubit(
       adminRepo: getIt.get<AdminRepo>(),
       imagePickerCubit: getIt.get<ImagePickerCubit>()));
-
 
   getIt.registerSingleton<HomeRepo>(
     HomeRepoImplimentation(

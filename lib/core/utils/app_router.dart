@@ -22,6 +22,8 @@ import 'package:west_elbalad/features/shopping_cart/presentation/views/finish_or
 import 'package:west_elbalad/features/auth/presentation/views/widgets/sign_up_successfully.dart';
 import 'package:west_elbalad/features/used_phones/presentation/views/used_phones_details_view.dart';
 
+import '../../features/user_profile/presentation/views/user_profile_view.dart';
+
 abstract class AppRouter {
   static const kOnBoardingView = '/onBoardingView';
   static const kBottomNavBarController = '/bottomNavBarController';
@@ -29,7 +31,7 @@ abstract class AppRouter {
   static const kSignupView = '/signupView';
   static const kVerificationView = '/verificationView';
   static const kWrapper = '/wrapper';
-  static const kProfileView = '/profileView';
+  static const kUserProfileView = '/userprofileView';
   static const kforgetPasswordView = '/forgetPasswordView';
   static const kSignupSuccessView = '/signupSuccessView';
   static const kAdminView = '/adminView';
@@ -57,7 +59,6 @@ abstract class AppRouter {
         path: kBottomNavBarController,
         builder: (context, state) => const BottomNavBarController(),
       ),
-  
       GoRoute(
         path: kSigninView,
         builder: (context, state) => const SigninView(),
@@ -101,6 +102,10 @@ abstract class AppRouter {
       GoRoute(
         path: kUsedPhonesView,
         builder: (context, state) => const EditUsedPhonesView(),
+      ),
+      GoRoute(
+        path: kUserProfileView,
+        builder: (context, state) => const UserProfileView(),
       ),
       GoRoute(
           path: kShoppingCartView,
