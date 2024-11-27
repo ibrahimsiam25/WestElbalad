@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
 import '../../../../../../core/widgets/custom_show_image.dart';
-import '../../../manager/image_picker/image_picker_cubit.dart';
+import '../../../../../../core/manager/image_picker/image_picker_cubit.dart';
 import '../../../../../../core/widgets/show_image_picker_options.dart';
 
 class imagePickerBlocBuilder extends StatelessWidget {

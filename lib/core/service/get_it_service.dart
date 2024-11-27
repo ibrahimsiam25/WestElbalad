@@ -21,7 +21,7 @@ import 'package:west_elbalad/features/home/data/repos/home_repo_Implimentation.d
 import 'package:west_elbalad/features/used_phones/domian/repos/used_phone_repo.dart';
 import '../../features/admin/presentation/manager/add_in_store/edit_in_store_cubit.dart';
 import 'package:west_elbalad/features/home/data/data_source/home_remote_data_source.dart';
-import 'package:west_elbalad/features/admin/presentation/manager/image_picker/image_picker_cubit.dart';
+import 'package:west_elbalad/core/manager/image_picker/image_picker_cubit.dart';
 import 'package:west_elbalad/features/admin/data/data_sources/user_informations_remote_data_source.dart';
 import 'package:west_elbalad/features/shopping_cart/data/data_source/shopping_cart_remote_data_source.dart';
 

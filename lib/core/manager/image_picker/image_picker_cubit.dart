@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:bloc/bloc.dart';
-import '../../../domain/repos/admin_repo.dart';
-import '../../../../../core/errors/failure.dart';
+import '../../../features/admin/domain/repos/admin_repo.dart';
+import '../../errors/failure.dart';
 
 part 'image_picker_state.dart';
 

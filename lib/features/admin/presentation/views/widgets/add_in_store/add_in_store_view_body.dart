@@ -8,7 +8,7 @@ import 'package:west_elbalad/core/widgets/custom_text_field.dart';
 
 import '../../../../../../core/widgets/custom_number_field.dart';
 import '../../../manager/add_in_store/edit_in_store_cubit.dart';
-import '../../../manager/image_picker/image_picker_cubit.dart';
+import '../../../../../../core/manager/image_picker/image_picker_cubit.dart';
 
 class AddInStoreViewBody extends StatefulWidget {
   const AddInStoreViewBody({super.key});

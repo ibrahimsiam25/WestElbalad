@@ -7,7 +7,7 @@ import 'package:west_elbalad/features/user_profile/presentation/views/widgets/us
 
 import '../../../../core/functions/build_message_bar.dart';
 import '../../../../core/service/get_it_service.dart';
-import '../../../admin/presentation/manager/image_picker/image_picker_cubit.dart';
+import '../../../../core/manager/image_picker/image_picker_cubit.dart';
 import '../../domian/repos/user_profile_repo.dart';
 
 class UserProfileView extends StatelessWidget {

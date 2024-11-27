@@ -7,7 +7,7 @@ import '../../manager/add_used_phone/add_used_phone_cubit.dart';
 import '../../../../../../core/widgets/custom_number_field.dart';
 import 'package:west_elbalad/core/widgets/custom_text_field.dart';
 import 'package:west_elbalad/core/functions/build_message_bar.dart';
-import '../../../../admin/presentation/manager/image_picker/image_picker_cubit.dart';
+import '../../../../../core/manager/image_picker/image_picker_cubit.dart';
 
 
 class AddUsedPhoneViewBody extends StatefulWidget {

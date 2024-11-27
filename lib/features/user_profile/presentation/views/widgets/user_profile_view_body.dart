@@ -10,7 +10,7 @@ import '../../../../../core/functions/build_message_bar.dart';
 import '../../../../../core/functions/get_user.dart';
 import '../../../../../core/utils/app_styles.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
-import '../../../../admin/presentation/manager/image_picker/image_picker_cubit.dart';
+import '../../../../../core/manager/image_picker/image_picker_cubit.dart';
 import '../../../../admin/presentation/views/widgets/add_in_store/image_picker_bloc_builder.dart';
 
 class UserProfileViewBody extends StatelessWidget {
