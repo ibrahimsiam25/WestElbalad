@@ -18,4 +18,5 @@ class BackendEndpoint {
   static const orders = 'orders';
 
   static const profileImage = 'profileImage';
+   static const imageUrl = 'imageUrl';
 }

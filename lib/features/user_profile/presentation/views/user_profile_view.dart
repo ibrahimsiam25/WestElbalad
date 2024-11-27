@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:west_elbalad/core/manager/fetch_user_image/fetch_user_image_cubit.dart';
 import 'package:west_elbalad/features/user_profile/presentation/manager/upload_user_image/upload_user_image_cubit.dart';
-import 'package:west_elbalad/features/user_profile/presentation/views/widgets/user_profile_view_body.dart';
+import 'package:west_elbalad/features/user_profile/presentation/views/widgets/user_profile_view_body_bloc_builder.dart';
 
 import '../../../../core/functions/build_message_bar.dart';
 import '../../../../core/service/get_it_service.dart';
@@ -17,6 +18,11 @@ class UserProfileView extends StatelessWidget {
     return Scaffold(
       body: MultiBlocProvider(
         providers: [
+          BlocProvider(
+            create: (context) => FetchUserImageCubit(
+              getIt<UserProfileRepo>(),
+            )..fetchUserImage(),
+          ),
           BlocProvider(
               create: (context) => UploadUserImageCubit(
                     getIt.get<UserProfileRepo>(),
@@ -38,7 +44,7 @@ class UserProfileView extends StatelessWidget {
           builder: (context, state) {
             return ModalProgressHUD(
                 inAsyncCall: state is UploadUserImageLoading ? true : false,
-                child: const UserProfileViewBody());
+                child: const UserProfileViewBodyBlocBuilder());
           },
         ),
       ),

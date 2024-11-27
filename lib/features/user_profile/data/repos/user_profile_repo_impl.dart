@@ -14,4 +14,9 @@ class UserProfileRepoImpl extends UserProfileRepo{
    String imageUrl = await userProfileRemoteDataSource.uploadImage(image, getUser().uId);
 await userProfileRemoteDataSource.addUserimagetoFirestore(getUser().uId, imageUrl);
   }
+  
+  @override
+  Future<Map<String, dynamic>> getUserImage(String documentId) async{
+    return await userProfileRemoteDataSource.getUserImage(documentId);
+  }
 }

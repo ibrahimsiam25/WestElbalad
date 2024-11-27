@@ -12,11 +12,13 @@ class imagePickerBlocBuilder extends StatelessWidget {
     required this.width,
     required this.height,
     required this.defaultImage,
+       this.online =false
   });
   final double radius;
   final double width;
   final double height;
   final String defaultImage;
+    final bool online;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ImagePickerCubit, ImagePickerState>(
@@ -43,6 +45,7 @@ class imagePickerBlocBuilder extends StatelessWidget {
                 image: context.read<ImagePickerCubit>().image,
                 width: width,
                 height: height,
+                online: online,
                 defaultImage: defaultImage,
               ));
         } else {
