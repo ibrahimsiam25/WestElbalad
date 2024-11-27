@@ -8,7 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_assets.dart';
 import 'package:west_elbalad/core/widgets/custom_clippath.dart';
 
-
 class CustomHomeAppBar extends StatelessWidget {
   const CustomHomeAppBar({super.key});
 
@@ -22,27 +21,28 @@ class CustomHomeAppBar extends StatelessWidget {
         child: Center(
           child: ListTile(
             trailing: Container(
-              width: 40.0.w,
-              height: 40.0.w,
-              padding: const EdgeInsets.all(12),
-              decoration: const ShapeDecoration(
-                shape: CircleBorder(),
+              width: 45.0.w,
+              height: 45.0.w,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
                 color: AppColors.white,
               ),
-              child: Center(
-                child: InkWell(
-                  onTap: () {
-                    GoRouter.of(context).push(AppRouter.kShoppingCartView);
-                  },
-                  child: Icon(
-                    Icons.shopping_cart,
-                    size: 25,
-                    color: AppColors.primary,
-                  ),
+              child: InkWell(
+                onTap: () {
+                  GoRouter.of(context).push(AppRouter.kShoppingCartView);
+                },
+                child: Icon(
+                  Icons.shopping_cart,
+                  size: 25.r,
+                  color: AppColors.primary,
                 ),
               ),
             ),
-            leading: Image.asset(AppAssets.profile),
+            leading: GestureDetector(
+              onTap: () {
+                
+              },
+              child: Image.asset(AppAssets.profile)),
             title: Text(
               "صباح الخير !..",
               style: AppStyles.semiBold16.copyWith(color: AppColors.white),
