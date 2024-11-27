@@ -105,7 +105,9 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kUserProfileView,
-        builder: (context, state) => const UserProfileView(),
+        builder: (context, state) =>  UserProfileView(
+          imageUrl: state.extra as String,
+        ),
       ),
       GoRoute(
           path: kShoppingCartView,

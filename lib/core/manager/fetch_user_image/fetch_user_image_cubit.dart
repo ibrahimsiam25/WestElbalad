@@ -15,9 +15,11 @@ class FetchUserImageCubit extends Cubit<FetchUserImageState> {
   Future<void> fetchUserImage() async {
     emit(FetchUserImageLoading());
     try {
+      print("#####################################");
       final image = await userProfileRepo.getUserImage(getUser().uId);
       emit(FetchUserImageSuccess(image[BackendEndpoint.imageUrl]));
     } on Failure catch (e) {
+      print("**********************************************");
       emit(FetchUserImageFailure(message: e.message));
     }
   }

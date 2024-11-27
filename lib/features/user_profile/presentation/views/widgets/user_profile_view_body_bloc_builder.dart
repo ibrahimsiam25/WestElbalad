@@ -7,23 +7,11 @@ import 'package:west_elbalad/features/user_profile/presentation/views/widgets/us
 import '../../../../../core/constants/app_assets.dart';
 
 class UserProfileViewBodyBlocBuilder extends StatelessWidget {
-  const UserProfileViewBodyBlocBuilder({super.key});
-
+  const UserProfileViewBodyBlocBuilder({super.key, this.imageUrl});
+final String? imageUrl;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FetchUserImageCubit, FetchUserImageState>(
-      builder: (context, state) {
-        if (state is FetchUserImageSuccess) {
-          return UserProfileViewBody(
-              online: true, defaultImage: state.imageUrl);
-        }
-        if (state is FetchUserImageFailure) {
-          return UserProfileViewBody(
-              online: false, defaultImage: AppAssets.profile);
-        } else {
-          return const Center(child: CustomProgressIndicator());
-        }
-      },
-    );
+    return UserProfileViewBody(
+              online: imageUrl != null, defaultImage: imageUrl??AppAssets.profile);
   }
 }

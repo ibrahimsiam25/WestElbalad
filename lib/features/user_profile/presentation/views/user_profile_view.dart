@@ -11,17 +11,15 @@ import '../../../../core/manager/image_picker/image_picker_cubit.dart';
 import '../../domian/repos/user_profile_repo.dart';
 
 class UserProfileView extends StatelessWidget {
-  const UserProfileView({super.key});
-
+  const UserProfileView({super.key, this.imageUrl});
+final String? imageUrl;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (context) => FetchUserImageCubit(
-              getIt<UserProfileRepo>(),
-            )..fetchUserImage(),
+             BlocProvider<FetchUserImageCubit>(
+            create: (context) => getIt<FetchUserImageCubit>(),
           ),
           BlocProvider(
               create: (context) => UploadUserImageCubit(
@@ -34,6 +32,7 @@ class UserProfileView extends StatelessWidget {
         child: BlocConsumer<UploadUserImageCubit, UploadUserImageState>(
           listener: (context, state) {
             if (state is UploadUserImageSuccess) {
+                context.read<FetchUserImageCubit>().fetchUserImage();
               buildMessageBar(context, "تم تحديث الصورة بنجاح");
               Navigator.pop(context);
             }
@@ -44,7 +43,9 @@ class UserProfileView extends StatelessWidget {
           builder: (context, state) {
             return ModalProgressHUD(
                 inAsyncCall: state is UploadUserImageLoading ? true : false,
-                child: const UserProfileViewBodyBlocBuilder());
+                child:  UserProfileViewBodyBlocBuilder(
+                  imageUrl: imageUrl,
+                ));
           },
         ),
       ),

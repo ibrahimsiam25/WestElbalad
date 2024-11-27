@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:west_elbalad/core/manager/fetch_user_image/fetch_user_image_cubit.dart';
 import 'package:west_elbalad/features/user_profile/domian/repos/user_profile_repo.dart';
 import '../../features/user_profile/data/data_sources/user_profile_remote_data_source.dart';
 import '../../features/user_profile/data/repos/user_profile_repo_impl.dart';
@@ -30,6 +31,7 @@ void setupGetIt() {
   getIt.registerSingleton<FirebaseAuthService>(FirebaseAuthService());
   getIt.registerSingleton<DatabaseService>(FireStoreService());
   getIt.registerSingleton<ImagePickerService>(ImagePickerService());
+
   getIt.registerSingleton<AuthRepo>(
     AuthRepoImpl(
       firebaseAuthService: getIt.get<FirebaseAuthService>(),
@@ -41,7 +43,9 @@ void setupGetIt() {
       userProfileRemoteDataSource: UserProfileRemoteDataSourceImpl(
     databaseService: getIt.get<DatabaseService>(),
   )));
-
+  getIt.registerSingleton<FetchUserImageCubit>(FetchUserImageCubit(
+    getIt.get<UserProfileRepo>(),
+  ));
   getIt.registerSingleton<ShoppingCartRepo>(
     ShoppingCardRepoImpl(
         shoppingCartRemoteDataSource: ShoppingCartRemoteDataSourceImpl(

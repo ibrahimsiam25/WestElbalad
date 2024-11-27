@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../../core/manager/fetch_user_image/fetch_user_image_cubit.dart';
 import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/utils/app_styles.dart';
 import '../../../../../core/functions/get_user.dart';
@@ -38,11 +40,30 @@ class CustomHomeAppBar extends StatelessWidget {
                 ),
               ),
             ),
-            leading: GestureDetector(
-              onTap: () {
-                GoRouter.of(context).push(AppRouter.kUserProfileView);
-              },
-              child: Image.asset(AppAssets.profile)),
+            leading: BlocBuilder<FetchUserImageCubit, FetchUserImageState>(
+                builder: (context, state) {
+                  if (state is FetchUserImageSuccess) {
+                    return GestureDetector(
+                      onTap: () {
+                        GoRouter.of(context).push(AppRouter.kUserProfileView,extra: state.imageUrl);
+                      },
+                      child: CircleAvatar(
+                        radius: 25.0.r,
+                        backgroundImage: NetworkImage(state.imageUrl),
+                      ),
+                    );
+                  } else {
+                    return GestureDetector(
+                      onTap: () {
+                        GoRouter.of(context).push(AppRouter.kUserProfileView);
+                      },
+                      child: Image.asset(
+                        AppAssets.profile,
+                      ),
+                    );
+                  }
+                },
+              ),
             title: Text(
               "صباح الخير !..",
               style: AppStyles.semiBold16.copyWith(color: AppColors.white),
