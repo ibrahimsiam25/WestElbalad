@@ -105,9 +105,10 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kUserProfileView,
-        builder: (context, state) =>  UserProfileView(
-          imageUrl: state.extra as String,
-        ),
+  builder: (context, state) {
+  final imageUrl = state.extra is String ? state.extra as String : null;
+  return UserProfileView(imageUrl: imageUrl);
+},
       ),
       GoRoute(
           path: kShoppingCartView,

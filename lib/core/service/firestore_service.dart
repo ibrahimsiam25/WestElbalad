@@ -288,12 +288,16 @@ class FireStoreService implements DatabaseService {
   
   @override
   Future<Map<String, dynamic>> getDataFromSubCollection({required String collection, required String docId, required String subCollection, required String subDocId}) async{
-    var data = await firestore
+try {
+      var data = await firestore
     .collection(collection)
     .doc(docId)
     .collection(subCollection)
     .doc(subDocId)
     .get();
     return data.data() as Map<String, dynamic>;
+} catch (e) {
+  throw CustomException(message: 'حدث خطأ أثناء جلب البيانات.');
+}
   }
 }

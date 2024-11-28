@@ -6,9 +6,7 @@ import 'package:west_elbalad/features/home/domian/repos/home_repo.dart';
 import 'package:west_elbalad/features/home/presentation/manager/phones_data/phones_data_cubit.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/phones_bloc_consumer.dart';
 
-import '../../../../core/manager/fetch_user_image/fetch_user_image_cubit.dart';
 import '../../../../core/utils/backend_endpoints.dart';
-
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -16,18 +14,11 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider<PhonesDataCubit>(
-            create: (context) => PhonesDataCubit(
-              getIt<HomeRepo>(),
-              getIt<Stream<QuerySnapshot>>(instanceName: BackendEndpoint.newPhone),
-            ),
-          ),
-          BlocProvider<FetchUserImageCubit>(
-            create: (context) =>  getIt<FetchUserImageCubit>()..fetchUserImage(),
-          ),
-        ],
+      body: BlocProvider(
+        create: (context) => PhonesDataCubit(
+          getIt<HomeRepo>(),
+          getIt<Stream<QuerySnapshot>>(instanceName: BackendEndpoint.newPhone),
+        ),
         child: const PhonesBlocConsumer(),
       ),
     );
