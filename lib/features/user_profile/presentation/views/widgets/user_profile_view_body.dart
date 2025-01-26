@@ -8,10 +8,9 @@ import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_consts.dart';
 import '../../../../../core/functions/build_message_bar.dart';
 import '../../../../../core/functions/get_user.dart';
-import '../../../../../core/manager/fetch_user_image/fetch_user_image_cubit.dart';
+import '../../../../../core/manager/image_picker/image_picker_cubit.dart';
 import '../../../../../core/utils/app_styles.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
-import '../../../../../core/manager/image_picker/image_picker_cubit.dart';
 import '../../../../admin/presentation/views/widgets/add_in_store/image_picker_bloc_builder.dart';
 
 class UserProfileViewBody extends StatelessWidget {
@@ -48,7 +47,6 @@ class UserProfileViewBody extends StatelessWidget {
                   if (context.read<ImagePickerCubit>().image != null) {
                     context.read<UploadUserImageCubit>().uploadUserImage(
                         context.read<ImagePickerCubit>().image!);
-                      
                   } else {
                     buildMessageBar(
                         context, "الرجاءاختيار صورة جديدة للملف الشخصي");
