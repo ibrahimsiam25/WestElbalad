@@ -12,6 +12,7 @@ import 'package:west_elbalad/core/service/data_service.dart';
 import 'package:west_elbalad/core/service/firestore_service.dart';
 import 'package:west_elbalad/core/service/image_picker_serivce.dart';
 import 'package:west_elbalad/core/service/firebase_auth_service.dart';
+import 'package:west_elbalad/core/service/supabase_auth_service.dart';
 import 'package:west_elbalad/features/home/domian/repos/home_repo.dart';
 import '../../features/shopping_cart/domian/repos/shopping_cart.repo.dart';
 import 'package:west_elbalad/features/admin/data/repos/admin_repo_impl.dart';
@@ -29,12 +30,14 @@ import 'package:west_elbalad/features/shopping_cart/data/data_source/shopping_ca
 final getIt = GetIt.instance;
 void setupGetIt() {
   getIt.registerSingleton<FirebaseAuthService>(FirebaseAuthService());
+  getIt.registerSingleton<SupabaseAuthService>(SupabaseAuthService());
   getIt.registerSingleton<DatabaseService>(FireStoreService());
   getIt.registerSingleton<ImagePickerService>(ImagePickerService());
 
   getIt.registerSingleton<AuthRepo>(
     AuthRepoImpl(
       firebaseAuthService: getIt.get<FirebaseAuthService>(),
+      supabaseAuthService: getIt.get<SupabaseAuthService>(),
       databaseService: getIt.get<DatabaseService>(),
     ),
   );

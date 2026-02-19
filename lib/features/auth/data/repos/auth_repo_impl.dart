@@ -12,7 +12,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../../core/utils/backend_endpoints.dart';
 import '../../presentation/views/verification_view.dart';
 import '../../../../core/service/firebase_auth_service.dart';
+import '../../../../core/service/supabase_auth_service.dart';
 import '../../../../core/service/shared_preferences_singleton.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' as supa;
 import 'package:west_elbalad/features/auth/data/models/user_model.dart';
 import 'package:west_elbalad/features/auth/domain/repos/auth_repo.dart';
 import 'package:west_elbalad/features/auth/domain/entites/user_entity.dart';
@@ -20,24 +22,29 @@ import 'package:west_elbalad/features/auth/presentation/views/widgets/sign_up_su
 
 class AuthRepoImpl extends AuthRepo {
   final FirebaseAuthService firebaseAuthService;
+  final SupabaseAuthService supabaseAuthService;
   final DatabaseService databaseService;
 
-  AuthRepoImpl(
-      {required this.databaseService, required this.firebaseAuthService});
+  AuthRepoImpl({
+    required this.databaseService,
+    required this.firebaseAuthService,
+    required this.supabaseAuthService,
+  });
+
   @override
   Future<Either<Failure, UserEntity>> createUserWithEmailAndPassword(
       String email, String password, String name) async {
-    User? user;
     try {
-      user = await firebaseAuthService.createUserWithEmailAndPassword(
-          email: email, password: password);
+      final supaUser = await supabaseAuthService.signUpWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       var userEntity = UserEntity(
         name: name,
         email: email,
-        uId: user.uid,
+        uId: supaUser.id,
       );
-      SharedPref.setString('user_name', name);
-
+      await SharedPref.setString('user_name', name);
       return right(userEntity);
     } on CustomException catch (e) {
       return left(ServerFailure(e.message));
@@ -46,9 +53,7 @@ class AuthRepoImpl extends AuthRepo {
         'Exception in AuthRepoImpl.createUserWithEmailAndPassword: ${e.toString()}',
       );
       return left(
-        ServerFailure(
-          'حدث خطأ ما. الرجاء المحاولة مرة اخرى.',
-        ),
+        ServerFailure('??? ??? ??. ?????? ???????? ??? ????.'),
       );
     }
   }
@@ -63,18 +68,28 @@ class AuthRepoImpl extends AuthRepo {
   Future<Either<Failure, UserEntity>> signinWithEmailAndPassword(
       String email, String password) async {
     try {
-      var user = await firebaseAuthService.signInWithEmailAndPassword(
-          email: email, password: password);
-      bool isUserExist = await doesDocumentExist(user.uid);
-      if (!isUserExist) {
-        await sendEmailVerification(user);
-        return left(ServerFailure('الايميل مسجل من قبل ولاكن لم يتحقق منه'));
+      final supaUser = await supabaseAuthService.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      if (supaUser.emailConfirmedAt == null) {
+        await SharedPref.setString('pending_verification_email', email);
+        return left(ServerFailure('??????? ???? ?? ??? ????? ?? ????? ???'));
+      }
+      bool isUserExist = await doesDocumentExist(supaUser.id);
+      if (isUserExist) {
+        final data = await databaseService.getData(
+            path: BackendEndpoint.getUsersData, docuementId: supaUser.id);
+        final fullUser = UserModel.fromJson(data);
+        await saveUserData(user: fullUser);
+        return right(fullUser);
       } else {
-        var userEntity = UserModel.fromFirebaseUser(user);
-        await saveUserData(user: userEntity);
-        return right(
-          userEntity,
+        final userEntity = UserModel.fromSupabaseUser(
+          supaUser,
+          name: SharedPref.getString('user_name'),
         );
+        await saveUserData(user: userEntity);
+        return right(userEntity);
       }
     } on CustomException catch (e) {
       return left(ServerFailure(e.message));
@@ -83,9 +98,7 @@ class AuthRepoImpl extends AuthRepo {
         'Exception in AuthRepoImpl.signinWithEmailAndPassword: ${e.toString()}',
       );
       return left(
-        ServerFailure(
-          'حدث خطأ ما. الرجاء المحاولة مرة اخرى.',
-        ),
+        ServerFailure('??? ??? ??. ?????? ???????? ??? ????.'),
       );
     }
   }
@@ -95,7 +108,6 @@ class AuthRepoImpl extends AuthRepo {
     User? user;
     try {
       user = await firebaseAuthService.signInWithGoogle();
-
       var userEntity = UserModel.fromFirebaseUser(user);
       var isUserExist = await databaseService.checkIfDataExists(
           path: BackendEndpoint.isUserExists, docuementId: user.uid);
@@ -108,14 +120,8 @@ class AuthRepoImpl extends AuthRepo {
       return right(userEntity);
     } catch (e) {
       await deleteUser(user);
-      log(
-        'Exception in AuthRepoImpl.signinWithGoogle ${e.toString()}',
-      );
-      return left(
-        ServerFailure(
-          'حدث خطأ ما. الرجاء المحاولة مرة اخرى.',
-        ),
-      );
+      log('Exception in AuthRepoImpl.signinWithGoogle ${e.toString()}');
+      return left(ServerFailure('??? ??? ??. ?????? ???????? ??? ????.'));
     }
   }
 
@@ -124,21 +130,14 @@ class AuthRepoImpl extends AuthRepo {
     User? user;
     try {
       user = await firebaseAuthService.signInWithApple();
-
       var userEntity = UserModel.fromFirebaseUser(user);
       await addUserData(user: userEntity);
       await saveUserData(user: userEntity);
       return right(userEntity);
     } catch (e) {
       await deleteUser(user);
-      log(
-        'Exception in AuthRepoImpl.createUserWithEmailAndPassword: ${e.toString()}',
-      );
-      return left(
-        ServerFailure(
-          'حدث خطأ ما. الرجاء المحاولة مرة اخرى.',
-        ),
-      );
+      log('Exception in AuthRepoImpl.signinWithApple: ${e.toString()}');
+      return left(ServerFailure('??? ??? ??. ?????? ???????? ??? ????.'));
     }
   }
 
@@ -171,37 +170,37 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return const Center(
-                  child: Text('حدث خطأ ما. الرجاء المحاولة مرة اخرى.'));
-            } else {
-              if (snapshot.data == null) {
-                return SigninView();
-              } else {
-                if (snapshot.data?.emailVerified == true) {
-                  String name = SharedPref.getString('user_name');
-                  var userEntity = UserEntity(
-                    name: name,
-                    email: UserModel.fromFirebaseUser(snapshot.data!).email,
-                    uId: UserModel.fromFirebaseUser(snapshot.data!).uId,
-                  );
-                  addData(
-                    path: BackendEndpoint.addUserData,
-                    documentId: snapshot.data!.uid,
-                    data: UserModel.fromEntity(userEntity).toMap(),
-                  );
-
-                  return SignUpSuccessfully();
-                }
-                return VerificationView();
-              }
+      body: StreamBuilder<supa.AuthState>(
+        stream: supa.Supabase.instance.client.auth.onAuthStateChange,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(
+                child: Text('??? ??? ??. ?????? ???????? ??? ????.'));
+          } else {
+            final supaUser = supa.Supabase.instance.client.auth.currentUser;
+            if (supaUser == null) {
+              return SigninView();
             }
-          }),
+            if (supaUser.emailConfirmedAt != null) {
+              String name = SharedPref.getString('user_name');
+              var userEntity = UserEntity(
+                name: name,
+                email: supaUser.email ?? '',
+                uId: supaUser.id,
+              );
+              addData(
+                path: BackendEndpoint.addUserData,
+                documentId: supaUser.id,
+                data: UserModel.fromEntity(userEntity).toMap(),
+              );
+              return SignUpSuccessfully();
+            }
+            return VerificationView();
+          }
+        },
+      ),
     );
   }
 }
@@ -221,46 +220,13 @@ Future<void> addData(
 
 Future<bool> doesDocumentExist(String documentName) async {
   try {
-    // Reference to the Firestore collection
     CollectionReference usersCollection =
         FirebaseFirestore.instance.collection('users');
-
-    // Get the document reference
     DocumentReference documentRef = usersCollection.doc(documentName);
-
-    // Get the document snapshot
     DocumentSnapshot documentSnapshot = await documentRef.get();
-
-    // Check if the document exists
     return documentSnapshot.exists;
   } catch (e) {
-    // Handle any errors that occur
     print('Error checking document existence: $e');
     return false;
-  }
-}
-
-Future<void> sendEmailVerification(User user) async {
-  try {
-    await user.sendEmailVerification();
-    log('Verification email sent to ${user.email}');
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'too-many-requests') {
-      log("Too many requests: ${e.message}");
-      throw CustomException(
-          message:
-              'تم ارسال بريد التحقق بالفعل من قبل. يرجى المحاولة مرة أخرى في وقت لاحق.');
-    } else if (e.code == 'network-request-failed') {
-      log("Network error: ${e.message}");
-      throw CustomException(
-          message:
-              'تعذر إرسال البريد بسبب مشكلة في الاتصال بالشبكة. يرجى التحقق من اتصالك وحاول مرة أخرى.');
-    } else {
-      log("FirebaseAuthException: ${e.message}");
-      throw CustomException(message: 'فشل في إرسال بريد التحقق.');
-    }
-  } catch (e) {
-    log("Unexpected error: ${e.toString()}");
-    throw CustomException(message: 'حدث خطأ غير متوقع. حاول مرة أخرى لاحقًا.');
   }
 }

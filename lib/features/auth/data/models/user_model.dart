@@ -1,6 +1,6 @@
 import '../../domain/entites/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:supabase_flutter/supabase_flutter.dart' as supa;
 
 class UserModel extends UserEntity {
   UserModel({required super.name, required super.email, required super.uId});
@@ -10,6 +10,14 @@ class UserModel extends UserEntity {
       name: user.displayName ?? '',
       email: user.email ?? '',
       uId: user.uid,
+    );
+  }
+
+  factory UserModel.fromSupabaseUser(supa.User user, {String name = ''}) {
+    return UserModel(
+      name: name,
+      email: user.email ?? '',
+      uId: user.id,
     );
   }
 
