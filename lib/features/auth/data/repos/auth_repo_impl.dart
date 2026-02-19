@@ -105,23 +105,30 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either<Failure, UserEntity>> signinWithGoogle() async {
-    User? user;
     try {
-      user = await firebaseAuthService.signInWithGoogle();
-      var userEntity = UserModel.fromFirebaseUser(user);
-      var isUserExist = await databaseService.checkIfDataExists(
-          path: BackendEndpoint.isUserExists, docuementId: user.uid);
+      final supaUser = await supabaseAuthService.signInWithGoogle();
+      final name = supaUser.userMetadata?['full_name'] as String? ??
+          supaUser.userMetadata?['name'] as String? ??
+          '';
+      var userEntity = UserModel.fromSupabaseUser(supaUser, name: name);
+      bool isUserExist = await databaseService.checkIfDataExists(
+          path: BackendEndpoint.isUserExists, docuementId: supaUser.id);
       if (isUserExist) {
-        await getUserData(uid: user.uid);
+        final data = await databaseService.getData(
+            path: BackendEndpoint.getUsersData, docuementId: supaUser.id);
+        final fullUser = UserModel.fromJson(data);
+        await saveUserData(user: fullUser);
+        return right(fullUser);
       } else {
         await addUserData(user: userEntity);
+        await saveUserData(user: userEntity);
+        return right(userEntity);
       }
-      await saveUserData(user: userEntity);
-      return right(userEntity);
+    } on CustomException catch (e) {
+      return left(ServerFailure(e.message));
     } catch (e) {
-      await deleteUser(user);
       log('Exception in AuthRepoImpl.signinWithGoogle ${e.toString()}');
-      return left(ServerFailure('??? ??? ??. ?????? ???????? ??? ????.'));
+      return left(ServerFailure('حدث خطأ ما. الرجاء المحاولة مرة اخرى.'));
     }
   }
 

@@ -1,5 +1,6 @@
 import 'dart:developer';
 import '../errors/excptions.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseAuthService {
@@ -86,6 +87,44 @@ class SupabaseAuthService {
     try {
       await _supabase.auth.refreshSession();
     } catch (_) {}
+  }
+
+  Future<User> signInWithGoogle() async {
+    try {
+      // TODO: ضع هنا الـ Web Client ID من Google Cloud Console
+      // يمكن العثور عليه من: Supabase Dashboard → Auth → Providers → Google
+      final GoogleSignIn googleSignIn = GoogleSignIn(
+        serverClientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
+      );
+      final googleUser = await googleSignIn.signIn();
+      if (googleUser == null) {
+        throw CustomException(message: 'تم إلغاء تسجيل الدخول بجوجل.');
+      }
+      final googleAuth = await googleUser.authentication;
+      final idToken = googleAuth.idToken;
+      final accessToken = googleAuth.accessToken;
+      if (idToken == null) {
+        throw CustomException(message: 'فشل في الحصول على token من جوجل.');
+      }
+      final response = await _supabase.auth.signInWithIdToken(
+        provider: OAuthProvider.google,
+        idToken: idToken,
+        accessToken: accessToken,
+      );
+      if (response.user == null) {
+        throw CustomException(message: 'فشل في تسجيل الدخول بجوجل.');
+      }
+      return response.user!;
+    } on AuthException catch (e) {
+      log('AuthException in signInWithGoogle: ${e.message}');
+      _mapAuthException(e);
+      rethrow;
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      log('Exception in signInWithGoogle: $e');
+      throw CustomException(
+          message: 'فشل في تسجيل الدخول بجوجل. حاول مرة أخرى.');
+    }
   }
 
   Future<void> deleteUser() async {
