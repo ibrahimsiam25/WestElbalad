@@ -41,29 +41,32 @@ class CustomHomeAppBar extends StatelessWidget {
               ),
             ),
             leading: BlocBuilder<FetchUserImageCubit, FetchUserImageState>(
-                builder: (context, state) {
-                  if (state is FetchUserImageSuccess) {
-                    return GestureDetector(
-                      onTap: () {
-                        GoRouter.of(context).push(AppRouter.kUserProfileView,extra: state.imageUrl);
-                      },
-                      child: CircleAvatar(
-                        radius: 25.0.r,
-                        backgroundImage: NetworkImage(state.imageUrl),
-                      ),
-                    );
-                  } else {
-                    return GestureDetector(
-                      onTap: () {
-                        GoRouter.of(context).push(AppRouter.kUserProfileView);
-                      },
-                      child: Image.asset(
-                        AppAssets.profile,
-                      ),
-                    );
-                  }
-                },
-              ),
+              builder: (context, state) {
+                if (state is FetchUserImageSuccess &&
+                    state.imageUrl.isNotEmpty &&
+                    Uri.tryParse(state.imageUrl)?.host.isNotEmpty == true) {
+                  return GestureDetector(
+                    onTap: () {
+                      GoRouter.of(context).push(AppRouter.kUserProfileView,
+                          extra: state.imageUrl);
+                    },
+                    child: CircleAvatar(
+                      radius: 25.0.r,
+                      backgroundImage: NetworkImage(state.imageUrl),
+                    ),
+                  );
+                } else {
+                  return GestureDetector(
+                    onTap: () {
+                      GoRouter.of(context).push(AppRouter.kUserProfileView);
+                    },
+                    child: Image.asset(
+                      AppAssets.profile,
+                    ),
+                  );
+                }
+              },
+            ),
             title: Text(
               "صباح الخير !..",
               style: AppStyles.semiBold16.copyWith(color: AppColors.white),
