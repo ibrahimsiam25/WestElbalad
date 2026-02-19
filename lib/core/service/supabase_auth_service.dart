@@ -89,6 +89,28 @@ class SupabaseAuthService {
     } catch (_) {}
   }
 
+  Future<void> resetPassword(String email) async {
+    try {
+      await _supabase.auth.resetPasswordForEmail(email);
+    } on AuthException catch (e) {
+      log('AuthException in resetPassword: ${e.message}');
+      final msg = e.message.toLowerCase();
+      if (msg.contains('user not found') || msg.contains('unable to find')) {
+        throw CustomException(message: 'البريد الإلكتروني غير مسجل.');
+      } else if (msg.contains('rate limit') || msg.contains('too many')) {
+        throw CustomException(
+            message:
+                'تم إرسال بريد إعادة التعيين سابقاً. يرجى المحاولة بعد دقيقة.');
+      }
+      throw CustomException(message: 'حدث خطأ ما. حاول مرة أخرى لاحقاً.');
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      log('Exception in resetPassword: $e');
+      throw CustomException(
+          message: 'حدث خطأ غير متوقع. حاول مرة أخرى لاحقاً.');
+    }
+  }
+
   Future<User> signInWithGoogle() async {
     try {
       // TODO: ضع هنا الـ Web Client ID من Google Cloud Console

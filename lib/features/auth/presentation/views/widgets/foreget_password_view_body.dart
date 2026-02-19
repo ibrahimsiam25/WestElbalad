@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:west_elbalad/core/widgets/custom_app_bar.dart';
 import '../../../../../core/constants/app_consts.dart';
 import '../../../../../core/widgets/custom_button.dart';
@@ -15,34 +15,36 @@ class ForgetPasswordViewBody extends StatefulWidget {
 
 class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  bool _isLoading = false;
   late String email;
-  Future<void> resetPassword(BuildContext context) async {
-    final String successMessage =
-        'تم إرسال بريد إعادة تعيين كلمة المرور إلى $email';
-    final String userNotFoundMessage = 'البريد الإلكتروني غير مسجل';
-    final String genericErrorMessage = 'حدث خطأ ما. حاول مرة أخرى لاحقًا';
-    final String unexpectedErrorMessage = 'حدث خطأ غير متوقع';
 
+  Future<void> resetPassword(BuildContext context) async {
     void showSnackBar(String message) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
     }
 
+    setState(() => _isLoading = true);
     try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      showSnackBar(successMessage);
-      Navigator.of(context).pop();
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        showSnackBar(userNotFoundMessage);
+      await Supabase.instance.client.auth.resetPasswordForEmail(email);
+      showSnackBar('تم إرسال بريد إعادة تعيين كلمة المرور إلى $email');
+      if (mounted) Navigator.of(context).pop();
+    } on AuthException catch (e) {
+      final msg = e.message.toLowerCase();
+      if (msg.contains('user not found') || msg.contains('unable to find')) {
+        showSnackBar('البريد الإلكتروني غير مسجل');
+      } else if (msg.contains('rate limit') || msg.contains('too many')) {
+        showSnackBar('تم إرسال البريد مسبقاً. يرجى المحاولة بعد دقيقة.');
       } else {
-        showSnackBar(genericErrorMessage);
+        showSnackBar('حدث خطأ ما. حاول مرة أخرى لاحقًا');
       }
     } catch (_) {
-      showSnackBar(unexpectedErrorMessage);
+      showSnackBar('حدث خطأ غير متوقع');
     } finally {
-      formKey.currentState?.reset();
+      if (mounted) {
+        setState(() => _isLoading = false);
+        formKey.currentState?.reset();
+      }
     }
   }
 
@@ -76,6 +78,7 @@ class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
                   //Signin
                   CustomButton(
                     onPressed: () {
+                      if (_isLoading) return;
                       if (formKey.currentState!.validate()) {
                         formKey.currentState!.save();
                         resetPassword(context);
@@ -84,7 +87,9 @@ class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
                         setState(() {});
                       }
                     },
-                    text: 'اعادة تعيين كلمة المرور',
+                    text: _isLoading
+                        ? 'جاري الإرسال...'
+                        : 'اعادة تعيين كلمة المرور',
                   ),
                   SizedBox(height: 16.0.h),
                 ],
