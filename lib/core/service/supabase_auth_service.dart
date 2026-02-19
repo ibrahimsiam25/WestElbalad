@@ -1,6 +1,10 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:math' as math;
 import '../errors/excptions.dart';
+import 'package:crypto/crypto.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseAuthService {
@@ -155,6 +159,60 @@ class SupabaseAuthService {
     } catch (e) {
       log('Error deleting user: $e');
     }
+  }
+
+  Future<User> signInWithApple() async {
+    try {
+      final rawNonce = _generateNonce();
+      final nonce = _sha256ofString(rawNonce);
+
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+        nonce: nonce,
+      );
+
+      if (appleCredential.identityToken == null) {
+        throw CustomException(message: 'فشل في الحصول على token من Apple.');
+      }
+
+      final response = await _supabase.auth.signInWithIdToken(
+        provider: OAuthProvider.apple,
+        idToken: appleCredential.identityToken!,
+        nonce: rawNonce,
+      );
+
+      if (response.user == null) {
+        throw CustomException(message: 'فشل في تسجيل الدخول بـ Apple.');
+      }
+      return response.user!;
+    } on AuthException catch (e) {
+      log('AuthException in signInWithApple: ${e.message}');
+      _mapAuthException(e);
+      rethrow;
+    } catch (e) {
+      if (e is CustomException) rethrow;
+      log('Exception in signInWithApple: $e');
+      throw CustomException(
+          message: 'فشل في تسجيل الدخول بـ Apple. حاول مرة أخرى.');
+    }
+  }
+
+  // ─── Nonce helpers ───
+  String _generateNonce([int length = 32]) {
+    const charset =
+        '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+    final random = math.Random.secure();
+    return List.generate(length, (_) => charset[random.nextInt(charset.length)])
+        .join();
+  }
+
+  String _sha256ofString(String input) {
+    final bytes = utf8.encode(input);
+    final digest = sha256.convert(bytes);
+    return digest.toString();
   }
 
   void _mapAuthException(AuthException e) {

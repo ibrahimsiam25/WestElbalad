@@ -1,17 +1,16 @@
 import 'package:get_it/get_it.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:west_elbalad/core/manager/fetch_user_image/fetch_user_image_cubit.dart';
 import 'package:west_elbalad/features/user_profile/domian/repos/user_profile_repo.dart';
 import '../../features/user_profile/data/data_sources/user_profile_remote_data_source.dart';
 import '../../features/user_profile/data/repos/user_profile_repo_impl.dart';
 import '../utils/backend_endpoints.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../features/auth/domain/repos/auth_repo.dart';
 import '../../features/admin/domain/repos/admin_repo.dart';
 import '../../features/auth/data/repos/auth_repo_impl.dart';
 import 'package:west_elbalad/core/service/data_service.dart';
-import 'package:west_elbalad/core/service/firestore_service.dart';
+import 'package:west_elbalad/core/service/supabase_database_service.dart';
 import 'package:west_elbalad/core/service/image_picker_serivce.dart';
-import 'package:west_elbalad/core/service/firebase_auth_service.dart';
 import 'package:west_elbalad/core/service/supabase_auth_service.dart';
 import 'package:west_elbalad/features/home/domian/repos/home_repo.dart';
 import '../../features/shopping_cart/domian/repos/shopping_cart.repo.dart';
@@ -29,14 +28,12 @@ import 'package:west_elbalad/features/shopping_cart/data/data_source/shopping_ca
 
 final getIt = GetIt.instance;
 void setupGetIt() {
-  getIt.registerSingleton<FirebaseAuthService>(FirebaseAuthService());
   getIt.registerSingleton<SupabaseAuthService>(SupabaseAuthService());
-  getIt.registerSingleton<DatabaseService>(FireStoreService());
+  getIt.registerSingleton<DatabaseService>(SupabaseDatabaseService());
   getIt.registerSingleton<ImagePickerService>(ImagePickerService());
 
   getIt.registerSingleton<AuthRepo>(
     AuthRepoImpl(
-      firebaseAuthService: getIt.get<FirebaseAuthService>(),
       supabaseAuthService: getIt.get<SupabaseAuthService>(),
       databaseService: getIt.get<DatabaseService>(),
     ),
@@ -80,18 +77,18 @@ void setupGetIt() {
     ),
   );
 
-  final Stream<QuerySnapshot> phonesStream = FirebaseFirestore.instance
-      .collection(BackendEndpoint.newPhone)
-      .snapshots();
+  final Stream<List<Map<String, dynamic>>> phonesStream =
+      Supabase.instance.client.from('phones').stream(primaryKey: ['id']);
 
-  // تسجيل الـ Stream للهواتف المستعملة
-  final Stream<QuerySnapshot> usedPhonesStream = FirebaseFirestore.instance
-      .collection(BackendEndpoint.usedPhones)
-      .snapshots();
+  final Stream<List<Map<String, dynamic>>> usedPhonesStream =
+      Supabase.instance.client.from('used_phones').stream(primaryKey: ['id']);
 
-  // التسجيل في GetIt
-  getIt.registerSingleton<Stream<QuerySnapshot>>(phonesStream,
-      instanceName: BackendEndpoint.newPhone);
-  getIt.registerSingleton<Stream<QuerySnapshot>>(usedPhonesStream,
-      instanceName: BackendEndpoint.usedPhones);
+  getIt.registerSingleton<Stream<List<Map<String, dynamic>>>>(
+    phonesStream,
+    instanceName: BackendEndpoint.newPhone,
+  );
+  getIt.registerSingleton<Stream<List<Map<String, dynamic>>>>(
+    usedPhonesStream,
+    instanceName: BackendEndpoint.usedPhones,
+  );
 }

@@ -1,33 +1,28 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' as supa;
 import '../../../../core/errors/failure.dart';
 import '../../../../core/errors/excptions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../../presentation/views/signin_view.dart';
 import '../../../../core/constants/app_consts.dart';
 import '../../../../core/service/data_service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../../core/utils/backend_endpoints.dart';
 import '../../presentation/views/verification_view.dart';
-import '../../../../core/service/firebase_auth_service.dart';
 import '../../../../core/service/supabase_auth_service.dart';
 import '../../../../core/service/shared_preferences_singleton.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' as supa;
 import 'package:west_elbalad/features/auth/data/models/user_model.dart';
 import 'package:west_elbalad/features/auth/domain/repos/auth_repo.dart';
 import 'package:west_elbalad/features/auth/domain/entites/user_entity.dart';
 import 'package:west_elbalad/features/auth/presentation/views/widgets/sign_up_successfully.dart';
 
 class AuthRepoImpl extends AuthRepo {
-  final FirebaseAuthService firebaseAuthService;
   final SupabaseAuthService supabaseAuthService;
   final DatabaseService databaseService;
 
   AuthRepoImpl({
     required this.databaseService,
-    required this.firebaseAuthService,
     required this.supabaseAuthService,
   });
 
@@ -39,28 +34,14 @@ class AuthRepoImpl extends AuthRepo {
         email: email,
         password: password,
       );
-      var userEntity = UserEntity(
-        name: name,
-        email: email,
-        uId: supaUser.id,
-      );
+      var userEntity = UserEntity(name: name, email: email, uId: supaUser.id);
       await SharedPref.setString('user_name', name);
       return right(userEntity);
     } on CustomException catch (e) {
       return left(ServerFailure(e.message));
     } catch (e) {
-      log(
-        'Exception in AuthRepoImpl.createUserWithEmailAndPassword: ${e.toString()}',
-      );
-      return left(
-        ServerFailure('??? ??? ??. ?????? ???????? ??? ????.'),
-      );
-    }
-  }
-
-  Future<void> deleteUser(User? user) async {
-    if (user != null) {
-      await firebaseAuthService.deleteUser();
+      log('Exception in createUserWithEmailAndPassword: $e');
+      return left(ServerFailure('حدث خطأ ما. الرجاء المحاولة مرة اخرى.'));
     }
   }
 
@@ -74,9 +55,9 @@ class AuthRepoImpl extends AuthRepo {
       );
       if (supaUser.emailConfirmedAt == null) {
         await SharedPref.setString('pending_verification_email', email);
-        return left(ServerFailure('??????? ???? ?? ??? ????? ?? ????? ???'));
+        return left(ServerFailure('الايميل مسجل من قبل ولاكن لم يتحقق منه'));
       }
-      bool isUserExist = await doesDocumentExist(supaUser.id);
+      bool isUserExist = await _doesUserExist(supaUser.id);
       if (isUserExist) {
         final data = await databaseService.getData(
             path: BackendEndpoint.getUsersData, docuementId: supaUser.id);
@@ -94,12 +75,8 @@ class AuthRepoImpl extends AuthRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(e.message));
     } catch (e) {
-      log(
-        'Exception in AuthRepoImpl.signinWithEmailAndPassword: ${e.toString()}',
-      );
-      return left(
-        ServerFailure('??? ??? ??. ?????? ???????? ??? ????.'),
-      );
+      log('Exception in signinWithEmailAndPassword: $e');
+      return left(ServerFailure('حدث خطأ ما. الرجاء المحاولة مرة اخرى.'));
     }
   }
 
@@ -127,24 +104,27 @@ class AuthRepoImpl extends AuthRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(e.message));
     } catch (e) {
-      log('Exception in AuthRepoImpl.signinWithGoogle ${e.toString()}');
+      log('Exception in signinWithGoogle: $e');
       return left(ServerFailure('حدث خطأ ما. الرجاء المحاولة مرة اخرى.'));
     }
   }
 
   @override
   Future<Either<Failure, UserEntity>> signinWithApple() async {
-    User? user;
     try {
-      user = await firebaseAuthService.signInWithApple();
-      var userEntity = UserModel.fromFirebaseUser(user);
+      final supaUser = await supabaseAuthService.signInWithApple();
+      final name = supaUser.userMetadata?['full_name'] as String? ??
+          supaUser.userMetadata?['name'] as String? ??
+          '';
+      var userEntity = UserModel.fromSupabaseUser(supaUser, name: name);
       await addUserData(user: userEntity);
       await saveUserData(user: userEntity);
       return right(userEntity);
+    } on CustomException catch (e) {
+      return left(ServerFailure(e.message));
     } catch (e) {
-      await deleteUser(user);
-      log('Exception in AuthRepoImpl.signinWithApple: ${e.toString()}');
-      return left(ServerFailure('??? ??? ??. ?????? ???????? ??? ????.'));
+      log('Exception in signinWithApple: $e');
+      return left(ServerFailure('حدث خطأ ما. الرجاء المحاولة مرة اخرى.'));
     }
   }
 
@@ -171,6 +151,8 @@ class AuthRepoImpl extends AuthRepo {
   }
 }
 
+// ─── Wrapper ──────────────────────────────────────────────────────────────────
+
 class Wrapper extends StatelessWidget {
   const Wrapper({super.key});
 
@@ -184,12 +166,11 @@ class Wrapper extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return const Center(
-                child: Text('??? ??? ??. ?????? ???????? ??? ????.'));
+                child: Text('حدث خطأ ما. الرجاء المحاولة مرة اخرى.'));
           } else {
-            final supaUser = supa.Supabase.instance.client.auth.currentUser;
-            if (supaUser == null) {
-              return SigninView();
-            }
+            final supaUser =
+                supa.Supabase.instance.client.auth.currentUser;
+            if (supaUser == null) return SigninView();
             if (supaUser.emailConfirmedAt != null) {
               String name = SharedPref.getString('user_name');
               var userEntity = UserEntity(
@@ -197,8 +178,8 @@ class Wrapper extends StatelessWidget {
                 email: supaUser.email ?? '',
                 uId: supaUser.id,
               );
-              addData(
-                path: BackendEndpoint.addUserData,
+              _addUserToDb(
+                table: BackendEndpoint.addUserData,
                 documentId: supaUser.id,
                 data: UserModel.fromEntity(userEntity).toMap(),
               );
@@ -212,28 +193,35 @@ class Wrapper extends StatelessWidget {
   }
 }
 
-FirebaseFirestore firestore = FirebaseFirestore.instance;
+// ─── Global helpers (Supabase) ────────────────────────────────────────────────
 
-Future<void> addData(
-    {required String path,
-    required Map<String, dynamic> data,
-    String? documentId}) async {
-  if (documentId != null) {
-    firestore.collection(path).doc(documentId).set(data);
-  } else {
-    await firestore.collection(path).add(data);
+String _supaTable(String collection) =>
+    collection == 'usedPhones' ? 'used_phones' : collection;
+
+Future<void> _addUserToDb({
+  required String table,
+  required Map<String, dynamic> data,
+  String? documentId,
+}) async {
+  try {
+    await supa.Supabase.instance.client
+        .from(_supaTable(table))
+        .upsert(data);
+  } catch (e) {
+    log('Error in _addUserToDb: $e');
   }
 }
 
-Future<bool> doesDocumentExist(String documentName) async {
+Future<bool> _doesUserExist(String userId) async {
   try {
-    CollectionReference usersCollection =
-        FirebaseFirestore.instance.collection('users');
-    DocumentReference documentRef = usersCollection.doc(documentName);
-    DocumentSnapshot documentSnapshot = await documentRef.get();
-    return documentSnapshot.exists;
+    final response = await supa.Supabase.instance.client
+        .from('users')
+        .select('uId')
+        .eq('uId', userId)
+        .maybeSingle();
+    return response != null;
   } catch (e) {
-    print('Error checking document existence: $e');
+    log('Error in _doesUserExist: $e');
     return false;
   }
 }
