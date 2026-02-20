@@ -1,4 +1,6 @@
-import '../../bottom_nav_bar.dart';
+import '../../admin_bottom_nav_bar.dart';
+import '../../user_bottom_nav_bar.dart';
+import '../../core/config/app_config.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/auth/data/repos/auth_repo_impl.dart';
 import '../../features/home/domian/entites/phone_entites.dart';
@@ -50,7 +52,9 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kBottomNavBarController,
-        builder: (context, state) => const BottomNavBarController(),
+        builder: (context, state) => AppConfig.isAdmin
+            ? const BottomNavBarController()
+            : const UserBottomNavBarController(),
       ),
       GoRoute(
         path: kSigninView,
