@@ -33,20 +33,22 @@ class UsedPhonesDetailsView extends StatelessWidget {
         ),
       ),
       body: UsedPhonesDetailsViewBody(phone: usedPhonesEntities),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        onPressedTwo: () {
-          saveMapToListInSharedPref(
-            key: kOrder,
-            newMap: UsedPhoneModel.fromEntity(usedPhonesEntities).toMap(),
-          );
-          GoRouter.of(context).push(AppRouter.kShoppingCartView);
-        },
-        onPressedOne: () {
-          Navigator.of(context).pop();
-        },
-        textTwo: "اضافة الي عربة التسوق",
-        iconOne: Icons.home,
-        iconTwo: Icons.shopping_cart,
+      bottomNavigationBar: SafeArea(
+        child: CustomBottomNavigationBar(
+          onPressedTwo: () {
+            saveMapToListInSharedPref(
+              key: kOrder,
+              newMap: UsedPhoneModel.fromEntity(usedPhonesEntities).toMap(),
+            );
+            GoRouter.of(context).push(AppRouter.kShoppingCartView);
+          },
+          onPressedOne: () {
+            Navigator.of(context).pop();
+          },
+          textTwo: "اضافة الي عربة التسوق",
+          iconOne: Icons.home,
+          iconTwo: Icons.shopping_cart,
+        ),
       ),
     );
   }
