@@ -33,20 +33,22 @@ class NewPhoneDetailsView extends StatelessWidget {
         ),
       ),
       body: NewPhoneDetailsViewBody(phone: phoneEntites),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        onPressedTwo: () {
-          saveMapToListInSharedPref(
-            key: kOrder,
-            newMap: PhoneModel.fromEntity(phoneEntites).toMap(),
-          );
-          GoRouter.of(context).push(AppRouter.kShoppingCartView);
-        },
-        onPressedOne: () {
-          Navigator.of(context).pop();
-        },
-        textTwo: "اضافة الي عربة التسوق",
-        iconOne: Icons.home,
-        iconTwo: Icons.shopping_cart,
+      bottomNavigationBar: SafeArea(
+        child: CustomBottomNavigationBar(
+          onPressedTwo: () {
+            saveMapToListInSharedPref(
+              key: kOrder,
+              newMap: PhoneModel.fromEntity(phoneEntites).toMap(),
+            );
+            GoRouter.of(context).push(AppRouter.kShoppingCartView);
+          },
+          onPressedOne: () {
+            Navigator.of(context).pop();
+          },
+          textTwo: "اضافة الي عربة التسوق",
+          iconOne: Icons.home,
+          iconTwo: Icons.shopping_cart,
+        ),
       ),
     );
   }

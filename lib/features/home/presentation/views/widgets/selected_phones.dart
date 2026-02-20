@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
-import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:west_elbalad/core/widgets/custom_cacehd_network_image.dart';
 import 'package:west_elbalad/features/home/domian/entites/phone_entites.dart';
@@ -24,62 +23,82 @@ class SelectedPhones extends StatelessWidget {
             .push(AppRouter.kNewPhoneDetailsView, extra: phones);
       },
       child: Container(
-        padding: EdgeInsets.all(16.0),
-        margin: EdgeInsets.only(bottom: 16.0.h),
         decoration: BoxDecoration(
           color: AppColors.white,
-          borderRadius: BorderRadius.circular(
-            kRadius16,
-          ),
+          borderRadius: BorderRadius.circular(16.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.07),
+              blurRadius: 12,
+              spreadRadius: 0,
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 128.0.h,
-              child: CustomCachedImage(
-                imageUrl: phones.imageUrl,
-              ),
-            ),
-            SizedBox(height: 8.0.h),
-            SizedBox(
-              width: 128.0.w,
-              child: Center(
-                child: Text(
-                  phones.name,
-                  textAlign: TextAlign.center,
-                  style: AppStyles.title.copyWith(
-                    height: 1,
-                  ),
+            // ── Image area (fixed height) ──
+            ClipRRect(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+              child: SizedBox(
+                height: 130.h,
+                width: double.infinity,
+                child: CustomCachedImage(
+                  imageUrl: phones.imageUrl,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-            SizedBox(height: 4.0.h),
-            SizedBox(
-              width: 128.0.w,
-              child: Center(
-                child: Text(
-                  phones.description,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppStyles.subtitle.copyWith(
-                    height: 1.3,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 4.0.h),
-            SizedBox(
-              width: 128.0.w,
-              child: Center(
-                child: FittedBox(
-                  child: Text(
-                    '${phones.price} جنية',
-                    style: AppStyles.title.copyWith(
-                      color: AppColors.red,
-                      fontSize: 18.0.sp,
+            // ── Content ──
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Name
+                    Text(
+                      phones.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppStyles.semiBold16.copyWith(
+                        fontSize: 13.sp,
+                        color: AppColors.black,
+                      ),
                     ),
-                  ),
+                    SizedBox(height: 4.h),
+                    // Description
+                    Expanded(
+                      child: Text(
+                        phones.description,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppStyles.tiny.copyWith(
+                          color: AppColors.darkGrey,
+                          height: 1.4,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 6.h),
+                    // Price badge
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: Text(
+                        '${phones.price} جنيه',
+                        style: AppStyles.semiBold16.copyWith(
+                          fontSize: 13.sp,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

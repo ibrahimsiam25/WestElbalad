@@ -37,24 +37,15 @@ class UsedPhonesViewBody extends StatelessWidget {
             BlocBuilder<FilterListCubit, int>(
               builder: (context, state) {
                 final orderedPhones = [
-                   'all',
-                'oppo',
-                'samsung',
-                'realme',
-                'mi',
-                'vivo',
-                'nokia',
+                  'all',
+                  'oppo',
+                  'samsung',
+                  'realme',
+                  'mi',
+                  'vivo',
+                  'nokia',
                   ...phones.map((phone) => phone.type).toList()
                 ].toSet().toList();
-                final usedPhones = phones
-                    .where(
-                      (phone) => phone.type == orderedPhones[state],
-                    )
-                    .map((phone) => SelectedUsedPhones(phones: phone))
-                    .toList();
-                final allUsedPhones = phones
-                    .map((phone) => SelectedUsedPhones(phones: phone))
-                    .toList();
                 return Column(
                   children: [
                     Column(
@@ -64,68 +55,47 @@ class UsedPhonesViewBody extends StatelessWidget {
                           phones: phones,
                         ),
                         SizedBox(height: 8.0.h),
-                        //Selected phones
-                        Wrap(
-                          spacing: 16.0.w,
-                          children: orderedPhones[state] == 'all'
-                              ? [
-                                  ...allUsedPhones,
-                                  // For alighnment and refresh
-                                  if (allUsedPhones.length == 1)
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: kHorizontalPadding),
-                                      child: SizedBox(
-                                        width: 128.0.w,
-                                      ),
-                                    ),
-                                  //Empty
-                                  if (allUsedPhones.isEmpty)
-                                    Container(
-                                      padding: EdgeInsets.only(
-                                          bottom: kHorizontalPadding),
-                                      child: SizedBox(
-                                        width: 128.0.w,
-                                        height: 128.0.h,
-                                        child: Center(
-                                          child: Text(
-                                            'لا توجد اجهزة مستعملة.',
-                                            textAlign: TextAlign.center,
-                                            style: AppStyles.semiBold16,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                ]
-                              : [
-                                  ...usedPhones,
-                                  //For alighnment and refresh
-                                  if (usedPhones.length == 1)
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: kHorizontalPadding),
-                                      child: SizedBox(
-                                        width: 128.0.w,
-                                      ),
-                                    ),
-                                  //Empty
-                                  if (usedPhones.isEmpty)
-                                    Container(
-                                      padding: EdgeInsets.only(
-                                          bottom: kHorizontalPadding),
-                                      child: SizedBox(
-                                        width: 200.0.w,
-                                        height: 128.0.h,
-                                        child: Center(
-                                          child: Text(
-                                            'لا توجد اجهزة مستعملة\nمن هذا النوع.',
-                                            textAlign: TextAlign.center,
-                                            style: AppStyles.semiBold16,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                ],
+                        // Grid of phones
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: kHorizontalPadding),
+                          child: () {
+                            final list = orderedPhones[state] == 'all'
+                                ? phones
+                                : phones
+                                    .where(
+                                        (p) => p.type == orderedPhones[state])
+                                    .toList();
+                            if (list.isEmpty) {
+                              return SizedBox(
+                                height: 120.h,
+                                child: Center(
+                                  child: Text(
+                                    orderedPhones[state] == 'all'
+                                        ? 'لا توجد اجهزة مستعملة.'
+                                        : 'لا توجد اجهزة مستعملة\nمن هذا النوع.',
+                                    textAlign: TextAlign.center,
+                                    style: AppStyles.semiBold16,
+                                  ),
+                                ),
+                              );
+                            }
+                            return GridView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.only(bottom: 16.h),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 12.w,
+                                mainAxisSpacing: 12.h,
+                                mainAxisExtent: 240.h,
+                              ),
+                              itemCount: list.length,
+                              itemBuilder: (context, index) =>
+                                  SelectedUsedPhones(phones: list[index]),
+                            );
+                          }(),
                         ),
                       ],
                     )

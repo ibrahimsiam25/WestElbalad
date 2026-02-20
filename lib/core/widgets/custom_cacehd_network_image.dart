@@ -7,27 +7,33 @@ import 'package:west_elbalad/core/constants/app_colors.dart';
 class CustomCachedImage extends StatelessWidget {
   final String imageUrl;
   final double? width;
+  final BoxFit fit;
   const CustomCachedImage({
     super.key,
     required this.imageUrl,
     this.width = 128.0,
+    this.fit = BoxFit.contain,
   });
 
   @override
   Widget build(BuildContext context) {
+    final resolvedWidth =
+        (width == double.infinity) ? double.infinity : width!.w;
     return CachedNetworkImage(
       imageUrl: imageUrl,
-      width: width!.w,
+      width: resolvedWidth,
+      height: double.infinity,
+      fit: fit,
+      alignment:  Alignment.topCenter,
       placeholder: (context, url) => Skeletonizer(
-        containersColor: AppColors.darkGrey,
+        containersColor: AppColors.grey,
         child: Container(
-          width: width!.w,
+          width: resolvedWidth,
           color: AppColors.white,
         ),
       ),
-      errorWidget: (context, url, error) => Icon(
-        Icons.error,
-      ),
+      errorWidget: (context, url, error) =>
+          const Icon(Icons.image_not_supported_outlined),
     );
   }
 }
