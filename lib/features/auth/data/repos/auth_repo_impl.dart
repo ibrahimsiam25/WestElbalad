@@ -1,6 +1,6 @@
 ﻿import 'dart:convert';
 import 'dart:developer';
-import 'package:dartz/dartz.dart';
+import 'package:dartz/dartz.dart' hide State;
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supa;
 import '../../../../core/errors/failure.dart';
@@ -9,13 +9,13 @@ import '../../presentation/views/signin_view.dart';
 import '../../../../core/constants/app_consts.dart';
 import '../../../../core/service/data_service.dart';
 import '../../../../core/utils/backend_endpoints.dart';
-import '../../presentation/views/verification_view.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/utils/app_router.dart';
 import '../../../../core/service/supabase_auth_service.dart';
 import '../../../../core/service/shared_preferences_singleton.dart';
 import 'package:west_elbalad/features/auth/data/models/user_model.dart';
 import 'package:west_elbalad/features/auth/domain/repos/auth_repo.dart';
 import 'package:west_elbalad/features/auth/domain/entites/user_entity.dart';
-import 'package:west_elbalad/features/auth/presentation/views/widgets/sign_up_successfully.dart';
 
 class AuthRepoImpl extends AuthRepo {
   final SupabaseAuthService supabaseAuthService;
@@ -168,24 +168,10 @@ class Wrapper extends StatelessWidget {
             return const Center(
                 child: Text('حدث خطأ ما. الرجاء المحاولة مرة اخرى.'));
           } else {
-            final supaUser =
-                supa.Supabase.instance.client.auth.currentUser;
+            final supaUser = supa.Supabase.instance.client.auth.currentUser;
             if (supaUser == null) return SigninView();
-            if (supaUser.emailConfirmedAt != null) {
-              String name = SharedPref.getString('user_name');
-              var userEntity = UserEntity(
-                name: name,
-                email: supaUser.email ?? '',
-                uId: supaUser.id,
-              );
-              _addUserToDb(
-                table: BackendEndpoint.addUserData,
-                documentId: supaUser.id,
-                data: UserModel.fromEntity(userEntity).toMap(),
-              );
-              return SignUpSuccessfully();
-            }
-            return VerificationView();
+            // Google users are always confirmed - navigate to home
+            return _NavigateToHome();
           }
         },
       ),
@@ -193,24 +179,35 @@ class Wrapper extends StatelessWidget {
   }
 }
 
-// ─── Global helpers (Supabase) ────────────────────────────────────────────────
+// ─── Navigate to Home ────────────────────────────────────────────────────────
 
-String _supaTable(String collection) =>
-    collection == 'usedPhones' ? 'used_phones' : collection;
+class _NavigateToHome extends StatefulWidget {
+  const _NavigateToHome();
 
-Future<void> _addUserToDb({
-  required String table,
-  required Map<String, dynamic> data,
-  String? documentId,
-}) async {
-  try {
-    await supa.Supabase.instance.client
-        .from(_supaTable(table))
-        .upsert(data);
-  } catch (e) {
-    log('Error in _addUserToDb: $e');
+  @override
+  State<_NavigateToHome> createState() => _NavigateToHomeState();
+}
+
+class _NavigateToHomeState extends State<_NavigateToHome> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.go(AppRouter.kBottomNavBarController);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(child: CircularProgressIndicator()),
+    );
   }
 }
+
+// ─── Global helpers (Supabase) ────────────────────────────────────────────────
 
 Future<bool> _doesUserExist(String userId) async {
   try {

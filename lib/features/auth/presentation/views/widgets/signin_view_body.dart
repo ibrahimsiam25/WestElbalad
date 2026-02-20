@@ -1,130 +1,152 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'dont_have_account_widget.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/utils/app_router.dart';
-import '../../../../../core/utils/app_styles.dart';
+import 'package:svg_flutter/svg.dart';
 import '../../../../../core/constants/app_assets.dart';
 import '../../../../../core/constants/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:west_elbalad/core/constants/app_consts.dart';
-import 'package:west_elbalad/core/widgets/custom_button.dart';
-import 'package:west_elbalad/core/widgets/password_field.dart';
-import 'package:west_elbalad/core/widgets/custom_text_field.dart';
-import 'package:west_elbalad/features/auth/presentation/views/widgets/or_divider.dart';
 import 'package:west_elbalad/features/auth/presentation/cubits/signin_cubit/signin_cubit.dart';
-import 'package:west_elbalad/features/auth/presentation/views/widgets/social_login_button.dart';
 
-class SigninViewBody extends StatefulWidget {
+class SigninViewBody extends StatelessWidget {
   const SigninViewBody({super.key});
 
   @override
-  State<SigninViewBody> createState() => _SigninViewBodyState();
-}
-
-class _SigninViewBodyState extends State<SigninViewBody> {
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-  late String email, password;
-
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: kHorizontalPadding,
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFFFFFFFF),
+            Color(0xFFE8F5E9),
+            Color(0xFFC8E6C9),
+          ],
+          stops: [0.0, 0.5, 1.0],
         ),
-        child: SingleChildScrollView(
-          child: Form(
-            key: formKey,
-            autovalidateMode: autovalidateMode,
-            child: Column(
-              children: [
-                SizedBox(height: 16.h),
-                Text(
-                  "تسجيل الدخول",
-                  style: AppStyles.title.copyWith(
-                    color: AppColors.darkGrey,
-                  ),
+      ),
+      child: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 28.0.w),
+          child: Column(
+            children: [
+              const Spacer(flex: 2),
+              // ── Logo ──
+              Container(
+                width: 110.r,
+                height: 110.r,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary.withOpacity(0.25),
+                      blurRadius: 32,
+                      spreadRadius: 4,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 40.0.h),
-                //Email
-                CustomTextFormField(
-                  onSaved: (value) {
-                    email = value!;
-                  },
-                  hintText: 'البريد الالكتروني',
-                  textInputType: TextInputType.emailAddress,
-                ),
-                SizedBox(height: 4.0.h),
-                //Password
-                PasswordField(
-                  onSaved: (value) {
-                    password = value!;
-                  },
-                ),
-                SizedBox(height: 8.0.h),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: GestureDetector(
-                    onTap: () {
-                      GoRouter.of(context).push(AppRouter.kforgetPasswordView);
-                    },
-                    child: Text(
-                      'نسيت كلمة المرور؟',
-                      style: AppStyles.semiBold16.copyWith(
-                        color: AppColors.red,
-                        fontSize: 12.sp,
-                      ),
+                child: ClipOval(
+                  child: Padding(
+                    padding: EdgeInsets.all(16.r),
+                    child: Image.asset(
+                      AppAssets.launcherIcon,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
-                SizedBox(height: 20.0.h),
-                //Signin
-                CustomButton(
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
-                      context.read<SigninCubit>().signin(email, password);
-                    } else {
-                      autovalidateMode = AutovalidateMode.always;
-                      setState(() {});
-                    }
-                  },
-                  text: 'تسجيل دخول',
+              ),
+              SizedBox(height: 24.h),
+              // ── App name ──
+              Text(
+                'وسط البلد',
+                style: TextStyle(
+                  fontSize: 28.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.green,
+                  letterSpacing: 0.5,
                 ),
-                SizedBox(height: 12.0.h),
-                const DontHaveAnAccountWidget(),
-                SizedBox(height: 20.0.h),
-                const OrDivider(),
-                SizedBox(height: 20.0.w),
-                //Google
-                SocialLoginButton(
-                  onPressed: () {
-                    context.read<SigninCubit>().signinWithGoogle();
-                  },
-                  image: AppAssets.googleIcon,
-                  title: 'التسجيل بواسطة جوجل',
+              ),
+              SizedBox(height: 8.h),
+              Text(
+                'متجرك الأول لبيع وصيانة الهواتف',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.grey.shade600,
+                  height: 1.5,
                 ),
-                //Apple
-                if (Platform.isIOS)
-                  Column(
-                    children: [
-                      SizedBox(height: 20.0.w),
-                      SocialLoginButton(
-                        onPressed: () {
-                          context.read<SigninCubit>().signinWithApple();
-                        },
-                        image: AppAssets.applIcon,
-                        title: 'التسجيل بواسطة أبل',
-                      ),
-                      SizedBox(height: 20.0.w),
-                    ],
-                  ),
-              ],
-            ),
+              ),
+              const Spacer(flex: 3),
+              // ── Google Button ──
+              _GoogleSignInButton(
+                onPressed: () => context.read<SigninCubit>().signinWithGoogle(),
+              ),
+              SizedBox(height: 24.h),
+              // ── Privacy note ──
+              Text(
+                'بالمتابعة، أنت توافق على شروط الاستخدام وسياسة الخصوصية',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 11.sp,
+                  color: Colors.grey.shade500,
+                  height: 1.6,
+                ),
+              ),
+              SizedBox(height: 32.h),
+            ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+// ── Google Sign-In Button Widget ──
+class _GoogleSignInButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  const _GoogleSignInButton({required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        width: double.infinity,
+        height: 54.h,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.10),
+              blurRadius: 20,
+              spreadRadius: 0,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              AppAssets.googleIcon,
+              height: 24.r,
+              width: 24.r,
+            ),
+            SizedBox(width: 14.w),
+            Text(
+              'المتابعة بحساب Google',
+              style: TextStyle(
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w600,
+                color: const Color(0xFF3C4043),
+              ),
+            ),
+          ],
         ),
       ),
     );

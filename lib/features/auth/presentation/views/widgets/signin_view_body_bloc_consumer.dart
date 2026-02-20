@@ -9,7 +9,6 @@ import '../../../../../core/functions/build_message_bar.dart';
 import '../../../../../core/widgets/custom_progress_hud.dart';
 import 'package:west_elbalad/core/service/shared_preferences_singleton.dart';
 
-
 class SigninViewBodyBlocConsumer extends StatelessWidget {
   const SigninViewBodyBlocConsumer({
     super.key,
@@ -24,9 +23,6 @@ class SigninViewBodyBlocConsumer extends StatelessWidget {
           SharedPref.setBool(kIsSigninView, true);
         }
         if (state is SigninFailure) {
-          if (state.message == 'الايميل مسجل من قبل ولاكن لم يتحقق منه') {
-            GoRouter.of(context).go(AppRouter.kVerificationView);
-          }
           buildMessageBar(context, state.message);
         }
       },

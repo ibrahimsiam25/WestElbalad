@@ -1,4 +1,5 @@
 class AppAssets {
+  static const launcherIcon = 'assets/images/launcher_icon.png';
   static const spalsh = 'assets/images/splash.gif';
   static const onboarding1 = 'assets/images/onboarding1.json';
   static const onboarding2 = 'assets/images/onboarding2.json';

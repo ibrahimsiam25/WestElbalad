@@ -4,11 +4,8 @@ import '../../features/auth/data/repos/auth_repo_impl.dart';
 import '../../features/home/domian/entites/phone_entites.dart';
 import '../../features/admin/presentation/views/admin_view.dart';
 import '../../features/auth/presentation/views/signin_view.dart';
-import '../../features/auth/presentation/views/signup_view.dart';
 import '../../features/admin/presentation/views/orders_view.dart';
-import '../../features/auth/presentation/views/verification_view.dart';
 import '../../features/admin/presentation/views/add_in_store_view.dart';
-import '../../features/auth/presentation/views/forget_password_view.dart';
 import '../../features/admin/presentation/views/edit_new_phones_view.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
 import '../../features/home/presentation/views/new_phone_details_view.dart';
@@ -19,7 +16,7 @@ import 'package:west_elbalad/features/splash/presentation/views/splash_view.dart
 import 'package:west_elbalad/features/admin/presentation/views/edit_used_phones_view.dart';
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 import 'package:west_elbalad/features/shopping_cart/presentation/views/finish_order_view.dart';
-import 'package:west_elbalad/features/auth/presentation/views/widgets/sign_up_successfully.dart';
+
 import 'package:west_elbalad/features/used_phones/presentation/views/used_phones_details_view.dart';
 
 import '../../features/user_profile/presentation/views/user_profile_view.dart';
@@ -28,12 +25,8 @@ abstract class AppRouter {
   static const kOnBoardingView = '/onBoardingView';
   static const kBottomNavBarController = '/bottomNavBarController';
   static const kSigninView = '/signinView';
-  static const kSignupView = '/signupView';
-  static const kVerificationView = '/verificationView';
   static const kWrapper = '/wrapper';
   static const kUserProfileView = '/userprofileView';
-  static const kforgetPasswordView = '/forgetPasswordView';
-  static const kSignupSuccessView = '/signupSuccessView';
   static const kAdminView = '/adminView';
   static const kOrdersView = '/OrdersView';
   static const kusersInformatinsView = '/usersInformatinsView';
@@ -64,24 +57,8 @@ abstract class AppRouter {
         builder: (context, state) => const SigninView(),
       ),
       GoRoute(
-        path: kSignupView,
-        builder: (context, state) => const SignupView(),
-      ),
-      GoRoute(
         path: kWrapper,
         builder: (context, state) => const Wrapper(),
-      ),
-      GoRoute(
-        path: kVerificationView,
-        builder: (context, state) => const VerificationView(),
-      ),
-      GoRoute(
-        path: kforgetPasswordView,
-        builder: (context, state) => const ForgetPasswordView(),
-      ),
-      GoRoute(
-        path: kSignupSuccessView,
-        builder: (context, state) => const SignUpSuccessfully(),
       ),
       GoRoute(
         path: kAdminView,
@@ -105,10 +82,10 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kUserProfileView,
-  builder: (context, state) {
-  final imageUrl = state.extra is String ? state.extra as String : null;
-  return UserProfileView(imageUrl: imageUrl);
-},
+        builder: (context, state) {
+          final imageUrl = state.extra is String ? state.extra as String : null;
+          return UserProfileView(imageUrl: imageUrl);
+        },
       ),
       GoRoute(
           path: kShoppingCartView,
