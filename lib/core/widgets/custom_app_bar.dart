@@ -10,12 +10,15 @@ class CustomAppBar extends StatelessWidget {
   final IconData? icon;
   final VoidCallback? onTap;
   final bool backButton;
+  final double bottomHeight;
+
   const CustomAppBar({
     super.key,
     required this.title,
     this.icon,
     this.onTap,
     this.backButton = true,
+    this.bottomHeight = 40.0,
   });
 
   @override
@@ -23,29 +26,31 @@ class CustomAppBar extends StatelessWidget {
     return ClipPath(
       clipper: CustomClipperPath(),
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColors.primary,
         ),
         child: SafeArea(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(height: 8.0.h),
               Row(
                 children: [
                   SizedBox(width: 24.0.w),
-                  backButton
-                      ? InkWell(
-                          onTap: () {
-                            GoRouter.of(context).pop();
-                          },
-                          child: Icon(
-                            Icons.arrow_back_ios_new,
-                            size: 24.0.r,
-                            color: AppColors.white,
-                          ),
-                        )
-                      : SizedBox(width: 24.0.w),
-                  Spacer(),
+                  if (backButton)
+                    InkWell(
+                      onTap: () {
+                        context.pop();
+                      },
+                      child: Icon(
+                        Icons.arrow_back_ios_new,
+                        size: 24.0.r,
+                        color: AppColors.white,
+                      ),
+                    )
+                  else
+                    SizedBox(width: 24.0.w),
+                  const Spacer(),
                   Text(
                     title,
                     style: AppStyles.header.copyWith(
@@ -53,21 +58,22 @@ class CustomAppBar extends StatelessWidget {
                       fontSize: 22.0.sp,
                     ),
                   ),
-                  Spacer(),
-                  icon != null
-                      ? InkWell(
-                          onTap: onTap,
-                          child: Icon(
-                            icon,
-                            color: AppColors.white,
-                            size: 24.0.h,
-                          ),
-                        )
-                      : SizedBox(width: 24.0.w),
+                  const Spacer(),
+                  if (icon != null)
+                    InkWell(
+                      onTap: onTap,
+                      child: Icon(
+                        icon,
+                        color: AppColors.white,
+                        size: 24.0.h,
+                      ),
+                    )
+                  else
+                    SizedBox(width: 24.0.w),
                   SizedBox(width: 24.0.w),
                 ],
               ),
-              SizedBox(height: 40.0.h),
+              SizedBox(height: bottomHeight.h),
             ],
           ),
         ),
