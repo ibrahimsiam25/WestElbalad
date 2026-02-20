@@ -35,16 +35,19 @@ class _UserBottomNavBarControllerState
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      bottomNavigationBar: _FloatingNavBar(
-        currentIndex: index,
-        items: _items,
-        onTap: (i) => setState(() {
-          if (i == 2) {
-            // Refresh the cart every time the tab is tapped
-            _cartKey = UniqueKey();
-          }
-          index = i;
-        }),
+      bottomNavigationBar: SafeArea(
+        
+        child: _FloatingNavBar(
+          currentIndex: index,
+          items: _items,
+          onTap: (i) => setState(() {
+            if (i == 2) {
+              // Refresh the cart every time the tab is tapped
+              _cartKey = UniqueKey();
+            }
+            index = i;
+          }),
+        ),
       ),
       body: IndexedStack(
         index: index,

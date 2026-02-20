@@ -11,6 +11,7 @@ class CustomAppBar extends StatelessWidget {
   final VoidCallback? onTap;
   final bool backButton;
   final double bottomHeight;
+  final bool compact;
 
   const CustomAppBar({
     super.key,
@@ -19,6 +20,7 @@ class CustomAppBar extends StatelessWidget {
     this.onTap,
     this.backButton = true,
     this.bottomHeight = 40.0,
+    this.compact = false,
   });
 
   @override
@@ -30,17 +32,18 @@ class CustomAppBar extends StatelessWidget {
           color: AppColors.primary,
         ),
         child: SafeArea(
+          bottom: false,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 6.0.h),
+              if (!compact) SizedBox(height: 6.0.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12.0.w),
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 44.w,
-                      height: 44.w,
+                      width: compact ? 36.w : 44.w,
+                      height: compact ? 36.w : 44.w,
                       child: backButton
                           ? IconButton(
                               onPressed: () {
@@ -48,8 +51,8 @@ class CustomAppBar extends StatelessWidget {
                               },
                               icon: const BackButtonIcon(),
                               color: AppColors.white,
-                              iconSize: 22.r,
-                              splashRadius: 22.r,
+                              iconSize: compact ? 18.r : 22.r,
+                              splashRadius: compact ? 18.r : 22.r,
                             )
                           : const SizedBox.shrink(),
                     ),
@@ -61,21 +64,21 @@ class CustomAppBar extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppStyles.header.copyWith(
                             color: AppColors.white,
-                            fontSize: 21.0.sp,
+                            fontSize: compact ? 17.0.sp : 21.0.sp,
                           ),
                         ),
                       ),
                     ),
                     SizedBox(
-                      width: 44.w,
-                      height: 44.w,
+                      width: compact ? 36.w : 44.w,
+                      height: compact ? 36.w : 44.w,
                       child: icon != null
                           ? IconButton(
                               onPressed: onTap,
                               icon: Icon(icon),
                               color: AppColors.white,
-                              iconSize: 22.r,
-                              splashRadius: 22.r,
+                              iconSize: compact ? 18.r : 22.r,
+                              splashRadius: compact ? 18.r : 22.r,
                             )
                           : const SizedBox.shrink(),
                     ),

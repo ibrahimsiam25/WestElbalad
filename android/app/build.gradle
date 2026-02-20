@@ -28,7 +28,7 @@ android {
         }
         admin {
             dimension "app"
-            applicationId "com.siam.west_elbalad.admin"
+            applicationId "com.siam.west_elbalad"
         }
     }
 

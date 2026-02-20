@@ -30,7 +30,7 @@ class UsedPhonesViewBody extends StatelessWidget {
           CustomAppBar(
             title: "الهواتف المستعملة",
             backButton: false,
-            bottomHeight: 0.0,
+            bottomHeight: 25.0,
             icon: Iconsax.add5,
             onTap: () {
               GoRouter.of(context).push(AppRouter.kAddUsedPhoneView);

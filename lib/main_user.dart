@@ -34,6 +34,7 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   await SharedPref.init();
 
+   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const _UserApp());
 }
 
@@ -49,7 +50,8 @@ class _UserApp extends StatelessWidget {
       builder: (context, child) {
         SystemChrome.setSystemUIOverlayStyle(
           const SystemUiOverlayStyle(
-            statusBarIconBrightness: Brightness.dark,
+             statusBarIconBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.light,
             statusBarColor: Colors.transparent,
           ),
         );

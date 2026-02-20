@@ -26,10 +26,12 @@ class _BottomNavBarControllerState extends State<BottomNavBarController> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      bottomNavigationBar: _FloatingNavBar(
-        currentIndex: index,
-        items: _items,
-        onTap: (i) => setState(() => index = i),
+      bottomNavigationBar: SafeArea(
+        child: _FloatingNavBar(
+          currentIndex: index,
+          items: _items,
+          onTap: (i) => setState(() => index = i),
+        ),
       ),
       body: IndexedStack(
         index: index,
