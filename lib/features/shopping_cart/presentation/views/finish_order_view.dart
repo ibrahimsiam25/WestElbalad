@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/features/shopping_cart/presentation/views/widgets/finish_order_view_body_bloc_consumer.dart';
 
 import '../../../../core/service/get_it_service.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../domian/repos/shopping_cart.repo.dart';
 import '../manager/finish_order/finish_order_cubit.dart';
@@ -20,6 +21,7 @@ class FinishOrderView extends StatelessWidget {
         getIt<ShoppingCartRepo>(),
       ),
       child: Scaffold(
+        backgroundColor: AppColors.lightGrey,
         extendBodyBehindAppBar: true,
         extendBody: true,
         appBar: PreferredSize(

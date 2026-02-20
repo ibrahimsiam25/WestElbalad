@@ -23,7 +23,7 @@ class NewPhoneDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: AppColors.lightGrey,
       extendBodyBehindAppBar: true,
       extendBody: true,
       appBar: PreferredSize(

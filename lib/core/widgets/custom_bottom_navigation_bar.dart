@@ -12,6 +12,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
     required this.iconOne,
     required this.iconTwo,
     required this.textTwo,
+
   });
 
   final void Function() onPressedOne;
@@ -22,51 +23,69 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8.0.w),
-      color: AppColors.white,
-      child: Row(
-        children: [
-          InkWell(
-            onTap: onPressedOne,
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
+    return Material(
+
+ color: Colors.transparent,
+    
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(kRadius24),
+        topRight: Radius.circular(kRadius24),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 10.0.h),
+        child: Row(
+          children: [
+            Material(
+           
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(kRadius24),
+                side: const BorderSide(
                   color: AppColors.primary,
                   width: 2,
                 ),
-                borderRadius: BorderRadius.circular(kRadius24),
               ),
-              padding: const EdgeInsets.all(8),
-              child: Icon(
-                iconOne,
-                color: AppColors.primary,
-                size: 30,
-              ),
-            ),
-          ),
-          SizedBox(width: 4.0.w),
-          Expanded(
-            child: ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(kRadius24),
-                ),
-                backgroundColor: AppColors.primary,
-                padding: EdgeInsets.symmetric(vertical: 10.0.h),
-              ),
-              onPressed: onPressedTwo,
-              icon: Icon(iconTwo, color: AppColors.white),
-              label: Text(
-                textTwo,
-                style: AppStyles.title.copyWith(
-                  color: AppColors.white,
-                  fontSize: 15.0.sp,
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                onTap: onPressedOne,
+                child: Padding(
+                  padding: EdgeInsets.all(10.0.w),
+                  child: Icon(
+                    iconOne,
+                    color: AppColors.primary,
+                    size: 26.r,
+                  ),
                 ),
               ),
             ),
-          )
-        ],
+            SizedBox(width: 10.0.w),
+            Expanded(
+              child: SizedBox(
+                height: 46.h,
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(kRadius24),
+                    ),
+                    backgroundColor: AppColors.primary,
+                    padding: EdgeInsets.symmetric(vertical: 12.0.h),
+                    elevation: 0,
+                  ),
+                  onPressed: onPressedTwo,
+                  icon: Icon(iconTwo, color: AppColors.white, size: 20.r),
+                  label: Text(
+                    textTwo,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppStyles.title.copyWith(
+                      color: AppColors.white,
+                      fontSize: 15.0.sp,
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -33,45 +33,54 @@ class CustomAppBar extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 8.0.h),
-              Row(
-                children: [
-                  SizedBox(width: 24.0.w),
-                  if (backButton)
-                    InkWell(
-                      onTap: () {
-                        context.pop();
-                      },
-                      child: Icon(
-                        Icons.arrow_back_ios_new,
-                        size: 24.0.r,
-                        color: AppColors.white,
-                      ),
-                    )
-                  else
-                    SizedBox(width: 24.0.w),
-                  const Spacer(),
-                  Text(
-                    title,
-                    style: AppStyles.header.copyWith(
-                      color: AppColors.white,
-                      fontSize: 22.0.sp,
+              SizedBox(height: 6.0.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.0.w),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 44.w,
+                      height: 44.w,
+                      child: backButton
+                          ? IconButton(
+                              onPressed: () {
+                                context.pop();
+                              },
+                              icon: const BackButtonIcon(),
+                              color: AppColors.white,
+                              iconSize: 22.r,
+                              splashRadius: 22.r,
+                            )
+                          : const SizedBox.shrink(),
                     ),
-                  ),
-                  const Spacer(),
-                  if (icon != null)
-                    InkWell(
-                      onTap: onTap,
-                      child: Icon(
-                        icon,
-                        color: AppColors.white,
-                        size: 24.0.h,
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppStyles.header.copyWith(
+                            color: AppColors.white,
+                            fontSize: 21.0.sp,
+                          ),
+                        ),
                       ),
-                    )
-                  else
-                    SizedBox(width: 24.0.w),
-                  SizedBox(width: 24.0.w),
-                ],
+                    ),
+                    SizedBox(
+                      width: 44.w,
+                      height: 44.w,
+                      child: icon != null
+                          ? IconButton(
+                              onPressed: onTap,
+                              icon: Icon(icon),
+                              color: AppColors.white,
+                              iconSize: 22.r,
+                              splashRadius: 22.r,
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: bottomHeight.h),
             ],

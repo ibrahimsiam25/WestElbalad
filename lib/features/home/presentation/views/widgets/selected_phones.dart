@@ -17,38 +17,28 @@ class SelectedPhones extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        GoRouter.of(context)
-            .push(AppRouter.kNewPhoneDetailsView, extra: phones);
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(16.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.07),
-              blurRadius: 12,
-              spreadRadius: 0,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
+    final radius = BorderRadius.circular(16.r);
+    return Material(
+      color: AppColors.white,
+      elevation: 2,
+      borderRadius: radius,
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () {
+          GoRouter.of(context)
+              .push(AppRouter.kNewPhoneDetailsView, extra: phones);
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ── Image area (fixed height) ──
-            ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
-              child: SizedBox(
-                height: 130.h,
+            SizedBox(
+              height: 130.h,
+              width: double.infinity,
+              child: CustomCachedImage(
+                imageUrl: phones.imageUrl,
                 width: double.infinity,
-                child: CustomCachedImage(
-                  imageUrl: phones.imageUrl,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+                fit: BoxFit.cover,
               ),
             ),
             // ── Content ──
@@ -58,7 +48,6 @@ class SelectedPhones extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Name
                     Text(
                       phones.name,
                       maxLines: 1,
@@ -69,7 +58,6 @@ class SelectedPhones extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 4.h),
-                    // Description
                     Expanded(
                       child: Text(
                         phones.description,
@@ -77,18 +65,17 @@ class SelectedPhones extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppStyles.tiny.copyWith(
                           color: AppColors.darkGrey,
-                          height: 1.4,
+                          height: 1.35,
                         ),
                       ),
                     ),
                     SizedBox(height: 6.h),
-                    // Price badge
                     Container(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                          EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
                       decoration: BoxDecoration(
-                        color: AppColors.primary.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8.r),
+                        color: AppColors.primary.withAlpha(26),
+                        borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: Text(
                         '${phones.price} جنيه',

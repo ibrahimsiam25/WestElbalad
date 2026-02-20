@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
+import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/core/service/shared_preferences_singleton.dart';
 import 'package:west_elbalad/core/widgets/custom_button.dart';
 import 'package:west_elbalad/core/widgets/custom_text_field.dart';
@@ -36,11 +37,28 @@ class _FinishOrderViewBodyState extends State<FinishOrderViewBody> {
           padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
           child: Column(
             children: [
-              Text(
-                "اجمالي سعر الطلب:  $totalPrice جنية",
-                style: AppStyles.semiBold16,
+              Material(
+                color: AppColors.white,
+                elevation: 2,
+                borderRadius: BorderRadius.circular(18.r),
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.receipt_long_rounded,
+                          size: 20.r, color: AppColors.black),
+                      SizedBox(width: 8.w),
+                      Text(
+                        "اجمالي سعر الطلب:  $totalPrice جنية",
+                        style: AppStyles.semiBold16,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              SizedBox(height: 16.0.h),
+              SizedBox(height: 14.0.h),
               CustomTextFormField(
                 onSaved: (value) {
                   userName = value!;
@@ -71,7 +89,7 @@ class _FinishOrderViewBodyState extends State<FinishOrderViewBody> {
                 hintText: "العنوان",
                 textInputType: TextInputType.text,
               ),
-              SizedBox(height: 24.0),
+              SizedBox(height: 18.0.h),
               CustomButton(
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
@@ -90,6 +108,7 @@ class _FinishOrderViewBodyState extends State<FinishOrderViewBody> {
                 },
                 text: " تأكيد الطلب ",
               ),
+              SizedBox(height: 12.0.h),
             ],
           ),
         ),

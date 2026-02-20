@@ -17,73 +17,59 @@ class SelectedUsedPhones extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        GoRouter.of(context)
-            .push(AppRouter.kUsedPhoneDetailsView, extra: phones);
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(16.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.07),
-              blurRadius: 12,
-              spreadRadius: 0,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
+    final radius = BorderRadius.circular(16.r);
+    return Material(
+      color: AppColors.white,
+      elevation: 2,
+      borderRadius: radius,
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () {
+          GoRouter.of(context)
+              .push(AppRouter.kUsedPhoneDetailsView, extra: phones);
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── Image area (fixed height) ──
-            ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
-              child: SizedBox(
-                height: 130.h,
-                width: double.infinity,
-                child: Stack(
-                  children: [
-                    CustomCachedImage(
-                      imageUrl: phones.imageUrl,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                    // Used badge
-                    Positioned(
-                      top: 8.h,
-                      right: 8.w,
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 6.w, vertical: 3.h),
-                        decoration: BoxDecoration(
-                          color: AppColors.red.withOpacity(0.85),
-                          borderRadius: BorderRadius.circular(6.r),
-                        ),
-                        child: Text(
-                          'مستعمل',
-                          style: TextStyle(
-                            fontSize: 9.sp,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
+            SizedBox(
+              height: 130.h,
+              width: double.infinity,
+              child: Stack(
+                children: [
+                  CustomCachedImage(
+                    imageUrl: phones.imageUrl,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                  Positioned(
+                    top: 8.h,
+                    right: 8.w,
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 7.w, vertical: 4.h),
+                      decoration: BoxDecoration(
+                        color: AppColors.red.withAlpha(217),
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: Text(
+                        'مستعمل',
+                        style: TextStyle(
+                          fontSize: 10.sp,
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            // ── Content ──
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Name
                     Text(
                       phones.name,
                       maxLines: 1,
@@ -94,7 +80,6 @@ class SelectedUsedPhones extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 4.h),
-                    // Description
                     Expanded(
                       child: Text(
                         phones.description,
@@ -102,18 +87,17 @@ class SelectedUsedPhones extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppStyles.tiny.copyWith(
                           color: AppColors.darkGrey,
-                          height: 1.4,
+                          height: 1.35,
                         ),
                       ),
                     ),
                     SizedBox(height: 6.h),
-                    // Price badge
                     Container(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                          EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
                       decoration: BoxDecoration(
-                        color: AppColors.primary.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8.r),
+                        color: AppColors.primary.withAlpha(26),
+                        borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: Text(
                         '${phones.price} جنيه',

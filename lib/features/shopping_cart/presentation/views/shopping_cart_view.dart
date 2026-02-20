@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:west_elbalad/core/service/shared_preferences_singleton.dart';
+import 'package:west_elbalad/core/constants/app_colors.dart';
 
 import '../../../../core/constants/app_consts.dart';
 import '../../../../core/utils/app_router.dart';
@@ -22,6 +23,7 @@ class ShoppingCartView extends StatelessWidget {
     return BlocProvider(
       create: (context) => ShowOrdersCubit()..fetchOrders(),
       child: Scaffold(
+        backgroundColor: AppColors.lightGrey,
         body: ShoppingCartViewBody(showBackButton: showBackBar),
         bottomNavigationBar: BlocBuilder<ShowOrdersCubit, ShowOrdersState>(
           builder: (context, state) {

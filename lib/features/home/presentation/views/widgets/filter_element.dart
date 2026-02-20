@@ -15,13 +15,14 @@ class FilterElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isSelected = color == AppColors.primary;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.0.w),
+      padding: EdgeInsets.symmetric(horizontal: 14.0.w, vertical: 6.0.h),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: isSelected ? AppColors.primary : AppColors.white,
         border: Border.all(
           width: 1,
-          color: color,
+          color: isSelected ? AppColors.primary : AppColors.grey,
         ),
         borderRadius: BorderRadius.circular(kRadius24),
       ),
@@ -29,7 +30,9 @@ class FilterElement extends StatelessWidget {
         child: Text(
           text.toUpperCase(),
           style: AppStyles.semiBold16.copyWith(
-            height: 2,
+            height: 1.2,
+            fontSize: 13.sp,
+            color: isSelected ? AppColors.white : AppColors.black,
           ),
         ),
       ),

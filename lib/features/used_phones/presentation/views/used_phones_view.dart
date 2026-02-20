@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:west_elbalad/core/service/get_it_service.dart';
+import 'package:west_elbalad/core/constants/app_colors.dart';
 import 'package:west_elbalad/features/used_phones/presentation/views/widgets/used_phones_bloc_consumer.dart';
 import '../../../../core/utils/backend_endpoints.dart';
 import '../../domian/repos/used_phone_repo.dart';
@@ -12,6 +13,7 @@ class UsedPhones extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightGrey,
       body: BlocProvider<FetchUsedPhoneCubit>(
         create: (context) => FetchUsedPhoneCubit(
           getIt<UsedPhonesRepo>(),
