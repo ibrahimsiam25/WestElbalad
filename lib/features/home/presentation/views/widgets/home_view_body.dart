@@ -92,6 +92,7 @@ class HomeViewBody extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(height: 160.0.h),
                 ],
               );
             },

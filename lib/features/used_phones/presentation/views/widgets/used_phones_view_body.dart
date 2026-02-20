@@ -100,6 +100,8 @@ class UsedPhonesViewBody extends StatelessWidget {
                           );
                         }(),
                       ),
+                      SizedBox(height: 160.0.h),
+                      
                     ],
                   )
                 ],
