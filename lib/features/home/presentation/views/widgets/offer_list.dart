@@ -8,7 +8,6 @@ import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_consts.dart';
 import '../../../../../core/service/get_it_service.dart';
-import '../../../domian/repos/home_repo.dart';
 import '../../manager/offers/offers_cubit.dart';
 
 class OffersList extends StatelessWidget {
@@ -16,10 +15,8 @@ class OffersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => OffersCubit(
-        getIt<HomeRepo>(),
-      )..loadImagesFromFirebase(),
+    return BlocProvider.value(
+      value: getIt<OffersCubit>(),
       child: SizedBox(
         height: 148.0.h,
         child: BlocBuilder<OffersCubit, OffersState>(

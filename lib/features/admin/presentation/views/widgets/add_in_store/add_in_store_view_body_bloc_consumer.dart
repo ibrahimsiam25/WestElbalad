@@ -5,8 +5,10 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:west_elbalad/core/constants/app_assets.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/core/functions/build_message_bar.dart';
+import 'package:west_elbalad/core/service/get_it_service.dart';
 import 'package:west_elbalad/core/widgets/custom_app_bar.dart';
 import 'package:west_elbalad/features/admin/presentation/views/widgets/add_in_store/image_picker_bloc_builder.dart';
+import 'package:west_elbalad/features/home/presentation/manager/phones_data/phones_data_cubit.dart';
 
 import '../../../manager/add_in_store/edit_in_store_cubit.dart';
 import 'add_in_store_view_body.dart';
@@ -20,6 +22,7 @@ class AddInStoreViewBodyBlocConsumer extends StatelessWidget {
       listener: (context, state) {
         if (state is AddInStoreSuccess) {
           buildMessageBar(context, "تمت اضافةالهاتف بنجاح");
+          getIt<PhonesDataCubit>().fetchPhonesStreamData();
           Navigator.pop(context);
         } else if (state is AddInStoreFailure) {
           buildMessageBar(context, state.message);

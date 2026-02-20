@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:west_elbalad/core/service/get_it_service.dart';
+import 'package:west_elbalad/features/home/presentation/manager/phones_data/phones_data_cubit.dart';
+import 'package:west_elbalad/features/used_phones/presentation/manager/fetch_used_phone/fetch_used_phone_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:west_elbalad/core/constants/app_assets.dart';
@@ -20,6 +23,8 @@ class AddUsedPhoneViewBodyBlocConsumer extends StatelessWidget {
       listener: (context, state) {
         if (state is AddUsedPhoneSuccess) {
           buildMessageBar(context, "تمت اضافةالهاتف المستعمل بنجاح");
+          getIt<FetchUsedPhoneCubit>().fetchPhonesStreamData();
+          getIt<PhonesDataCubit>().fetchPhonesStreamData();
           Navigator.pop(context);
         } else if (state is AddUsedPhoneFailure) {
           buildMessageBar(context, state.message);

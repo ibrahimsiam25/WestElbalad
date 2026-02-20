@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:west_elbalad/core/functions/build_message_bar.dart';
+import 'package:west_elbalad/core/service/get_it_service.dart';
+import 'package:west_elbalad/features/home/presentation/manager/phones_data/phones_data_cubit.dart';
+import 'package:west_elbalad/features/used_phones/presentation/manager/fetch_used_phone/fetch_used_phone_cubit.dart';
 import 'package:west_elbalad/features/admin/presentation/manager/used_phones/used_phones_cubit.dart';
 import 'package:west_elbalad/features/admin/presentation/views/widgets/edit_used_phones/edit_used_phones_view_body.dart';
 
@@ -13,8 +16,12 @@ class EditUsedPhonesViewBodyBlocConsumer extends StatelessWidget {
       listener: (context, state) {
         if (state is removeEditUsedPhonesuccess) {
           buildMessageBar(context, "تم الحذف بنجاح");
+          getIt<FetchUsedPhoneCubit>().fetchPhonesStreamData();
+          getIt<PhonesDataCubit>().fetchPhonesStreamData();
         } else if (state is editUsedPhonePriceSuccess) {
           buildMessageBar(context, "تم تعديل السعر بنجاح");
+          getIt<FetchUsedPhoneCubit>().fetchPhonesStreamData();
+          getIt<PhonesDataCubit>().fetchPhonesStreamData();
         }
       },
       builder: (context, state) {

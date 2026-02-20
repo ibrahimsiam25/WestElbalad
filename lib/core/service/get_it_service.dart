@@ -25,6 +25,9 @@ import 'package:west_elbalad/features/home/data/data_source/home_remote_data_sou
 import 'package:west_elbalad/core/manager/image_picker/image_picker_cubit.dart';
 import 'package:west_elbalad/features/admin/data/data_sources/user_informations_remote_data_source.dart';
 import 'package:west_elbalad/features/shopping_cart/data/data_source/shopping_cart_remote_data_source.dart';
+import 'package:west_elbalad/features/home/presentation/manager/phones_data/phones_data_cubit.dart';
+import 'package:west_elbalad/features/used_phones/presentation/manager/fetch_used_phone/fetch_used_phone_cubit.dart';
+import 'package:west_elbalad/features/home/presentation/manager/offers/offers_cubit.dart';
 
 final getIt = GetIt.instance;
 void setupGetIt() {
@@ -90,5 +93,25 @@ void setupGetIt() {
   getIt.registerSingleton<Stream<List<Map<String, dynamic>>>>(
     usedPhonesStream,
     instanceName: BackendEndpoint.usedPhones,
+  );
+
+  getIt.registerLazySingleton<PhonesDataCubit>(
+    () => PhonesDataCubit(
+      getIt<HomeRepo>(),
+      getIt<Stream<List<Map<String, dynamic>>>>(
+          instanceName: BackendEndpoint.newPhone),
+    ),
+  );
+
+  getIt.registerLazySingleton<FetchUsedPhoneCubit>(
+    () => FetchUsedPhoneCubit(
+      getIt<UsedPhonesRepo>(),
+      getIt<Stream<List<Map<String, dynamic>>>>(
+          instanceName: BackendEndpoint.usedPhones),
+    ),
+  );
+
+  getIt.registerLazySingleton<OffersCubit>(
+    () => OffersCubit(getIt<HomeRepo>())..loadImagesFromFirebase(),
   );
 }
