@@ -12,22 +12,26 @@ class ShoppingCartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(SharedPref.getString(kOrder));
     return Scaffold(
       body: ShoppingCartViewBody(),
       bottomNavigationBar: SafeArea(
-        child: CustomBottomNavigationBar(
-          onPressedTwo: () {
-            String orders = SharedPref.getString(kOrder);
-            if (orders != "") {
-              GoRouter.of(context).push(AppRouter.kFinishOrderView);
-            }
-          },
-          onPressedOne: () {
-            GoRouter.of(context).go(AppRouter.kBottomNavBarController);
-          },
-          textTwo: "اتمام الطلب",
-          iconOne: Icons.home,
-          iconTwo: Icons.shopping_bag,
+        child: Visibility(
+          visible: SharedPref.getString(kOrder).isEmpty,
+          child: CustomBottomNavigationBar(
+            onPressedTwo: () {
+              String orders = SharedPref.getString(kOrder);
+              if (orders != "") {
+                GoRouter.of(context).push(AppRouter.kFinishOrderView);
+              }
+            },
+            onPressedOne: () {
+              GoRouter.of(context).go(AppRouter.kBottomNavBarController);
+            },
+            textTwo: "اتمام الطلب",
+            iconOne: Icons.home,
+            iconTwo: Icons.shopping_bag,
+          ),
         ),
       ),
     );

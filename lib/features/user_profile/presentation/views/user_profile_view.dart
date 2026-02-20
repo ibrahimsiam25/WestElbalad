@@ -39,11 +39,14 @@ class UserProfileView extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            return ModalProgressHUD(
+            return SizedBox.expand(
+              child: ModalProgressHUD(
                 inAsyncCall: state is UploadUserImageLoading ? true : false,
                 child: UserProfileViewBody(
                     online: imageUrl != null,
-                    defaultImage: imageUrl ?? AppAssets.profile));
+                    defaultImage: imageUrl ?? AppAssets.profile),
+              ),
+            );
           },
         ),
       ),
