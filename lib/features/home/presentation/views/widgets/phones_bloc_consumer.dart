@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:west_elbalad/core/widgets/custom_error_widget.dart';
-import 'package:west_elbalad/core/widgets/custom_progress_indicator.dart';
+import 'package:west_elbalad/core/widgets/phones_grid_skeleton.dart';
 import 'package:west_elbalad/features/home/presentation/manager/phones_data/phones_data_cubit.dart';
 import 'package:west_elbalad/features/home/presentation/views/widgets/home_view_body.dart';
+import 'package:west_elbalad/features/home/presentation/views/widgets/custom_home_app_bar.dart';
 
 class PhonesBlocConsumer extends StatelessWidget {
   const PhonesBlocConsumer({super.key});
@@ -20,7 +21,13 @@ class PhonesBlocConsumer extends StatelessWidget {
           } else if (state is PhonesDataFailure) {
             return CustomErrorWidget(text: state.message);
           } else {
-            return const CustomProgressIndicator();
+            return ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                CustomHomeAppBar(),
+                const PhonesGridSkeleton(),
+              ],
+            );
           }
         });
   }
