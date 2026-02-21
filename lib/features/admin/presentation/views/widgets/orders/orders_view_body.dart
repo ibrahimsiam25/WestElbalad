@@ -35,6 +35,7 @@ class _OrdersViewBodyState extends State<OrdersViewBody> {
         .toList();
 
     return SingleChildScrollView(
+      padding: EdgeInsets.only(bottom: 30.0.h),
       child: Column(
         children: [
           CustomAppBar(title: "الطلبات"),

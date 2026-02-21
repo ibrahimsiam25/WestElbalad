@@ -34,7 +34,9 @@ class _EditNewPhonesViewBodyState extends State<EditNewPhonesViewBody> {
         .toList();
 
     return SingleChildScrollView(
+  padding: EdgeInsets.only(bottom: 30.0.h),
       child: Column(
+
         children: [
           CustomAppBar(title: "المنتجات الجديدة"),
           Padding(

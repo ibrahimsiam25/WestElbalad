@@ -67,14 +67,17 @@ class _UsersInformationsViewBodyState extends State<UsersInformationsViewBody> {
           ),
         ),
         Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.symmetric(
-                horizontal: kHorizontalPadding, vertical: 8.0.h),
-            itemCount: filtered.length,
-            itemBuilder: (context, index) {
-              final user = filtered[index];
-              return UserDataElement(user: user);
-            },
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 30.0.h),
+            child: ListView.builder(
+              padding: EdgeInsets.symmetric(
+                  horizontal: kHorizontalPadding, vertical: 8.0.h),
+              itemCount: filtered.length,
+              itemBuilder: (context, index) {
+                final user = filtered[index];
+                return UserDataElement(user: user);
+              },
+            ),
           ),
         ),
       ],

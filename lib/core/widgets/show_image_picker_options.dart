@@ -13,46 +13,48 @@ Future<dynamic> showImagePickerOptions({
     clipBehavior: Clip.antiAlias,
     context: context,
     builder: (context) {
-      return Container(
-        color: AppColors.white,
-        padding: EdgeInsets.all(12.0.r),
-        child: Wrap(
-          children: [
-            ListTile(
-              leading: Padding(
-                padding: EdgeInsets.only(top: 4.0.h),
-                child: const Icon(
-                  Icons.photo_library,
-                  size: 28,
+      return SafeArea(
+        child: Container(
+          color: AppColors.white,
+          padding: EdgeInsets.all(12.0.r),
+          child: Wrap(
+            children: [
+              ListTile(
+                leading: Padding(
+                  padding: EdgeInsets.only(top: 4.0.h),
+                  child: const Icon(
+                    Icons.photo_library,
+                    size: 28,
+                  ),
                 ),
-              ),
-              title: Text(
-                'فتح معرض الصور',
-                style: AppStyles.subtitle,
-              ),
-              onTap: () {
-                Navigator.pop(context); 
-                onGalleryPressed();
-              },
-            ),
-            ListTile(
-              leading: Padding(
-                padding: EdgeInsets.only(top: 4.0.h),
-                child: const Icon(
-                  Icons.camera_alt,
-                  size: 28,
+                title: Text(
+                  'فتح معرض الصور',
+                  style: AppStyles.subtitle,
                 ),
+                onTap: () {
+                  Navigator.pop(context);
+                  onGalleryPressed();
+                },
               ),
-              title: Text(
-                'فتح الكاميرا',
-                style: AppStyles.subtitle,
+              ListTile(
+                leading: Padding(
+                  padding: EdgeInsets.only(top: 4.0.h),
+                  child: const Icon(
+                    Icons.camera_alt,
+                    size: 28,
+                  ),
+                ),
+                title: Text(
+                  'فتح الكاميرا',
+                  style: AppStyles.subtitle,
+                ),
+                onTap: () {
+                  Navigator.pop(context); // Close bottom sheet before action
+                  onCameraPressed();
+                },
               ),
-              onTap: () {
-                Navigator.pop(context); // Close bottom sheet before action
-                onCameraPressed();
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       );
     },

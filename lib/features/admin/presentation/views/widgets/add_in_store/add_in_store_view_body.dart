@@ -26,68 +26,70 @@ class _AddInStoreViewBodyState extends State<AddInStoreViewBody> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Form(
-        key: formKey,
-        autovalidateMode: autovalidateMode,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
-          child: Column(
-            children: [
-              SizedBox(height: 12.0.h),
-              CustomTextFormField(
-                onSaved: (value) {
-                  phoneType = value!;
-                },
-                hintText: "اسم الشركة",
-                textInputType: TextInputType.text,
-              ),
-              SizedBox(height: 6.0.h),
-              CustomTextFormField(
-                onSaved: (value) {
-                  phoneName = value!;
-                },
-                hintText: "نوع الهاتف",
-                textInputType: TextInputType.text,
-              ),
-              SizedBox(height: 6.0.h),
-              CustomNumberField(
-                onSaved: (value) {
-                  phonePrice = value!;
-                },
-                hintText: "سعر الهاتف",
-              ),
-              SizedBox(height: 6.0.h),
-              CustomTextFormField(
-                onSaved: (value) {
-                  phoneDescription = value!;
-                },
-                hintText: "موصفات الهاتف",
-                textInputType: TextInputType.text,
-              ),
-              SizedBox(height: 12.0.h),
-              CustomButton(
-                onPressed: () async {
-                  if (formKey.currentState!.validate()) {
-                    formKey.currentState!.save();
-                    if (context.read<ImagePickerCubit>().image != null) {
-                      context.read<AddInStoreCubit>().uploadPhoneData(
-                          context.read<ImagePickerCubit>().image, {
-                        "phoneType": phoneType,
-                        "phoneName": phoneName,
-                        "phoneDescription": phoneDescription,
-                        "phonePrice": phonePrice
-                      });
+      child: SafeArea(
+        child: Form(
+          key: formKey,
+          autovalidateMode: autovalidateMode,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+            child: Column(
+              children: [
+                SizedBox(height: 12.0.h),
+                CustomTextFormField(
+                  onSaved: (value) {
+                    phoneType = value!;
+                  },
+                  hintText: "اسم الشركة",
+                  textInputType: TextInputType.text,
+                ),
+                SizedBox(height: 6.0.h),
+                CustomTextFormField(
+                  onSaved: (value) {
+                    phoneName = value!;
+                  },
+                  hintText: "نوع الهاتف",
+                  textInputType: TextInputType.text,
+                ),
+                SizedBox(height: 6.0.h),
+                CustomNumberField(
+                  onSaved: (value) {
+                    phonePrice = value!;
+                  },
+                  hintText: "سعر الهاتف",
+                ),
+                SizedBox(height: 6.0.h),
+                CustomTextFormField(
+                  onSaved: (value) {
+                    phoneDescription = value!;
+                  },
+                  hintText: "موصفات الهاتف",
+                  textInputType: TextInputType.text,
+                ),
+                SizedBox(height: 12.0.h),
+                CustomButton(
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      formKey.currentState!.save();
+                      if (context.read<ImagePickerCubit>().image != null) {
+                        context.read<AddInStoreCubit>().uploadPhoneData(
+                            context.read<ImagePickerCubit>().image, {
+                          "phoneType": phoneType,
+                          "phoneName": phoneName,
+                          "phoneDescription": phoneDescription,
+                          "phonePrice": phonePrice
+                        });
+                      } else {
+                        buildMessageBar(context, "يجب تحديد صورة للهاتف");
+                      }
                     } else {
-                      buildMessageBar(context, "يجب تحديد صورة للهاتف");
+                      autovalidateMode = AutovalidateMode.always;
+                      setState(() {});
                     }
-                  } else {
-                    autovalidateMode = AutovalidateMode.always;
-                    setState(() {});
-                  }
-                },
-                text: "اضافة الهاتف",
-              ),
-            ],
+                  },
+                  text: "اضافة الهاتف",
+                ),
+              ],
+            ),
           ),
         ),
       ),

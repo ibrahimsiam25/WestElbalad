@@ -35,6 +35,7 @@ class _EditUsedPhoneViewBodyState extends State<EditUsedPhoneViewBody> {
         .toList();
 
     return SingleChildScrollView(
+      padding: EdgeInsets.only(bottom: 30.0.h),
       child: Column(
         children: [
           CustomAppBar(title: "المنتجات المستعملة"),

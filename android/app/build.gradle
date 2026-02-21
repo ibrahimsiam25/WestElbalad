@@ -33,8 +33,6 @@ android {
     }
 
     defaultConfig {
-        // Application ID is overridden per flavor above.
-        applicationId = "com.siam.west_elbalad"
         minSdkVersion flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
