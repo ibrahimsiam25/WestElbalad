@@ -15,7 +15,8 @@ import '../../features/home/presentation/views/new_phone_details_view.dart';
 import '../../features/admin/presentation/views/users_informatins_view.dart';
 import '../../features/used_phones/presentation/views/add_used_phone_view.dart';
 import '../../features/shopping_cart/presentation/views/shopping_cart_view.dart';
-import 'package:west_elbalad/features/admin/presentation/views/edit_used_phones_view.dart';
+import '../../features/admin/presentation/views/edit_used_phones_view.dart';
+import '../../features/admin/presentation/views/pending_used_phones_view.dart';
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 import 'package:west_elbalad/features/shopping_cart/presentation/views/finish_order_view.dart';
 import 'package:west_elbalad/features/used_phones/presentation/views/used_phones_details_view.dart';
@@ -35,6 +36,7 @@ abstract class AppRouter {
   static const kAddInStoreView = '/AddInStoreView';
   static const kNewPhonesView = '/NewPhonesView';
   static const kUsedPhonesView = '/UsedPhonesView';
+  static const kPendingUsedPhonesView = '/PendingUsedPhonesView';
   static const kShoppingCartView = '/ShoppingCartView';
   static const kNewPhoneDetailsView = '/NewPhoneDetailsView';
   static const kUsedPhoneDetailsView = '/UsedPhoneDetailsView';
@@ -127,7 +129,11 @@ abstract class AppRouter {
       GoRoute(
         path: kOrdersView,
         builder: (context, state) => OrdersView(),
-      )
+      ),
+      GoRoute(
+        path: kPendingUsedPhonesView,
+        builder: (context, state) => const PendingUsedPhonesView(),
+      ),
     ],
   );
 }

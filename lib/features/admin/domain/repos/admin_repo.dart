@@ -6,8 +6,6 @@ import 'package:west_elbalad/features/admin/domain/entities/user_informations_en
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 import 'package:west_elbalad/features/shopping_cart/domian/entites/user_info_for_order_entities.dart';
 
-
-
 abstract class AdminRepo {
   Future<Either<Failure, List<UserInformationsEntity>>> fetchAllUsers();
   Future<Either<Failure, List<PhoneEntites>>> fetchNewPhonesData();
@@ -20,7 +18,9 @@ abstract class AdminRepo {
   Future<File?> openImagePickerFromCamera();
   Future<File?> openImagePickerFromGallery();
   Future<Either<Failure, void>> editNewPhonePrice(String phoneId, int newValue);
-  Future<Either<Failure, void>> editUsedPhonePrice(String phoneId, int newValue);
-  
-
+  Future<Either<Failure, void>> editUsedPhonePrice(
+      String phoneId, int newValue);
+  Future<Either<Failure, List<UsedPhonesEntities>>> fetchPendingUsedPhones();
+  Future<Either<Failure, void>> approveUsedPhone(String id);
+  Future<Either<Failure, void>> rejectUsedPhone(String id);
 }

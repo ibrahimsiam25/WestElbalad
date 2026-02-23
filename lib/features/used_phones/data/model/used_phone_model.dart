@@ -5,7 +5,7 @@ class UsedPhoneModel extends UsedPhonesEntities {
       {required super.id,
       required super.authUserId,
       required super.authUserName,
-      required super.authUserEmail,    
+      required super.authUserEmail,
       required super.type,
       required super.name,
       required super.description,
@@ -14,7 +14,8 @@ class UsedPhoneModel extends UsedPhonesEntities {
       required super.userPhone,
       required super.userGovernorate,
       required super.userLocation,
-      required super.imageUrl});
+      required super.imageUrl,
+      super.status = 'pending'});
   factory UsedPhoneModel.fromEntity(UsedPhonesEntities user) {
     return UsedPhoneModel(
       id: user.id,
@@ -30,14 +31,15 @@ class UsedPhoneModel extends UsedPhonesEntities {
       userLocation: user.userLocation,
       userGovernorate: user.userGovernorate,
       imageUrl: user.imageUrl,
+      status: user.status,
     );
   }
   factory UsedPhoneModel.fromMap(Map<String, dynamic> map) {
     return UsedPhoneModel(
       id: map['id'],
       authUserId: map['authUserId'],
-       authUserName: map['authUserName'],
-      authUserEmail: map['authUserEmail'], 
+      authUserName: map['authUserName'],
+      authUserEmail: map['authUserEmail'],
       type: map['type'],
       name: map['name'],
       description: map['description'],
@@ -47,6 +49,7 @@ class UsedPhoneModel extends UsedPhonesEntities {
       userGovernorate: map['userGovernorate'],
       userLocation: map['userLocation'],
       imageUrl: map['imageUrl'],
+      status: map['status'] ?? 'pending',
     );
   }
   toMap() {
@@ -63,7 +66,8 @@ class UsedPhoneModel extends UsedPhonesEntities {
       'userPhone': userPhone,
       'userLocation': userLocation,
       'userGovernorate': userGovernorate,
-      'imageUrl': imageUrl
+      'imageUrl': imageUrl,
+      'status': status,
     };
   }
 }

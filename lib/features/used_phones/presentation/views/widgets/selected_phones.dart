@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:west_elbalad/core/constants/app_colors.dart';
+import 'package:west_elbalad/core/constants/app_assets.dart';
+import 'package:west_elbalad/core/service/laumch_url_service.dart';
 import 'package:west_elbalad/core/utils/app_styles.dart';
 import 'package:west_elbalad/core/widgets/custom_cacehd_network_image.dart';
+import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/utils/app_router.dart';
 import '../../../domian/entities/used_phone_entities.dart';
@@ -92,20 +95,79 @@ class SelectedUsedPhones extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 6.h),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary.withAlpha(26),
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      child: Text(
-                        '${phones.price} جنيه',
-                        style: AppStyles.semiBold16.copyWith(
-                          fontSize: 13.sp,
-                          color: AppColors.primary,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () => launchCustomUr(
+                                context, 'https://wa.me/201000110049'),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 6.w, vertical: 5.h),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF25D366).withAlpha(26),
+                                borderRadius: BorderRadius.circular(8.r),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    AppAssets.whatsappIcon,
+                                    width: 13.r,
+                                    height: 13.r,
+                                  ),
+                                  SizedBox(width: 4.w),
+                                  Flexible(
+                                    child: Text(
+                                      'واتساب',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: AppStyles.semiBold16.copyWith(
+                                        fontSize: 11.sp,
+                                        color: const Color(0xFF25D366),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(width: 6.w),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () => callPhoneNumber('01000110049'),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 6.w, vertical: 5.h),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withAlpha(26),
+                                borderRadius: BorderRadius.circular(8.r),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    AppAssets.callIcon,
+                                    width: 13.r,
+                                    height: 13.r,
+                                  ),
+                                  SizedBox(width: 4.w),
+                                  Flexible(
+                                    child: Text(
+                                      'اتصال',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: AppStyles.semiBold16.copyWith(
+                                        fontSize: 11.sp,
+                                        color: AppColors.primary,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

@@ -12,6 +12,7 @@ class UsedPhonesEntities {
   final String userGovernorate;
   final String userLocation;
   final String imageUrl;
+  final String status; // 'pending' | 'approved' | 'rejected'
 
   UsedPhonesEntities({
     required this.id,
@@ -27,6 +28,6 @@ class UsedPhonesEntities {
     required this.userPhone,
     required this.userLocation,
     required this.imageUrl,
+    this.status = 'pending',
   });
 }
- 

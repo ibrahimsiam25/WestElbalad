@@ -13,25 +13,20 @@ import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_ent
 import 'package:west_elbalad/features/shopping_cart/domian/entites/user_info_for_order_entities.dart';
 import 'package:west_elbalad/features/admin/data/data_sources/user_informations_remote_data_source.dart';
 
-
-
 class AdminRepoImpl extends AdminRepo {
   final ImagePickerService imagePickerService;
   final UserInformationsRemoteDataSource userInformationsRemoteDataSource;
 
   AdminRepoImpl({
     required this.userInformationsRemoteDataSource,
- 
     required this.imagePickerService,
   });
 
   @override
-  Future<Either<Failure, List<UserInformationsEntity>>> fetchAllUsers(
-     ) async {
+  Future<Either<Failure, List<UserInformationsEntity>>> fetchAllUsers() async {
     try {
-     
       List<UserInformationsEntity> usersList =
-       await userInformationsRemoteDataSource.fetchUsersData();
+          await userInformationsRemoteDataSource.fetchUsersData();
       return right(usersList);
     } on CustomException catch (e) {
       return left(ServerFailure(e.message));
@@ -186,9 +181,9 @@ class AdminRepoImpl extends AdminRepo {
   }
 
   @override
-  Future<Either<Failure, void>> deleteOrderData(String id) async{
+  Future<Either<Failure, void>> deleteOrderData(String id) async {
     try {
-    await  userInformationsRemoteDataSource.deleteOrderData(id);
+      await userInformationsRemoteDataSource.deleteOrderData(id);
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(e.message));
@@ -202,10 +197,11 @@ class AdminRepoImpl extends AdminRepo {
   }
 
   @override
-  Future<Either<Failure, List<UserInfoForOrderEntities>>> fetchOrdersData()async {
+  Future<Either<Failure, List<UserInfoForOrderEntities>>>
+      fetchOrdersData() async {
     try {
       List<UserInfoForOrderEntities> ordersList =
-        await  userInformationsRemoteDataSource.fetchOrdersData();
+          await userInformationsRemoteDataSource.fetchOrdersData();
       print(
           "******************fetch ordersData AdminRepoImpl**********************");
       return right(ordersList);
@@ -221,6 +217,43 @@ class AdminRepoImpl extends AdminRepo {
         ),
       );
     }
+  }
+
+  @override
+  Future<Either<Failure, List<UsedPhonesEntities>>>
+      fetchPendingUsedPhones() async {
+    try {
+      final list =
+          await userInformationsRemoteDataSource.fetchPendingUsedPhones();
+      return right(list);
+    } on CustomException catch (e) {
+      return left(ServerFailure(e.message));
+    } catch (e) {
+      return left(ServerFailure('حدث خطأ ما. الرجاء المحاولة مرة أخرى.'));
     }
   }
 
+  @override
+  Future<Either<Failure, void>> approveUsedPhone(String id) async {
+    try {
+      await userInformationsRemoteDataSource.approveUsedPhone(id);
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(e.message));
+    } catch (e) {
+      return left(ServerFailure('حدث خطأ ما. الرجاء المحاولة مرة أخرى.'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> rejectUsedPhone(String id) async {
+    try {
+      await userInformationsRemoteDataSource.rejectUsedPhone(id);
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(e.message));
+    } catch (e) {
+      return left(ServerFailure('حدث خطأ ما. الرجاء المحاولة مرة أخرى.'));
+    }
+  }
+}

@@ -4,7 +4,6 @@ import '../../../../../../core/utils/app_router.dart';
 import 'package:west_elbalad/core/constants/app_consts.dart';
 import 'package:west_elbalad/features/admin/presentation/views/widgets/admin_view/custom_admin_view_card.dart';
 
-
 class AdminViewBody extends StatelessWidget {
   const AdminViewBody({super.key});
 
@@ -48,6 +47,12 @@ class AdminViewBody extends StatelessWidget {
                     GoRouter.of(context).push(AppRouter.kUsedPhonesView);
                   },
                   title: "المنتجات المستعملة",
+                ),
+                CustomAdminViewCard(
+                  onPressed: () {
+                    GoRouter.of(context).push(AppRouter.kPendingUsedPhonesView);
+                  },
+                  title: "موبايلات تنتظر القبول",
                 ),
               ],
             ),

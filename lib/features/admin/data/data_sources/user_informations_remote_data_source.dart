@@ -10,14 +10,15 @@ import 'package:west_elbalad/features/used_phones/data/model/used_phone_model.da
 import 'package:west_elbalad/features/admin/domain/entities/user_informations_entites.dart';
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 
-
-
 abstract class UserInformationsRemoteDataSource {
   Future<void> deleteNewPhoneData(String id);
   Future<void> deleteUsedPhoneData(String id);
   Future<void> deleteOrderData(String id);
   Future<List<PhoneEntites>> fetchNewPhonesData();
   Future<List<UsedPhonesEntities>> fetchUsedPhonesData();
+  Future<List<UsedPhonesEntities>> fetchPendingUsedPhones();
+  Future<void> approveUsedPhone(String id);
+  Future<void> rejectUsedPhone(String id);
   Future<List<UserInfoForOrderEntities>> fetchOrdersData();
   Future<void> editNewPhonePrice(String phoneId, int newValue);
   Future<void> editUsedPhonePrice(String phoneId, int newValue);
@@ -55,24 +56,62 @@ class UserInformationsRemoteDataSourceImpl
 
   @override
   Future<List<UsedPhonesEntities>> fetchUsedPhonesData() async {
+    // Only fetch approved phones (shown in edit_used_phones_view)
     final List<Map<String, dynamic>> phonesData =
-        await databaseService.fetchAllDocuments(BackendEndpoint.usedPhones);
-    final List<UsedPhonesEntities> phonesList = phonesData.map((data) {
-      return UsedPhoneModel.fromMap(data);
-    }).toList();
-    return phonesList;
+        await databaseService.fetchDocumentsWhere(
+      BackendEndpoint.usedPhones,
+      field: 'status',
+      value: 'approved',
+    );
+    return phonesData.map((data) => UsedPhoneModel.fromMap(data)).toList();
   }
+
   @override
-  Future<List<UserInfoForOrderEntities>> fetchOrdersData()async {
-   final List<Map<String, dynamic>> ordersData =
+  Future<List<UsedPhonesEntities>> fetchPendingUsedPhones() async {
+    final List<Map<String, dynamic>> phonesData =
+        await databaseService.fetchDocumentsWhere(
+      BackendEndpoint.usedPhones,
+      field: 'status',
+      value: 'pending',
+    );
+    return phonesData.map((data) => UsedPhoneModel.fromMap(data)).toList();
+  }
+
+  @override
+  Future<void> approveUsedPhone(String id) async {
+    await databaseService.updateFieldValue(
+      collectionName: BackendEndpoint.usedPhones,
+      docId: id,
+      fieldName: 'status',
+      newValue: 'approved',
+    );
+  }
+
+  @override
+  Future<void> rejectUsedPhone(String id) async {
+    await databaseService.deleteDocument(
+      collectionName: BackendEndpoint.usedPhones,
+      documentId: id,
+    );
+    bool imageExists = await databaseService
+        .checkIfImageExists('${BackendEndpoint.usedPhones}/$id');
+    if (imageExists) {
+      await databaseService
+          .deleteImageFromStorage('${BackendEndpoint.usedPhones}/$id');
+    }
+  }
+
+  @override
+  Future<List<UserInfoForOrderEntities>> fetchOrdersData() async {
+    final List<Map<String, dynamic>> ordersData =
         await databaseService.fetchAllDocuments(BackendEndpoint.orders);
     final List<UserInfoForOrderEntities> ordersList = ordersData.map((data) {
       return UserInfoForOrderModel.fromMap(data);
     }).toList();
-     
+
     return ordersList;
-   
   }
+
   @override
   Future<String> uploadImage(File image, String documentId) async {
     String imageUrl = await databaseService.uploadImage(
@@ -111,13 +150,15 @@ class UserInformationsRemoteDataSourceImpl
       await databaseService.deleteImageFromStorage("phones/$id");
     }
   }
-@override
-  Future<void> deleteOrderData(String id) async{
+
+  @override
+  Future<void> deleteOrderData(String id) async {
     await databaseService.deleteDocument(
       documentId: id,
       collectionName: BackendEndpoint.orders,
     );
   }
+
   @override
   Future<void> editNewPhonePrice(String phoneId, int newValue) async {
     await databaseService.updateFieldValue(
@@ -135,8 +176,4 @@ class UserInformationsRemoteDataSourceImpl
         fieldName: BackendEndpoint.priceOfUsedPhone,
         newValue: newValue);
   }
-  
-  
-  
-
 }

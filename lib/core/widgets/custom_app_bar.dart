@@ -28,6 +28,7 @@ class CustomAppBar extends StatelessWidget {
     return ClipPath(
       clipper: CustomClipperPath(),
       child: Container(
+        clipBehavior: Clip.hardEdge,
         decoration: const BoxDecoration(
           color: AppColors.primary,
         ),

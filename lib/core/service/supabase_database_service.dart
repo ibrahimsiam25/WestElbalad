@@ -228,6 +228,23 @@ class SupabaseDatabaseService implements DatabaseService {
     }
   }
 
+  @override
+  Future<List<Map<String, dynamic>>> fetchDocumentsWhere(
+    String collectionName, {
+    required String field,
+    required dynamic value,
+  }) async {
+    try {
+      final table = _table(collectionName);
+      final response =
+          await _client.from(table).select().eq(field, value) as List<dynamic>;
+      return response.map((e) => Map<String, dynamic>.from(e)).toList();
+    } catch (e) {
+      log('SupabaseDB.fetchDocumentsWhere error: $e');
+      throw CustomException(message: 'حدث خطأ أثناء جلب البيانات.');
+    }
+  }
+
   // ─────────────────────── Helpers ───────────────────────
 
   String _mimeType(String path) {
