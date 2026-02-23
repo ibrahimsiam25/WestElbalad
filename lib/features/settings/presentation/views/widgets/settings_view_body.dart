@@ -34,10 +34,10 @@ class SettingsViewBody extends StatelessWidget {
           _ContactCard(
             svgAsset: AppAssets.whatsappIcon,
             title: 'واتساب',
-            subtitle: '01011621272',
+            subtitle: '01000110049',
             color: const Color(0xFF25D366),
             onTap: () =>
-                launchCustomUr(context, 'https://wa.me/20${'1011621272'}'),
+                launchCustomUr(context, 'https://wa.me/20${'1000110049'}'),
           ),
           SizedBox(height: 10.h),
           _ContactCard(

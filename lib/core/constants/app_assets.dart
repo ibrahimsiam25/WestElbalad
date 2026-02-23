@@ -1,11 +1,11 @@
 class AppAssets {
-  static const launcherIcon = 'assets/images/launcher_icon.png';
-  static const spalsh = 'assets/images/splash.gif';
+  static const launcherIcon = 'assets/images/logo.png';
+
   static const onboarding1 = 'assets/images/onboarding1.json';
   static const onboarding2 = 'assets/images/onboarding2.json';
   static const onboarding3 = 'assets/images/onboarding3.json';
   static const onboarding4 = 'assets/images/onboarding4.json';
-  static const verificationLottie = 'assets/images/sign_in.json';
+  
   static const googleIcon = "assets/images/google_icon.svg";
   static const checkIcon = "assets/images/Check.svg";
   static const applIcon = "assets/images/appl_icon.svg";
@@ -20,8 +20,6 @@ class AppAssets {
   static const gallery = "assets/images/gallery.png";
   static const filter = "assets/images/filter.png";
   static const profile = "assets/images/profile.png";
-  static const offer1 = "assets/images/installment offer.png";
-  static const offer2 = "assets/images/sell_used_phone.png";
   static const add = "assets/images/plus.png";
   static const used = "assets/images/recycle-sign.png";
   static const shoppingCart = "assets/images/shopping-cart.png";

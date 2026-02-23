@@ -20,8 +20,8 @@ class SigninViewBody extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [
             Color(0xFFFFFFFF),
-            Color(0xFFE8F5E9),
-            Color(0xFFC8E6C9),
+            Color(0xFFE8EDF5),
+            Color(0xFFBECBE4),
           ],
           stops: [0.0, 0.5, 1.0],
         ),

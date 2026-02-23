@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import '../../admin_bottom_nav_bar.dart';
 import '../../user_bottom_nav_bar.dart';
 import '../../core/config/app_config.dart';
@@ -14,14 +15,13 @@ import '../../features/home/presentation/views/new_phone_details_view.dart';
 import '../../features/admin/presentation/views/users_informatins_view.dart';
 import '../../features/used_phones/presentation/views/add_used_phone_view.dart';
 import '../../features/shopping_cart/presentation/views/shopping_cart_view.dart';
-import 'package:west_elbalad/features/splash/presentation/views/splash_view.dart';
 import 'package:west_elbalad/features/admin/presentation/views/edit_used_phones_view.dart';
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 import 'package:west_elbalad/features/shopping_cart/presentation/views/finish_order_view.dart';
-
 import 'package:west_elbalad/features/used_phones/presentation/views/used_phones_details_view.dart';
-
 import '../../features/user_profile/presentation/views/user_profile_view.dart';
+import '../../core/constants/app_consts.dart';
+import '../../core/service/shared_preferences_singleton.dart';
 
 abstract class AppRouter {
   static const kOnBoardingView = '/onBoardingView';
@@ -41,10 +41,22 @@ abstract class AppRouter {
   static const kAddUsedPhoneView = '/AddUsedPhoneView';
   static const kFinishOrderView = '/FinishOrderView';
   static final router = GoRouter(
+    redirect: (context, state) {
+      if (state.matchedLocation == '/') {
+        final isOnBoardingView = SharedPref.getBool(kIsOnBoardingView);
+        final isSigninView = SharedPref.getBool(kIsSigninView);
+        if (isOnBoardingView) {
+          return isSigninView ? kBottomNavBarController : kSigninView;
+        } else {
+          return kOnBoardingView;
+        }
+      }
+      return null;
+    },
     routes: [
       GoRoute(
         path: "/",
-        builder: (context, state) => SplashView(),
+        builder: (context, state) => const SizedBox(),
       ),
       GoRoute(
         path: kOnBoardingView,

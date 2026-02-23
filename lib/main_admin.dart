@@ -61,6 +61,10 @@ class _AdminApp extends StatelessWidget {
             theme: ThemeData(
               fontFamily: appFontCairo,
               scaffoldBackgroundColor: AppColors.lightGrey,
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: AppColors.primary,
+                primary: AppColors.primary,
+              ),
             ),
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
