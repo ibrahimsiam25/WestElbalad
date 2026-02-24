@@ -24,147 +24,136 @@ class UserProfileViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = getUser();
-    return 
-     
-    
-       
-       SingleChildScrollView(
-          child: Column(
-            children: [
-                 CustomAppBar(
+    return SingleChildScrollView(
+        child: Column(
+      children: [
+        CustomAppBar(
           title: 'الملف الشخصي',
           backButton: true,
-        ),        Container(
-              width: double.infinity,
-              margin: EdgeInsets.zero,
-              padding: EdgeInsets.only(top: 20.h, bottom: 30.h),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                      AppColors.lightGrey,
-                       
-                    AppColors.primary.withOpacity(0.08
-                    ),
-
-                 
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-        child: Column(
-          children: [
-            Stack(
-              alignment: Alignment.bottomRight,
-              children: [
-                Container(
-                  width: 110.r,
-                  height: 110.r,
-                  padding: const EdgeInsets.all(
-                      3), // Add padding for border separation
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: AppColors.primary,
-                      width: 2.0,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primary.withOpacity(0.2),
-                        blurRadius: 16,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: ClipOval(
-                    child: imagePickerBlocBuilder(
-                      radius: kRadius48,
-                      width: 104.r, // Adjusted for padding
-                      height: 104.r,
-                      online: online,
-                      defaultImage: defaultImage,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Container(
-                    width: 28.r,
-                    height: 28.r,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 2),
-                    ),
-                    child: Icon(Icons.camera_alt_rounded,
-                        color: Colors.white, size: 14.r),
-                  ),
-                ),
-        
+        ),
+        Container(
+          width: double.infinity,
+          margin: EdgeInsets.zero,
+          padding: EdgeInsets.only(top: 20.h, bottom: 30.h),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                AppColors.lightGrey,
+                AppColors.primary.withValues(alpha: 0.08),
               ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
-            SizedBox(height: 12.h),
-            Text(
-              user.name,
-              style: TextStyle(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w700,
-                color: AppColors.black,
+          ),
+          child: Column(
+            children: [
+              Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  Container(
+                    width: 110.r,
+                    height: 110.r,
+                    padding: const EdgeInsets.all(
+                        3), // Add padding for border separation
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: AppColors.primary,
+                        width: 2.0,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withValues(alpha: 0.2),
+                          blurRadius: 16,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: ClipOval(
+                      child: imagePickerBlocBuilder(
+                        radius: kRadius48,
+                        width: 104.r, // Adjusted for padding
+                        height: 104.r,
+                        online: online,
+                        defaultImage: defaultImage,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Container(
+                      width: 28.r,
+                      height: 28.r,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 2),
+                      ),
+                      child: Icon(Icons.camera_alt_rounded,
+                          color: Colors.white, size: 14.r),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(height: 4.h),
-            Text(
-              user.email,
-              style: TextStyle(
-                fontSize: 12.sp,
-                color: AppColors.darkGrey,
+              SizedBox(height: 12.h),
+              Text(
+                user.name,
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.black,
+                ),
               ),
-            ),
-          ],
-        ),
+              SizedBox(height: 4.h),
+              Text(
+                user.email,
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: AppColors.darkGrey,
                 ),
-                SizedBox(height: 16.h),
-                Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Column(
-          children: [
-            _InfoTile(
-              icon: Icons.person_outline_rounded,
-              label: 'الاسم',
-              value: user.name,
-              color: AppColors.primary,
-            ),
-            SizedBox(height: 10.h),
-            _InfoTile(
-              icon: Icons.email_outlined,
-              label: 'البريد الإلكتروني',
-              value: user.email,
-              color: const Color(0xFF1877F2),
-            ),
-            SizedBox(height: 24.h),
-            CustomButton(
-              onPressed: () {
-                if (context.read<ImagePickerCubit>().image != null) {
-                  context.read<UploadUserImageCubit>().uploadUserImage(
-                      context.read<ImagePickerCubit>().image!);
-                } else {
-                  buildMessageBar(
-                      context, 'الرجاء اختيار صورة جديدة للملف الشخصي');
-                }
-              },
-              text: 'حفظ صورة الملف الشخصي',
-              backgroundColor: AppColors.primary,
-            ),
-            SizedBox(height: 24.h),
-          ],
-        ),
-                ),
-             
+              ),
             ],
-       )
-      
-      );
+          ),
+        ),
+        SizedBox(height: 16.h),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Column(
+            children: [
+              _InfoTile(
+                icon: Icons.person_outline_rounded,
+                label: 'الاسم',
+                value: user.name,
+                color: AppColors.primary,
+              ),
+              SizedBox(height: 10.h),
+              _InfoTile(
+                icon: Icons.email_outlined,
+                label: 'البريد الإلكتروني',
+                value: user.email,
+                color: const Color(0xFF1877F2),
+              ),
+              SizedBox(height: 24.h),
+              CustomButton(
+                onPressed: () {
+                  if (context.read<ImagePickerCubit>().image != null) {
+                    context.read<UploadUserImageCubit>().uploadUserImage(
+                        context.read<ImagePickerCubit>().image!);
+                  } else {
+                    buildMessageBar(
+                        context, 'الرجاء اختيار صورة جديدة للملف الشخصي');
+                  }
+                },
+                text: 'حفظ صورة الملف الشخصي',
+                backgroundColor: AppColors.primary,
+              ),
+              SizedBox(height: 24.h),
+            ],
+          ),
+        ),
+      ],
+    ));
   }
 }
 
@@ -190,7 +179,7 @@ class _InfoTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(14.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -202,7 +191,7 @@ class _InfoTile extends StatelessWidget {
             width: 40.r,
             height: 40.r,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.12),
+              color: color.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(10.r),
             ),
             child: Icon(icon, color: color, size: 20.r),
@@ -230,7 +219,7 @@ class _InfoTile extends StatelessWidget {
             ],
           ),
         ],
-      ), 
+      ),
     );
   }
 }

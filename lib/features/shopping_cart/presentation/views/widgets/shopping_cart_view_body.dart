@@ -45,7 +45,7 @@ class ShoppingCartViewBody extends StatelessWidget {
                           gradient: LinearGradient(
                             colors: [
                               AppColors.primary,
-                              AppColors.primary.withOpacity(0.75),
+                              AppColors.primary.withValues(alpha: 0.75),
                             ],
                             begin: Alignment.centerRight,
                             end: Alignment.centerLeft,
@@ -77,7 +77,7 @@ class ShoppingCartViewBody extends StatelessWidget {
                             children: [
                               Icon(Icons.shopping_cart_outlined,
                                   size: 64.r,
-                                  color: AppColors.grey.withOpacity(0.5)),
+                                  color: AppColors.grey.withValues(alpha: 0.5)),
                               SizedBox(height: 12.h),
                               Text(
                                 'عربة التسوق فارغة',

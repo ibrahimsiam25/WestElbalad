@@ -117,8 +117,6 @@ class SupabaseAuthService {
 
   Future<User> signInWithGoogle() async {
     try {
-      // TODO: ضع هنا الـ Web Client ID من Google Cloud Console
-      // يمكن العثور عليه من: Supabase Dashboard → Auth → Providers → Google
       final GoogleSignIn googleSignIn = GoogleSignIn(
         serverClientId: '601731152839-qr7c179t2kou87jp13kk7emt4cigg2jj.apps.googleusercontent.com',
       );

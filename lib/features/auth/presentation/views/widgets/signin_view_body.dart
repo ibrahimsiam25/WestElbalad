@@ -41,7 +41,7 @@ class SigninViewBody extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primary.withOpacity(0.25),
+                      color: AppColors.primary.withValues(alpha: 0.25),
                       blurRadius: 32,
                       spreadRadius: 4,
                       offset: const Offset(0, 8),
@@ -122,7 +122,7 @@ class _GoogleSignInButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(14.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.10),
+              color: Colors.black.withValues(alpha: 0.10),
               blurRadius: 20,
               spreadRadius: 0,
               offset: const Offset(0, 4),

@@ -1,10 +1,11 @@
 flutter_native_splash:
 
   color: "#FFFFFF"
-  image: assets/images/png/splash.png
-
+  image: assets/images/splash.png
+  branding: assets/images/branding_text.png  
+  branding_mode: center 
   android_12:
-    image: assets/images/png/splash.png
+    image: assets/images/splash.png
     color: "#FFFFFF"
-
+    branding: assets/images/branding_text.png
     # dart run flutter_native_splash:create --path=flutter_native_splash.yaml

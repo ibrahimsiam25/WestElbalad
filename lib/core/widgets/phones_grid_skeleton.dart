@@ -12,7 +12,7 @@ class PhonesGridSkeleton extends StatelessWidget {
     return Skeletonizer(
       enabled: true,
       effect: ShimmerEffect(
-        baseColor: AppColors.grey.withOpacity(0.3),
+        baseColor: AppColors.grey.withValues(alpha: 0.3),
         highlightColor: AppColors.white,
         duration: const Duration(milliseconds: 1200),
       ),
@@ -47,7 +47,7 @@ class _PhoneCardSkeleton extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -62,7 +62,7 @@ class _PhoneCardSkeleton extends StatelessWidget {
             child: Container(
               height: 130.h,
               width: double.infinity,
-              color: AppColors.grey.withOpacity(0.4),
+              color: AppColors.grey.withValues(alpha: 0.4),
             ),
           ),
           // Content placeholder
@@ -77,7 +77,7 @@ class _PhoneCardSkeleton extends StatelessWidget {
                     height: 14.h,
                     width: 100.w,
                     decoration: BoxDecoration(
-                      color: AppColors.grey.withOpacity(0.5),
+                      color: AppColors.grey.withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(4.r),
                     ),
                   ),
@@ -87,7 +87,7 @@ class _PhoneCardSkeleton extends StatelessWidget {
                     height: 10.h,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: AppColors.grey.withOpacity(0.3),
+                      color: AppColors.grey.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(4.r),
                     ),
                   ),
@@ -97,7 +97,7 @@ class _PhoneCardSkeleton extends StatelessWidget {
                     height: 10.h,
                     width: 80.w,
                     decoration: BoxDecoration(
-                      color: AppColors.grey.withOpacity(0.3),
+                      color: AppColors.grey.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(4.r),
                     ),
                   ),
@@ -107,7 +107,7 @@ class _PhoneCardSkeleton extends StatelessWidget {
                     height: 26.h,
                     width: 80.w,
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.15),
+                      color: AppColors.primary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                   ),
