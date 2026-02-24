@@ -54,6 +54,12 @@ class AdminViewBody extends StatelessWidget {
                   },
                   title: "موبايلات تنتظر القبول",
                 ),
+                CustomAdminViewCard(
+                  onPressed: () {
+                    GoRouter.of(context).push(AppRouter.kManageOffersView);
+                  },
+                  title: "إدارة صور العروض",
+                ),
               ],
             ),
           ),

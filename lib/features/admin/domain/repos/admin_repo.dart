@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../home/domian/entites/phone_entites.dart';
+import 'package:west_elbalad/features/admin/domain/entities/offer_entity.dart';
 import 'package:west_elbalad/features/admin/domain/entities/user_informations_entites.dart';
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 import 'package:west_elbalad/features/shopping_cart/domian/entites/user_info_for_order_entities.dart';
@@ -23,4 +24,7 @@ abstract class AdminRepo {
   Future<Either<Failure, List<UsedPhonesEntities>>> fetchPendingUsedPhones();
   Future<Either<Failure, void>> approveUsedPhone(String id);
   Future<Either<Failure, void>> rejectUsedPhone(String id);
+  Future<Either<Failure, List<OfferEntity>>> fetchOffers();
+  Future<Either<Failure, void>> addOffer(File image);
+  Future<Either<Failure, void>> deleteOffer(String id);
 }

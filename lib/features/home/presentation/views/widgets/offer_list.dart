@@ -17,65 +17,73 @@ class OffersList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: getIt<OffersCubit>(),
-      child: SizedBox(
-        height: 148.0.h,
-        child: BlocBuilder<OffersCubit, OffersState>(
-          builder: (context, state) {
-            if (state is OffersSuccess) {
-              return CarouselSlider(
-                  options: CarouselOptions(
-                    height: 148.0.h,
-                    viewportFraction: 0.75,
-                    enableInfiniteScroll: true,
-                    autoPlay: true,
-                    autoPlayInterval: const Duration(seconds: 4),
-                    autoPlayAnimationDuration: const Duration(seconds: 1),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    enlargeCenterPage: true,
-                    scrollDirection: Axis.horizontal,
-                  ),
-                  items: List.generate(state.imageUrls.length, (index) {
-                    return ClipRRect(
-                      borderRadius: BorderRadius.circular(kRadius24),
-                      child: CachedNetworkImage(
-                        fit: BoxFit.fill,
-                        height: 148.0.h,
-                        imageUrl: state.imageUrls[index],
-                        placeholder: (context, url) => CustomSkeletonizer(
-                          height: 148.0.h,
-                          aspectRatio: 16 / 9,
-                        ),
-                        errorWidget: (context, url, error) => Icon(
-                          Icons.error,
-                        ),
-                      ),
-                    );
-                  }));
-            } else if (state is OffersFailure) {
-              return Center(child: Text(state.message));
-            } else {
-              return ListView.builder(
-                padding: EdgeInsets.symmetric(
-                  horizontal: kHorizontalPadding,
-                  vertical: 16.0,
-                ),
-                scrollDirection: Axis.horizontal,
-                itemCount: 3,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: CustomSkeletonizer(
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      aspectRatio: 1321 / 736,
-                    ),
-                  );
-                },
-              );
-            }
-          },
-        ),
+      child: BlocBuilder<OffersCubit, OffersState>(
+        builder: (context, state) {
+          // Collapse completely when there are no offers
+          if (state is OffersSuccess && state.imageUrls.isEmpty) {
+            return const SizedBox.shrink();
+          }
+          return SizedBox(
+            height: 148.0.h,
+            child: _buildContent(context, state),
+          );
+        },
       ),
     );
+  }
+
+  Widget _buildContent(BuildContext context, OffersState state) {
+    if (state is OffersSuccess) {
+      return CarouselSlider(
+        options: CarouselOptions(
+          height: 148.0.h,
+          viewportFraction: 0.75,
+          enableInfiniteScroll: true,
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 4),
+          autoPlayAnimationDuration: const Duration(seconds: 1),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enlargeCenterPage: true,
+          scrollDirection: Axis.horizontal,
+        ),
+        items: List.generate(state.imageUrls.length, (index) {
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(kRadius24),
+            child: CachedNetworkImage(
+              fit: BoxFit.fill,
+              height: 148.0.h,
+              imageUrl: state.imageUrls[index],
+              placeholder: (context, url) => CustomSkeletonizer(
+                height: 148.0.h,
+                aspectRatio: 16 / 9,
+              ),
+              errorWidget: (context, url, error) =>
+                  const Icon(Icons.broken_image),
+            ),
+          );
+        }),
+      );
+    } else if (state is OffersFailure) {
+      return Center(child: Text(state.message));
+    } else {
+      return ListView.builder(
+        padding: EdgeInsets.symmetric(
+          horizontal: kHorizontalPadding,
+          vertical: 16.0,
+        ),
+        scrollDirection: Axis.horizontal,
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: CustomSkeletonizer(
+              height: MediaQuery.of(context).size.height * 0.3,
+              aspectRatio: 1321 / 736,
+            ),
+          );
+        },
+      );
+    }
   }
 }
 

@@ -16,6 +16,7 @@ import '../../features/admin/presentation/views/users_informatins_view.dart';
 import '../../features/used_phones/presentation/views/add_used_phone_view.dart';
 import '../../features/shopping_cart/presentation/views/shopping_cart_view.dart';
 import '../../features/admin/presentation/views/edit_used_phones_view.dart';
+import '../../features/admin/presentation/views/manage_offers_view.dart';
 import '../../features/admin/presentation/views/pending_used_phones_view.dart';
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 import 'package:west_elbalad/features/shopping_cart/presentation/views/finish_order_view.dart';
@@ -37,6 +38,7 @@ abstract class AppRouter {
   static const kNewPhonesView = '/NewPhonesView';
   static const kUsedPhonesView = '/UsedPhonesView';
   static const kPendingUsedPhonesView = '/PendingUsedPhonesView';
+  static const kManageOffersView = '/ManageOffersView';
   static const kShoppingCartView = '/ShoppingCartView';
   static const kNewPhoneDetailsView = '/NewPhoneDetailsView';
   static const kUsedPhoneDetailsView = '/UsedPhoneDetailsView';
@@ -133,6 +135,10 @@ abstract class AppRouter {
       GoRoute(
         path: kPendingUsedPhonesView,
         builder: (context, state) => const PendingUsedPhonesView(),
+      ),
+      GoRoute(
+        path: kManageOffersView,
+        builder: (context, state) => const ManageOffersView(),
       ),
     ],
   );

@@ -8,6 +8,7 @@ import '../../../home/domian/entites/phone_entites.dart';
 import '../../../../core/functions/generate_unique_id.dart';
 import '../../../../core/service/image_picker_serivce.dart';
 import 'package:west_elbalad/features/admin/domain/repos/admin_repo.dart';
+import 'package:west_elbalad/features/admin/domain/entities/offer_entity.dart';
 import 'package:west_elbalad/features/admin/domain/entities/user_informations_entites.dart';
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 import 'package:west_elbalad/features/shopping_cart/domian/entites/user_info_for_order_entities.dart';
@@ -249,6 +250,42 @@ class AdminRepoImpl extends AdminRepo {
   Future<Either<Failure, void>> rejectUsedPhone(String id) async {
     try {
       await userInformationsRemoteDataSource.rejectUsedPhone(id);
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(e.message));
+    } catch (e) {
+      return left(ServerFailure('حدث خطأ ما. الرجاء المحاولة مرة أخرى.'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<OfferEntity>>> fetchOffers() async {
+    try {
+      final list = await userInformationsRemoteDataSource.fetchOffers();
+      return right(list);
+    } on CustomException catch (e) {
+      return left(ServerFailure(e.message));
+    } catch (e) {
+      return left(ServerFailure('حدث خطأ ما. الرجاء المحاولة مرة أخرى.'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> addOffer(File image) async {
+    try {
+      await userInformationsRemoteDataSource.addOffer(image);
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(e.message));
+    } catch (e) {
+      return left(ServerFailure('حدث خطأ ما. الرجاء المحاولة مرة أخرى.'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteOffer(String id) async {
+    try {
+      await userInformationsRemoteDataSource.deleteOffer(id);
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(e.message));

@@ -2,12 +2,14 @@ import 'dart:io';
 import '../model/user_informations_model.dart';
 import '../../../../core/service/data_service.dart';
 import '../../../home/domian/entites/phone_entites.dart';
+import '../../../../core/functions/generate_unique_id.dart';
 import 'package:west_elbalad/core/utils/backend_endpoints.dart';
 import 'package:west_elbalad/features/home/data/model/phones_model.dart';
 import '../../../shopping_cart/data/model/user_info_for_order_model.dart';
 import '../../../shopping_cart/domian/entites/user_info_for_order_entities.dart';
 import 'package:west_elbalad/features/used_phones/data/model/used_phone_model.dart';
 import 'package:west_elbalad/features/admin/domain/entities/user_informations_entites.dart';
+import 'package:west_elbalad/features/admin/domain/entities/offer_entity.dart';
 import 'package:west_elbalad/features/used_phones/domian/entities/used_phone_entities.dart';
 
 abstract class UserInformationsRemoteDataSource {
@@ -25,6 +27,9 @@ abstract class UserInformationsRemoteDataSource {
   Future<List<UserInformationsEntity>> fetchUsersData();
   Future<String> uploadImage(File image, String documentId);
   Future<void> addPhoneData(Map<String, dynamic> data, String documentId);
+  Future<List<OfferEntity>> fetchOffers();
+  Future<void> addOffer(File image);
+  Future<void> deleteOffer(String id);
 }
 
 class UserInformationsRemoteDataSourceImpl
@@ -175,5 +180,40 @@ class UserInformationsRemoteDataSourceImpl
         docId: phoneId,
         fieldName: BackendEndpoint.priceOfUsedPhone,
         newValue: newValue);
+  }
+
+  @override
+  Future<List<OfferEntity>> fetchOffers() async {
+    final data =
+        await databaseService.fetchAllDocuments(BackendEndpoint.offers);
+    return data
+        .map((e) => OfferEntity(
+            id: e['id'] as String, imageUrl: e['imageUrl'] as String))
+        .toList();
+  }
+
+  @override
+  Future<void> addOffer(File image) async {
+    final id = generateUniqueId();
+    final imageUrl = await databaseService.uploadImage(
+      image: image,
+      path: 'offers/$id',
+    );
+    await databaseService.addData(
+      path: BackendEndpoint.offers,
+      data: {'id': id, 'imageUrl': imageUrl},
+    );
+  }
+
+  @override
+  Future<void> deleteOffer(String id) async {
+    await databaseService.deleteDocument(
+      collectionName: BackendEndpoint.offers,
+      documentId: id,
+    );
+    final exists = await databaseService.checkIfImageExists('offers/$id');
+    if (exists) {
+      await databaseService.deleteImageFromStorage('offers/$id');
+    }
   }
 }
